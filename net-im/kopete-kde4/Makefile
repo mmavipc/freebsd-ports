@@ -14,7 +14,6 @@ COMMENT=	KDE multi-protocol instant messenger
 LIB_DEPENDS=	idn.17:${PORTSDIR}/dns/libidn \
 		qca.2:${PORTSDIR}/devel/qca \
 		otr.4:${PORTSDIR}/security/libotr3 \
-		msn.0:${PORTSDIR}/net-im/libmsn \
 		gadu.3:${PORTSDIR}/polish/libgadu \
 		ortp.8:${PORTSDIR}/net/linphone-base \
 		mediastreamer.0:${PORTSDIR}/net/linphone-base \
