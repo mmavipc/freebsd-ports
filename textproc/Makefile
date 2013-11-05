@@ -22,6 +22,7 @@
     SUBDIR += ansifilter
     SUBDIR += ant-xinclude-task
     SUBDIR += antiword
+    SUBDIR += apache-poi
     SUBDIR += apache-solr
     SUBDIR += apache-solr3
     SUBDIR += apertium
@@ -220,7 +221,6 @@
     SUBDIR += groonga
     SUBDIR += gsed
     SUBDIR += gtk-doc
-    SUBDIR += gtkdiff
     SUBDIR += gtkspell
     SUBDIR += gtkspell-reference
     SUBDIR += gu-aspell
@@ -328,7 +328,6 @@
     SUBDIR += itstool
     SUBDIR += jade
     SUBDIR += jakarta-commons-digester
-    SUBDIR += jakarta-poi
     SUBDIR += jalingo
     SUBDIR += jarnal
     SUBDIR += java2html
@@ -1036,6 +1035,7 @@
     SUBDIR += p5-YAML-Shell
     SUBDIR += p5-YAML-Syck
     SUBDIR += p5-YAML-Tiny
+    SUBDIR += p5-YAML-Tiny-Color
     SUBDIR += p5-YAPE-HTML
     SUBDIR += p5-YAPE-Regex
     SUBDIR += p5-YAPE-Regex-Explain

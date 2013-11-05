@@ -273,6 +273,7 @@
     SUBDIR += cproto
     SUBDIR += cpuflags
     SUBDIR += creduce
+    SUBDIR += critcl
     SUBDIR += cross-binutils
     SUBDIR += cross-gcc
     SUBDIR += cross-gdb
@@ -2560,6 +2561,7 @@
     SUBDIR += p5-Proc-Fork
     SUBDIR += p5-Proc-Guard
     SUBDIR += p5-Proc-PID-File
+    SUBDIR += p5-Proc-Pidfile
     SUBDIR += p5-Proc-ProcessTable
     SUBDIR += p5-Proc-Queue
     SUBDIR += p5-Proc-Reliable
@@ -2568,6 +2570,7 @@
     SUBDIR += p5-Proc-Wait3
     SUBDIR += p5-Proc-WaitStat
     SUBDIR += p5-Project-Gantt
+    SUBDIR += p5-Project-Libs
     SUBDIR += p5-Qudo
     SUBDIR += p5-RRDTool-OO
     SUBDIR += p5-Range-String

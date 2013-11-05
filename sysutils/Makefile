@@ -196,6 +196,7 @@
     SUBDIR += dtpstree
     SUBDIR += du2ps
     SUBDIR += duff
+    SUBDIR += dunst
     SUBDIR += duplicity
     SUBDIR += duply
     SUBDIR += dupmerge
@@ -644,6 +645,7 @@
     SUBDIR += pacman
     SUBDIR += paicc
     SUBDIR += pam_mount
+    SUBDIR += panicmail
     SUBDIR += parallel
     SUBDIR += password-store
     SUBDIR += patchelf
