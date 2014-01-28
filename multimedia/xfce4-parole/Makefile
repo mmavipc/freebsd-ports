@@ -2,8 +2,7 @@
 # $FreeBSD$
 
 PORTNAME=	parole
-PORTVERSION=	0.5.3
-PORTREVISION=	1
+PORTVERSION=	0.5.4
 CATEGORIES=	multimedia xfce
 MASTER_SITES=	XFCE/src/apps/${PORTNAME}/${PORTVERSION:R}/
 DIST_SUBDIR=	xfce4
@@ -16,6 +15,8 @@ LICENSE=	GPLv2
 LIB_DEPENDS=	libtag.so:${PORTSDIR}/audio/taglib \
 		libnotify.so:${PORTSDIR}/devel/libnotify \
 		libdbus-glib-1.so:${PORTSDIR}/devel/dbus-glib
+
+PORTSCOUT=	limit:^0\.6\.
 
 GNU_CONFIGURE=	yes
 INSTALLS_ICONS=	yes
@@ -30,7 +31,7 @@ USE_GNOME=	gtk20 glib20 intltool intlhack
 USE_XFCE=	configenv libmenu libutil
 USE_XORG=	x11 sm
 USE_LDCONFIG=	yes
-USES=		desktop-file-utils pathfix pkgconfig gmake
+USES=		desktop-file-utils pkgconfig gmake
 
 OPTIONS_DEFINE=	NLS
 OPTIONS_SINGLE=	GSTREAMER

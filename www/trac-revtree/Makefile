@@ -9,7 +9,7 @@ MASTER_SITES=	http://www.sourcehosting.net/freebsd/distfiles/ \
 PKGNAMEPREFIX=	trac-
 DISTNAME=	${PORTNAME}plugin-${PORTVERSION}
 
-MAINTAINER=	glarkin@FreeBSD.org
+MAINTAINER=	ports@FreeBSD.org
 COMMENT=	Graphical representation of an SVN repository
 
 RUN_DEPENDS+=	trac>=0.12:${PORTSDIR}/www/trac \
@@ -31,8 +31,9 @@ PLIST_SUB+=	EGGVERSION="${PORTVERSION}dev" PYTHONVERSION=${PYTHON_VER}
 PYDISTUTILS_NOEGGINFO=	yes
 
 BROKEN=		fails to build
+DEPRECATED=	Broken for more than 6 months
+EXPIRATION_DATE=	2014-02-27
 
-NO_STAGE=	yes
 .include <bsd.port.options.mk>
 
 .if ${PORT_OPTIONS:MMINFOENH}

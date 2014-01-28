@@ -107,8 +107,8 @@
     SUBDIR += cdroot
     SUBDIR += cdrtools
     SUBDIR += cdrtools-devel
-    SUBDIR += cfengine-devel
     SUBDIR += cfengine
+    SUBDIR += cfengine-devel
     SUBDIR += cfengine22
     SUBDIR += cfengine32
     SUBDIR += cfengine33
@@ -125,6 +125,7 @@
     SUBDIR += clonehdd
     SUBDIR += cloop-utils
     SUBDIR += cmdwatch
+    SUBDIR += cmogstored
     SUBDIR += cmospwd
     SUBDIR += cog
     SUBDIR += colorize
@@ -177,10 +178,10 @@
     SUBDIR += dfc
     SUBDIR += di
     SUBDIR += dim
-    SUBDIR += dircomp
     SUBDIR += dirdiff
     SUBDIR += dirvish
     SUBDIR += diskcheckd
+    SUBDIR += diskimage-tools
     SUBDIR += diskscrub
     SUBDIR += disktool
     SUBDIR += disktype
@@ -213,8 +214,8 @@
     SUBDIR += eiciel
     SUBDIR += eject
     SUBDIR += endian
-    SUBDIR += entr
     SUBDIR += enteruser
+    SUBDIR += entr
     SUBDIR += env4801
     SUBDIR += epylog
     SUBDIR += eroaster
@@ -244,6 +245,7 @@
     SUBDIR += filewatcherd
     SUBDIR += finfo
     SUBDIR += firstboot-freebsd-update
+    SUBDIR += firstboot-pkgs
     SUBDIR += flasher
     SUBDIR += flashrom
     SUBDIR += flexbackup
@@ -366,11 +368,10 @@
     SUBDIR += hachoir-wx
     SUBDIR += hal
     SUBDIR += hal-info
-    SUBDIR += hammerhead
     SUBDIR += hardlink
     SUBDIR += hatop
-    SUBDIR += hdup
     SUBDIR += hdrecover
+    SUBDIR += hdup
     SUBDIR += healthd
     SUBDIR += heartbeat
     SUBDIR += heirloom
@@ -385,6 +386,7 @@
     SUBDIR += hoz
     SUBDIR += hpacucli
     SUBDIR += hploscripts
+    SUBDIR += hptcli
     SUBDIR += hs-angel
     SUBDIR += hs-cpu
     SUBDIR += htop
@@ -394,8 +396,8 @@
     SUBDIR += i2c-tools
     SUBDIR += i7z
     SUBDIR += iat
-    SUBDIR += iextract
     SUBDIR += installwatch
+    SUBDIR += intel-pcm
     SUBDIR += iogen
     SUBDIR += iograph
     SUBDIR += ioping
@@ -441,7 +443,6 @@
     SUBDIR += krename-kde4
     SUBDIR += kshutdown-kde4
     SUBDIR += ksysguardd
-    SUBDIR += lavaps
     SUBDIR += lbl-cf
     SUBDIR += lbl-hf
     SUBDIR += lcdproc
@@ -468,7 +469,6 @@
     SUBDIR += linux-afaapps
     SUBDIR += linux-crashplan
     SUBDIR += linux-f10-procps
-    SUBDIR += linux-megamgr
     SUBDIR += linux-nero
     SUBDIR += linuxfdisk
     SUBDIR += lire
@@ -497,6 +497,12 @@
     SUBDIR += manck
     SUBDIR += mapchan
     SUBDIR += massadmin
+    SUBDIR += mate-control-center
+    SUBDIR += mate-polkit
+    SUBDIR += mate-power-manager
+    SUBDIR += mate-settings-daemon
+    SUBDIR += mate-system-monitor
+    SUBDIR += mbgtools
     SUBDIR += mbmon
     SUBDIR += mcelog
     SUBDIR += mcollective
@@ -578,6 +584,7 @@
     SUBDIR += p5-BSD-Jail-Object
     SUBDIR += p5-BSD-Process
     SUBDIR += p5-BSD-Sysctl
+    SUBDIR += p5-BackupPC-XS
     SUBDIR += p5-Brackup
     SUBDIR += p5-Dir-Purge
     SUBDIR += p5-File-DirCompare
@@ -610,6 +617,7 @@
     SUBDIR += p5-Proc-PidUtil
     SUBDIR += p5-Proclet
     SUBDIR += p5-Quota
+    SUBDIR += p5-Rex
     SUBDIR += p5-Samba-SIDhelper
     SUBDIR += p5-Schedule-At
     SUBDIR += p5-Schedule-Cron
@@ -718,8 +726,9 @@
     SUBDIR += pstree
     SUBDIR += ptools
     SUBDIR += puppet
-    SUBDIR += puppet27
     SUBDIR += puppet-lint
+    SUBDIR += puppet-mode.el
+    SUBDIR += puppet27
     SUBDIR += pv
     SUBDIR += pwd_unmkdb
     SUBDIR += pwgen
@@ -735,6 +744,7 @@
     SUBDIR += py-halite 
     SUBDIR += py-iowait
     SUBDIR += py-nagiosplugin
+    SUBDIR += py-plumbum
     SUBDIR += py-psutil
     SUBDIR += py-pytsk
     SUBDIR += py-ranger
@@ -751,10 +761,11 @@
     SUBDIR += qjail2
     SUBDIR += qlogtools
     SUBDIR += qpxtool
+    SUBDIR += qsynergy
     SUBDIR += quicksynergy
     SUBDIR += qzeitgeist
-    SUBDIR += radeontool
     SUBDIR += racktables
+    SUBDIR += radeontool
     SUBDIR += radmind
     SUBDIR += raincoat
     SUBDIR += rclean
@@ -763,6 +774,7 @@
     SUBDIR += rdiff-backup-devel
     SUBDIR += rdup
     SUBDIR += readlink
+    SUBDIR += realsync
     SUBDIR += recoverdm
     SUBDIR += reed
     SUBDIR += rej
@@ -780,17 +792,9 @@
     SUBDIR += rsyncbackup
     SUBDIR += rsyncmanager
     SUBDIR += rsyncrypto
-    SUBDIR += rsyslog6
-    SUBDIR += rsyslog6-dbi
-    SUBDIR += rsyslog6-gnutls
-    SUBDIR += rsyslog6-gssapi
-    SUBDIR += rsyslog6-mysql
-    SUBDIR += rsyslog6-pgsql
-    SUBDIR += rsyslog6-relp
-    SUBDIR += rsyslog6-rfc3195
-    SUBDIR += rsyslog6-snmp
     SUBDIR += rsyslog7
     SUBDIR += rsyslog7-devel
+    SUBDIR += rsyslog8-devel
     SUBDIR += rtty
     SUBDIR += ruby-quota
     SUBDIR += rubygem-SyslogLogger
@@ -817,9 +821,11 @@
     SUBDIR += rubygem-hiera-json
     SUBDIR += rubygem-hiera-puppet
     SUBDIR += rubygem-log4r
+    SUBDIR += rubygem-mogilefs-client
     SUBDIR += rubygem-murder
     SUBDIR += rubygem-ohai
     SUBDIR += rubygem-parallel
+    SUBDIR += rubygem-rubyipmi
     SUBDIR += rubygem-sys-admin
     SUBDIR += rubygem-sys-cpu
     SUBDIR += rubygem-sys-filesystem
@@ -865,6 +871,7 @@
     SUBDIR += slmon
     SUBDIR += sloth
     SUBDIR += slst
+    SUBDIR += slurm-hpc
     SUBDIR += smartmontools
     SUBDIR += smp_utils
     SUBDIR += snap
@@ -1065,6 +1072,7 @@
     SUBDIR += zidrav
     SUBDIR += zisofs-tools
     SUBDIR += zogftw
+    SUBDIR += zrep
     SUBDIR += zxfer
 
 .include <bsd.port.subdir.mk>

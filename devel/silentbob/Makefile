@@ -2,32 +2,29 @@
 # $FreeBSD$
 
 PORTNAME=	silentbob
-PORTVERSION=	2.4.2
+PORTVERSION=	3.0
 CATEGORIES=	devel
-MASTER_SITES=	SF/${PORTNAME}/${PORTNAME}2/${PORTNAME}-2.4/
+MASTER_SITES=	SF/${PORTNAME}/${PORTNAME}2/${PORTNAME}-${PORTVERSION:C@\.[0-9]+$@@}/
 
 MAINTAINER=	tota@FreeBSD.org
 COMMENT=	Yet another sourcecode indexing tool
 
-USES=		cmake
+LICENSE=	GPLv2
 
-LICENSE=	GPLv1
-LICENSE_FILE=	${WRKSRC}/COPYING
+USES=		cmake:outsource
 
-PORTDOCS=	*
-PLIST_FILES=	bin/bob
+PORTDOCS=	README
+PLIST_FILES=	bin/silentbob
 
-NO_STAGE=	yes
+OPTIONS_DEFINE=	DOCS
+
 post-patch:
 	@${RM} ${WRKSRC}/CMakeCache.txt
-	@${REINPLACE_CMD} -e 's|/usr/lib/silent_bob/|${PREFIX}/lib/silent_bob/|' \
+	@${REINPLACE_CMD} -e '/lib\/silent_bob/s|/usr|${PREFIX}|' \
 		${WRKSRC}/src/init.cxx
 
 post-install:
-.if !defined(NOPORTDOCS)
-	@${MKDIR} ${DOCSDIR}
-	@${INSTALL_DATA} ${WRKSRC}/README ${DOCSDIR}
-	@${INSTALL_DATA} ${WRKSRC}/doc/* ${DOCSDIR}
-.endif
+	@${MKDIR} ${STAGEDIR}${DOCSDIR}
+	${INSTALL_DATA} ${WRKSRC}/${PORTDOCS} ${STAGEDIR}${DOCSDIR}
 
 .include <bsd.port.mk>

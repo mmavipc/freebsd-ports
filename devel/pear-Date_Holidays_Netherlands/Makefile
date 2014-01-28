@@ -1,7 +1,7 @@
 # $FreeBSD$
 
 PORTNAME=	Date_Holidays_Netherlands
-PORTVERSION=	0.1.3
+PORTVERSION=	0.1.4
 CATEGORIES=	devel www pear
 
 MAINTAINER=	miwi@FreeBSD.org
@@ -13,7 +13,6 @@ RUN_DEPENDS:=	${PEARDIR}/Date/Holidays.php:${PORTSDIR}/devel/pear-Date_Holidays
 PEAR_AUTOINSTALL=	yes
 PLIST_SUB=	PORTVERSION=${PORTVERSION}
 
-NO_STAGE=	yes
 .include <bsd.port.pre.mk>
 .include "${PORTSDIR}/devel/pear/bsd.pear.mk"
 .include <bsd.port.post.mk>

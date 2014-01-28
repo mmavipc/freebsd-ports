@@ -11,9 +11,9 @@ DIST_SUBDIR=	z88
 EXTRACT_ONLY=	${PORTNAME}130${EXTRACT_SUFX}
 
 MAINTAINER=	ports@FreeBSD.org
-COMMENT=	A compact Finite Element Analysis System
+COMMENT=	Compact Finite Element Analysis System
 
-LIB_DEPENDS=	gtkglext-x11-1.0.0:${PORTSDIR}/x11-toolkits/gtkglext
+LIB_DEPENDS=	libgtkglext-x11-1.0.so:${PORTSDIR}/x11-toolkits/gtkglext
 
 NO_WRKSUBDIR=	yes
 USES=		pkgconfig
@@ -24,11 +24,12 @@ USE_GNOME=	gtk20
 BROWSER?=	firefox3
 XEDITOR?=	gedit
 
+OPTIONS_DEFINE=	DOCS
+
 Z88_BINS=	z88f z88i1 z88i2 z88com z88d z88e z88g z88h z88n z88o	\
 		z88x z88v
 Z88_DATA=	z88.fcd z88.dyn *.dxf *.txt
 
-NO_STAGE=	yes
 post-patch:
 	@${CP} ${WRKSRC}/z88.fcd.linux ${WRKSRC}/z88.fcd
 	@${CP} ${WRKSRC}/z88.mk.kernel.gcc32 ${WRKSRC}/z88.kernel.mk
@@ -56,17 +57,15 @@ do-build:
 	@(cd ${WRKSRC}; ${SETENV} ${MAKE_ENV} ${MAKE} -f z88.gtk.mk gtk)
 
 do-install:
-	@${MKDIR} ${PREFIX}/bin
-	@${INSTALL_SCRIPT} ${WRKSRC}/z88.sh ${PREFIX}/bin/z88
-	@${INSTALL_PROGRAM} ${Z88_BINS:S|^|${WRKSRC}/|} ${PREFIX}/bin
-	@${MKDIR} ${DATADIR}
-	@${INSTALL_DATA} ${Z88_DATA:S|^|${WRKSRC}/|} ${DATADIR}
-	@${MKDIR} ${DOCSDIR}
-	@${INSTALL_DATA} ${WRKSRC}/*.htm ${DOCSDIR}
-	@${INSTALL_DATA} ${WRKSRC}/*.gif ${DOCSDIR}
-	@${INSTALL_DATA} ${WRKSRC}/*.jpg ${DOCSDIR}
-.if !defined(NOPORTDOCS)
-	@${INSTALL_DATA} ${DISTDIR}/${DIST_SUBDIR}/z88mane.pdf ${DOCSDIR}
-.endif
+	@${MKDIR} ${STAGEDIR}${PREFIX}/bin
+	${INSTALL_SCRIPT} ${WRKSRC}/z88.sh ${STAGEDIR}${PREFIX}/bin/z88
+	${INSTALL_PROGRAM} ${Z88_BINS:S|^|${WRKSRC}/|} ${STAGEDIR}${PREFIX}/bin
+	@${MKDIR} ${STAGEDIR}${DATADIR}
+	${INSTALL_DATA} ${Z88_DATA:S|^|${WRKSRC}/|} ${STAGEDIR}${DATADIR}
+	@${MKDIR} ${STAGEDIR}${DOCSDIR}
+	${INSTALL_DATA} ${WRKSRC}/*.htm ${STAGEDIR}${DOCSDIR}
+	${INSTALL_DATA} ${WRKSRC}/*.gif ${STAGEDIR}${DOCSDIR}
+	${INSTALL_DATA} ${WRKSRC}/*.jpg ${STAGEDIR}${DOCSDIR}
+	${INSTALL_DATA} ${DISTDIR}/${DIST_SUBDIR}/z88mane.pdf ${STAGEDIR}${DOCSDIR}
 
 .include <bsd.port.mk>

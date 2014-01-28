@@ -3,40 +3,36 @@
 
 PORTNAME=	fam
 PORTVERSION=	2.6.10
-PORTREVISION=	4
+PORTREVISION=	5
 CATEGORIES=	devel
 MASTER_SITES=	ftp://oss.sgi.com/projects/fam/download/
 DIST_SUBDIR=	${PORTNAME}
 
 MAINTAINER=	ports@FreeBSD.org
-COMMENT=	A file alteration monitor
+COMMENT=	File alteration monitor
 
 CFLAGS+=	-Wno-deprecated
 
+USES=		gmake
 USE_AUTOTOOLS=	aclocal automake autoconf libtool
 AUTOMAKE_ARGS=	-c -a
-USE_GMAKE=	yes
 USE_LDCONFIG=	yes
 ACLOCAL_ARGS=	-I "${ACLOCAL_DIR}" -I ${LOCALBASE}/share/aclocal
 SUB_FILES=	pkg-message
 
-MAN1=		fam.1m
-MAN3=		fam.3x
+#CONFLICTS_INSTALL=	gamin-[0-9]*
 
-CONFLICTS=	gamin-[0-9]*
-
-NO_STAGE=	yes
 post-patch:
-	@${REINPLACE_CMD} -e "s/-lstdc++//g" ${WRKSRC}/Makefile.am
+	${REINPLACE_CMD} -e "s/-lstdc++//g" ${WRKSRC}/libfam/Makefile.am
 
 pre-configure:
-	@${RM} -fr ${WRKSRC}/util
-	@${MV} ${WRKSRC}/Makefile.am ${WRKSRC}/Makefile.am.orig
-	@${SED} -e s/util// -e /SUBDIRS/q \
+	${RM} -fr ${WRKSRC}/util
+	${MV} ${WRKSRC}/Makefile.am ${WRKSRC}/Makefile.am.orig
+	${SED} -e s/util// -e /SUBDIRS/q \
 		<${WRKSRC}/Makefile.am.orig >${WRKSRC}/Makefile.am
-	@${CP} ${FILESDIR}/mntent* ${WRKSRC}/fam
+	${CP} ${FILESDIR}/mntent* ${WRKSRC}/fam
 
 post-install:
-	@${CAT} ${PKGMESSAGE}
+	${STRIP_CMD} ${STAGEDIR}${PREFIX}/lib/libfam.so.0
 
 .include <bsd.port.mk>

@@ -3,7 +3,7 @@
 
 PORTNAME=	R2HTML
 PORTVERSION=	2.2.1
-PORTREVISION=	2
+PORTREVISION=	3
 CATEGORIES=	textproc
 DISTNAME=	${PORTNAME}_${PORTVERSION}
 
@@ -12,8 +12,6 @@ COMMENT=	HTML exportation for R objects
 
 LICENSE=	GPLv2
 
-USE_R_MOD=	yes
-R_MOD_AUTOPLIST=	yes
+USES=	cran:auto-plist
 
-NO_STAGE=	yes
 .include <bsd.port.mk>

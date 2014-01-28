@@ -3,7 +3,7 @@
 
 PORTNAME=	memoise
 PORTVERSION=	0.1
-PORTREVISION=	6
+PORTREVISION=	7
 CATEGORIES=	devel
 DISTNAME=	${PORTNAME}_${PORTVERSION}
 
@@ -12,8 +12,6 @@ COMMENT=	Memoise functions for R
 
 RUN_DEPENDS=	R-cran-digest>=0:${PORTSDIR}/security/R-cran-digest
 
-USE_R_MOD=	yes
-R_MOD_AUTOPLIST=	yes
+USES=	cran:auto-plist
 
-NO_STAGE=	yes
 .include <bsd.port.mk>

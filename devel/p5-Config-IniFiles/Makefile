@@ -2,7 +2,7 @@
 # $FreeBSD$
 
 PORTNAME=	Config-IniFiles
-PORTVERSION=	2.82
+PORTVERSION=	2.83
 CATEGORIES=	devel perl5
 MASTER_SITES=	CPAN
 PKGNAMEPREFIX=	p5-
@@ -20,7 +20,4 @@ TEST_DEPENDS=	p5-IO-stringy>=0:${PORTSDIR}/devel/p5-IO-stringy
 USES=		perl5
 USE_PERL5=	configure
 
-MAN3=		Config::IniFiles.3
-
-NO_STAGE=	yes
 .include <bsd.port.mk>

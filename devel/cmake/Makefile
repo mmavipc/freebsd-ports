@@ -2,9 +2,9 @@
 # $FreeBSD$
 
 PORTNAME=	cmake
-PORTVERSION=	2.8.11.2
+PORTVERSION=	2.8.12.1
 CATEGORIES=	devel
-MASTER_SITES=	http://www.cmake.org/files/v2.8/
+MASTER_SITES=	http://downloads.cmake.org/files/v2.8/
 
 MAINTAINER=	kde@FreeBSD.org
 COMMENT?=	Cross-platform Makefile generator
@@ -23,7 +23,7 @@ INSTALL_TARGET=	install/strip
 
 .if !defined(CMAKE_MODULES)
 HAS_CONFIGURE=	yes
-RUN_DEPENDS=	${DATADIR}/Modules/CMake.cmake:${PORTSDIR}/devel/cmake-modules
+RUN_DEPENDS=	${LOCALBASE}/share/cmake/Modules/CMake.cmake:${PORTSDIR}/devel/cmake-modules
 .endif
 
 post-patch:

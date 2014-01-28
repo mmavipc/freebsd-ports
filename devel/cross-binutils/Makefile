@@ -3,6 +3,7 @@
 
 PORTNAME=	binutils
 PORTVERSION=	2.23.2
+PORTREVISION=	1
 CATEGORIES=	devel
 MASTER_SITES=	${MASTER_SITE_SOURCEWARE}
 MASTER_SITE_SUBDIR=	binutils/releases
@@ -29,6 +30,7 @@ NO_STAGE=	yes
 
 CONFIGURE_ARGS+=	--disable-nls \
 			--with-system-zlib \
+			--with-sysroot=/ \
 			--target=${OURTARGET} \
 			--disable-werror
 
@@ -104,8 +106,6 @@ FIXREFS=	${SH} -c '${REINPLACE_CMD} -E \
 		-e "s,(@file)\{$$0\},\1\{${OURTARGET}-$$0\},g" \
 		-e "s,\($$0\),\(${OURTARGET}-$$0\),g" $$*' --
 
-.include <bsd.port.pre.mk>
-
 post-patch:
 #
 # Patch and rename info files
@@ -152,4 +152,4 @@ post-install:
 	@${FIND} -ds ${PREFIX}/${OURTARGET} -type d | \
 		${SED} -e 's,^${PREFIX}/,@dirrm ,' >> ${TMPPLIST}
 
-.include <bsd.port.post.mk>
+.include <bsd.port.mk>

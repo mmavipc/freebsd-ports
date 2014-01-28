@@ -3,7 +3,7 @@
 
 PORTNAME=	sqldf
 DISTVERSION=	0.4-6.4
-PORTREVISION=	4
+PORTREVISION=	5
 CATEGORIES=	databases
 DISTNAME=	${PORTNAME}_${DISTVERSION}
 
@@ -20,8 +20,6 @@ BUILD_DEPENDS=	R-cran-proto>=0.3.9.2_6:${PORTSDIR}/devel/R-cran-proto \
 		R-cran-RSQLite.extfuns>=0.0.1:${PORTSDIR}/databases/R-cran-RSQLite.extfuns
 RUN_DEPENDS:=	${BUILD_DEPENDS}
 
-USE_R_MOD=	yes
-R_MOD_AUTOPLIST=	yes
+USES=	cran:auto-plist
 
-NO_STAGE=	yes
 .include <bsd.port.mk>

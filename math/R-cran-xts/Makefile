@@ -3,7 +3,7 @@
 
 PORTNAME=	xts
 DISTVERSION=	0.9-7
-PORTREVISION=	1
+PORTREVISION=	3
 CATEGORIES=	math
 DISTNAME=	${PORTNAME}_${DISTVERSION}
 
@@ -15,8 +15,6 @@ LICENSE_COMB=	dual
 
 RUN_DEPENDS=	R-cran-zoo>=1.7.10:${PORTSDIR}/math/R-cran-zoo
 
-USE_R_MOD=	yes
-R_MOD_AUTOPLIST=	yes
+USES=	cran:auto-plist
 
-NO_STAGE=	yes
 .include <bsd.port.mk>

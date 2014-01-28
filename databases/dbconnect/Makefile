@@ -7,7 +7,7 @@ PORTREVISION=	4
 CATEGORIES=	databases
 MASTER_SITES=	SF/${PORTNAME}/DBConnect%20API%200.3%20Source%20Code/DBConnect%20API%20${PORTVERSION}
 
-MAINTAINER=	sem@FreeBSD.org
+MAINTAINER=	ports@FreeBSD.org
 COMMENT=	Use C++ object API to allow applications to connect to databases
 
 GNU_CONFIGURE=	yes
@@ -48,6 +48,7 @@ PLIST_SUB+=	PGSQL="@comment "
 
 post-patch:
 	@${RM} -f ${WRKSRC}/include/dbconn/README
+	@${REINPLACE_CMD} 's/gcc/${CC}/' ${WRKSRC}/src/dbconnect/Makefile.in
 	@${REINPLACE_CMD} 's/gcc/${CC}/' ${WRKSRC}/src/driver_*/Makefile.in
 
 do-install:

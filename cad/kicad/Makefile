@@ -15,7 +15,7 @@ EXTRACT_ONLY=	${SFNAME}-stable${EXTRACT_SUFX}
 MAINTAINER=	thierry@FreeBSD.org
 COMMENT=	Schematic and PCB editing software
 
-LIB_DEPENDS=	boost_thread:${PORTSDIR}/devel/boost-libs
+LIB_DEPENDS=	libboost_thread.so:${PORTSDIR}/devel/boost-libs
 RUN_DEPENDS=	${LOCALBASE}/share/kicad/library/74xx.dcm:${PORTSDIR}/cad/kicad-library
 
 CONFLICTS=	kicad-devel*
@@ -54,8 +54,6 @@ BINS=		cvpcb eeschema gerbview kicad pcbnew
 EXTRAS2RM=	linux-non_unicode linux wings3d LINUX.README	\
 		contrib_makefiles.txt running_kicad_under_W98.txt
 
-.include <bsd.port.pre.mk>
-
 .if exists(${LOCALBASE}/bin/konqueror)
 RUN_DEPENDS+=	konqueror:${PORTSDIR}/x11/kdebase3
 .else
@@ -89,4 +87,4 @@ post-install:
 	@${CAT} ${PKGMESSAGE}
 	@${ECHO_MSG}
 
-.include <bsd.port.post.mk>
+.include <bsd.port.mk>

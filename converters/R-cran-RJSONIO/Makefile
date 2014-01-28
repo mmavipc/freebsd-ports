@@ -3,7 +3,7 @@
 
 PORTNAME=	RJSONIO
 DISTVERSION=	1.0-3
-PORTREVISION=	2
+PORTREVISION=	3
 CATEGORIES=	converters
 DISTNAME=	${PORTNAME}_${DISTVERSION}
 
@@ -12,8 +12,6 @@ COMMENT=	Serialize R objects to JSON, JavaScript Object Notation
 
 LICENSE=	BSD
 
-USE_R_MOD=	yes
-R_MOD_AUTOPLIST=	yes
+USES=	cran:auto-plist
 
-NO_STAGE=	yes
 .include <bsd.port.mk>

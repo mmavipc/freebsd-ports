@@ -2,7 +2,7 @@
 # $FreeBSD$
 
 PORTNAME=	wine
-DISTVERSION=	1.7.5
+DISTVERSION=	1.7.11
 PORTEPOCH=	1
 CATEGORIES=	emulators
 MASTER_SITES=	SF/${PORTNAME}/Source \
@@ -17,42 +17,35 @@ LICENSE_COMB=	dual
 LICENSE_FILE=	${WRKSRC}/LICENSE
 
 BUILD_DEPENDS=	${LOCALBASE}/bin/flex:${PORTSDIR}/textproc/flex
-LIB_DEPENDS=	libfontconfig.so:${PORTSDIR}/x11-fonts/fontconfig \
-		libfreetype.so:${PORTSDIR}/print/freetype2 \
-		libjpeg.so:${PORTSDIR}/graphics/jpeg \
-		liblcms2.so:${PORTSDIR}/graphics/lcms2 \
-		libpng15.so:${PORTSDIR}/graphics/png \
-		libxml2.so:${PORTSDIR}/textproc/libxml2
+LIB_DEPENDS=	libxml2.so:${PORTSDIR}/textproc/libxml2
 
-CONFLICTS_INSTALL=	i386-wine-* wine-1.4* wine-1.6*
+CONFLICTS_INSTALL=	i386-wine-[0-9]* i386-wine-devel-[0-9]* wine-[0-9]*
 
 CPPFLAGS+=	-I${LOCALBASE}/include
 LDFLAGS+=	-L${LOCALBASE}/lib
-USE_GCC=	any
 GNU_CONFIGURE=	yes
 CONFIGURE_ARGS+=--verbose --disable-tests \
 		--without-alsa --without-capi --without-dbus \
-		--with-fontconfig --with-glu \
 		--without-gphoto --without-gsm --without-gstreamer \
-		--with-opengl --without-mpg123 --without-opencl \
+		--without-mpg123 --without-opencl \
 		--with-oss --without-sane --without-tiff \
-		--without-v4l --without-xcomposite --without-xinerama \
-		--with-xinput2 --with-xrandr
-CONFIGURE_ENV=	FLEX="${LOCALBASE}/bin/flex"
+		--without-v4l --without-xcomposite --without-xinerama
+CONFIGURE_ENV=	FLEX="${LOCALBASE}/bin/flex" 
 WINELIBDIR?=	${PREFIX}/lib
 .if !defined(USE_LDCONFIG32)
 USE_LDCONFIG=	${WINELIBDIR} ${WINELIBDIR}/wine
 .endif
 ONLY_FOR_ARCHS=	i386
-USES=		bison gmake
+USES=		bison compiler:c11 gmake shebangfix
+SHEBANG_FILES=	tools/winemaker tools/winedump/function_grep.pl
 USE_BZIP2=	yes
-USE_GL=		glu
-USE_XORG=	xcursor xi xpm xrandr xrender
 
 SUB_FILES=	pkg-message
 PKGMESSAGE=	${WRKDIR}/pkg-message
 
-OPTIONS_DEFINE=	CUPS DOSBOX GNUTLS HAL LDAP LIBXSLT OPENAL WINEMAKER GECKO MONO
+OPTIONS_DEFINE=	CUPS DOCS DOSBOX GNUTLS HAL LDAP LIBXSLT OPENAL WINEMAKER GECKO MONO X11
+OPTIONS_DEFAULT=X11
+OPTIONS_SUB=	yes
 
 DOSBOX_DESC=	Use DOSBox to run MS-DOS programs
 LIBXSLT_DESC=	Use libxslt (only used by msxml3.dll)
@@ -60,73 +53,44 @@ WINEMAKER_DESC=	Fully support winemaker (requires Perl)
 GECKO_DESC=	Bundle Gecko MSI package for Wine
 MONO_DESC=	Bundle Mono MSI package for Wine
 
-PORTDATA=	fonts/ l_intl.nls wine.inf
+# USES needs to be before bsd.port.pre.mk
+CUPS_CONFIGURE_WITH=	cups
+CUPS_LIB_DEPENDS=	libcups.so:${PORTSDIR}/print/cups-client
 
-.include <bsd.port.pre.mk>
+DOSBOX_RUN_DEPENDS=	dosbox:${PORTSDIR}/emulators/dosbox
 
-.if ${PORT_OPTIONS:MCUPS}
-CONFIGURE_ARGS+=	--with-cups
-LIB_DEPENDS+=	libcups.so:${PORTSDIR}/print/cups-client
-.else
-CONFIGURE_ARGS+=	--without-cups
-.endif
+GECKO_RUN_DEPENDS=	${DATADIR}/gecko/wine_gecko-2.24-x86.msi:${PORTSDIR}/emulators/wine-gecko-devel
 
-.if ${PORT_OPTIONS:MDOSBOX}
-RUN_DEPENDS+=	dosbox:${PORTSDIR}/emulators/dosbox
-.endif
+GNUTLS_CONFIGURE_WITH=	gnutls
+GNUTLS_LIB_DEPENDS=	libgnutls.so:${PORTSDIR}/security/gnutls
 
-.if ${PORT_OPTIONS:MGNUTLS}
-CONFIGURE_ARGS+=	--with-gnutls
-LIB_DEPENDS+=	libgnutls.so:${PORTSDIR}/security/gnutls
-.else
-CONFIGURE_ARGS+=	--without-gnutls
-.endif
+HAL_CONFIGURE_WITH=	hal
+HAL_LIB_DEPENDS=	libhal.so:${PORTSDIR}/sysutils/hal
 
-.if ${PORT_OPTIONS:MHAL}
-CONFIGURE_ARGS+=	--with-hal
-LIB_DEPENDS+=	libhal.so:${PORTSDIR}/sysutils/hal
-.else
-CONFIGURE_ARGS+=	--without-hal
-.endif
+LDAP_CONFIGURE_WITH=	ldap
+LDAP_USE=		OPENLDAP=yes
 
-.if ${PORT_OPTIONS:MLDAP}
-CONFIGURE_ARGS+=	--with-ldap
-USE_OPENLDAP=	yes
-.else
-CONFIGURE_ARGS+=	--without-ldap
-.endif
+LIBXSLT_CONFIGURE_WITH=	xslt
+LIBXSLT_LIB_DEPENDS=	libxslt.so:${PORTSDIR}/textproc/libxslt
 
-.if ${PORT_OPTIONS:MLIBXSLT}
-CONFIGURE_ARGS+=	--with-xslt
-LIB_DEPENDS+=	libxslt.so:${PORTSDIR}/textproc/libxslt
-.else
-CONFIGURE_ARGS+=	--without-xslt
-.endif
+MONO_RUN_DEPENDS=	${DATADIR}/mono/wine-mono-4.5.2.msi:${PORTSDIR}/emulators/wine-mono-devel
 
-.if ${PORT_OPTIONS:MOPENAL}
-CONFIGURE_ARGS+=	--with-openal
-USE_OPENAL=		yes
-PLIST_SUB+=		OPENAL=""
-.else
-CONFIGURE_ARGS+=	--without-openal
-PLIST_SUB+=		OPENAL="@comment "
-.endif
+OPENAL_CONFIGURE_WITH=	openal
+OPENAL_USES=		openal
 
-.if ${PORT_OPTIONS:MWINEMAKER}
-RUN_DEPENDS+=	p5-XML-LibXML>0:${PORTSDIR}/textproc/p5-XML-LibXML
-.endif
+WINEMAKER_RUN_DEPENDS=	p5-XML-LibXML>0:${PORTSDIR}/textproc/p5-XML-LibXML
 
-.if ${PORT_OPTIONS:MGECKO}
-RUN_DEPENDS+=	${DATADIR}/gecko/wine_gecko-2.24-x86.msi:${PORTSDIR}/emulators/wine-gecko-devel
-.endif
+X11_CONFIGURE_WITH=	x fontconfig glu opengl xinput2 xrandr freetype
+X11_USE=		GL=glu XORG=xcursor,xi,xpm,xrandr,xrender
+X11_LIB_DEPENDS=	libfontconfig.so:${PORTSDIR}/x11-fonts/fontconfig \
+			libfreetype.so:${PORTSDIR}/print/freetype2 \
+			libjpeg.so:${PORTSDIR}/graphics/jpeg \
+			liblcms2.so:${PORTSDIR}/graphics/lcms2 \
+			libpng15.so:${PORTSDIR}/graphics/png
 
-.if ${PORT_OPTIONS:MMONO}
-RUN_DEPENDS+=	${DATADIR}/mono/wine-mono-0.0.8.msi:${PORTSDIR}/emulators/wine-mono
-.endif
+PORTDATA=	l_intl.nls wine.inf
 
-.if ${OSVERSION} < 800000
-IGNORE=		lacks required sound support on FreeBSD before 8.0
-.endif
+.include <bsd.port.options.mk>
 
 pre-build:
 	cd ${WRKSRC} && ${GMAKE} depend
@@ -135,7 +99,7 @@ post-install:
 	@${MV} -f ${STAGEDIR}${WINELIBDIR}/libwine.so.1.0 \
 	          ${STAGEDIR}${WINELIBDIR}/libwine.so.1
 	@${LN} -sf libwine.so.1 ${STAGEDIR}/${WINELIBDIR}/libwine.so
-.if !defined(NOPORTDOCS)
+.if ${PORT_OPTIONS:MDOCS}
 	-@${MKDIR} ${STAGEDIR}${DOCSDIR}
 .for i in README ANNOUNCE AUTHORS
 	@${INSTALL_DATA} ${WRKSRC}/${i} ${STAGEDIR}${DOCSDIR}
@@ -146,4 +110,4 @@ post-install:
 	@${ECHO}
 	@${CAT} ${PKGMESSAGE}
 
-.include <bsd.port.post.mk>
+.include <bsd.port.mk>

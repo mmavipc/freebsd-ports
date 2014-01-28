@@ -11,7 +11,7 @@ DISTNAME=	SPL_Types-${PORTVERSION}
 EXTRACT_SUFX=	.tgz
 DIST_SUBDIR=	PECL
 
-MAINTAINER=	glarkin@FreeBSD.org
+MAINTAINER=	ports@FreeBSD.org
 COMMENT=	A PECL extension of a collection of special typehandling classes
 
 LICENSE=	PHP301
@@ -26,5 +26,4 @@ IGNORE_WITH_PHP=5
 CONFIGURE_ARGS=	--enable-spl-types
 CFLAGS+=	-I${LOCALBASE}/include
 
-NO_STAGE=	yes
 .include <bsd.port.mk>

@@ -2,7 +2,7 @@
 # $FreeBSD$
 
 PORTNAME=	mediawiki
-PORTVERSION=	1.21.2
+PORTVERSION=	1.21.3
 CATEGORIES=	www
 MASTER_SITES=	http://dumps.wikimedia.org/mediawiki/${PORTVERSION:R}/
 
@@ -13,7 +13,6 @@ LICENSE=	GPLv2
 
 CONFLICTS=	mediawiki-1.1[0-9].* mediawiki-1.20.*
 
-FETCH_ARGS=	-pr
 USE_PHP=	ctype iconv mbstring pcre session xml zlib readline dom
 WANT_PHP_WEB=	yes
 MEDIAWIKIDIR?=	www/mediawiki

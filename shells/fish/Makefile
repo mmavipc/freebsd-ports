@@ -2,45 +2,38 @@
 # $FreeBSD$
 
 PORTNAME=	fish
-PORTVERSION=	2.0.0
+PORTVERSION=	2.1.0
 CATEGORIES=	shells
-MASTER_SITES=	http://fishshell.com/files/%SUBDIR%/
-MASTER_SITE_SUBDIR=	${PORTVERSION}
+MASTER_SITES=	http://fishshell.com/files/${PORTVERSION}/
 
-MAINTAINER=	ports@FreeBSD.org
+MAINTAINER=	nemysis@FreeBSD.org
 COMMENT=	User friendly command line shell
 
-OPTIONS_DEFINE=	DOCS NLS
+LICENSE=	GPLv2
 
-WRKSRC=		${WRKDIR}/${PORTNAME}
-
-USES=		iconv
-USE_GMAKE=	yes
+USES=		gmake iconv
 USE_AUTOTOOLS=	autoconf
-CONFIGURE_ARGS=	--docdir=${WRKDIR}/tmproot
 
 CPPFLAGS+=	-I${LOCALBASE}/include
 LDFLAGS+=	-L${LOCALBASE}/lib -pthread ${ICONV_LIB}
 
-MAN1=		fish.1 fish_indent.1 fish_pager.1 fishd.1 mimedb.1
+PORTDOCS=	*
 
-NO_STAGE=	yes
-.include <bsd.port.options.mk>
+OPTIONS_DEFINE=	DOCS NLS
+OPTIONS_SUB=	yes
 
-.if ${PORT_OPTIONS:MNLS}
-USES+=		gettext
-CONFIGURE_ENV+=	ac_cv_func_gettext=yes
-PLIST_SUB+=	NLS=""
-.else
-CONFIGURE_ARGS+=--without-gettext
-PLIST_SUB+=	NLS="@comment "
-.endif
+NLS_USES=		gettext
+NLS_CONFIGURE_ENV=	ac_cv_func_gettext=yes
+NLS_CONFIGURE_OFF=	--without-gettext
+
+.include <bsd.port.options.mk> 
 
 post-patch:
 	@${REINPLACE_CMD} -e \
 		'/^all:/s|user_doc|| ; \
 		 s| "$$(HAVE_GETTEXT)" = 1| x$$(HAVE_GETTEXT) = x1| ; \
 		 s| $$(HAVE_GETTEXT) = 1| x$$(HAVE_GETTEXT) = x1| ; \
+		 s|$$(DESTDIR)$$(bindir)/fish|$$(bindir)/fish|g ; \
 		 /fish\/man\/man1/d' ${WRKSRC}/Makefile.in
 	@${REINPLACE_CMD} -e \
 		's|-rdynamic|-Wl,--export-dynamic| ; \
@@ -48,18 +41,13 @@ post-patch:
 		 s|ncurses curses|curses| ; \
 		 s|ncurses.h||' ${WRKSRC}/configure.ac
 
-post-install:
-.if ${PORT_OPTIONS:MDOCS}
-	@${MKDIR} ${DOCSDIR}
-	@(cd ${WRKDIR}/tmproot && ${COPYTREE_SHARE} . ${DOCSDIR})
+.if ! ${PORT_OPTIONS:MDOCS}
+EXTRA_PATCHES+=${FILESDIR}/extra-patch-Makefile.in
 .endif
+
+post-install:
 .for i in fish fish_indent fish_pager fishd mimedb
-	@${STRIP_CMD} ${PREFIX}/bin/${i}
+	@${STRIP_CMD} ${STAGEDIR}${PREFIX}/bin/${i}
 .endfor
-	if ${GREP} -q '${PREFIX}/bin/${PORTNAME}' /etc/shells; then \
-		${TRUE}; \
-	else \
-		${ECHO_CMD} '${PREFIX}/bin/${PORTNAME}' >> /etc/shells; \
-	fi
 
 .include <bsd.port.mk>

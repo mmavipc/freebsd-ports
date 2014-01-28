@@ -3,7 +3,7 @@
 
 PORTNAME=	som
 DISTVERSION=	0.3-5
-PORTREVISION=	6
+PORTREVISION=	7
 CATEGORIES=	science
 DISTNAME=	${PORTNAME}_${DISTVERSION}
 
@@ -12,8 +12,6 @@ COMMENT=	Self-Organizing Map
 
 LICENSE=	GPLv3
 
-USE_R_MOD=	yes
-R_MOD_AUTOPLIST=	yes
+USES=	cran:auto-plist
 
-NO_STAGE=	yes
 .include <bsd.port.mk>

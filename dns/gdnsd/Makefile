@@ -2,7 +2,7 @@
 # $FreeBSD$
 
 PORTNAME=	gdnsd
-PORTVERSION=	1.10.1
+PORTVERSION=	1.11.0
 CATEGORIES=	dns
 MASTER_SITES=	http://downloads.gdnsd.net/ \
 		http://gdnsd.scaleengine.net/gdnsd/
@@ -15,7 +15,7 @@ LICENSE=	GPLv3
 LIB_DEPENDS=	libev.so:${PORTSDIR}/devel/libev
 
 GNU_CONFIGURE=	yes
-CONFIGURE_ARGS=	--localstatedir=/var
+CONFIGURE_ARGS=	--localstatedir=/var --with-rootdir=${LOCALBASE}/etc/gdnsd
 USE_LDCONFIG=	yes
 USE_XZ=		yes
 USES=		pkgconfig
@@ -34,10 +34,5 @@ GEOIP_RUN_DEPENDS=	${LOCALBASE}/share/GeoIP/GeoIP.dat:${PORTSDIR}/net/GeoIP
 URCU_DESC=		Read-Copy-Update Support (Faster Zone Parsing)
 URCU_CONFIGURE_WITH=	urcu
 URCU_LIB_DEPENDS=	liburcu.so:${PORTSDIR}/sysutils/liburcu
-
-.include <bsd.port.options.mk>
-
-post-install:
-	${MKDIR} ${STAGEDIR}${PREFIX}/etc/gdnsd/zones
 
 .include <bsd.port.mk>

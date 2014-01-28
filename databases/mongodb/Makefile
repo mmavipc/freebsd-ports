@@ -2,7 +2,7 @@
 # $FreeBSD$
 
 PORTNAME=	mongodb
-PORTVERSION=	2.4.7
+PORTVERSION=	2.4.8
 CATEGORIES=	databases net
 MASTER_SITES=	http://downloads.mongodb.org/src/
 DISTNAME=	${PORTNAME}-src-r${PORTVERSION}
@@ -10,8 +10,8 @@ DISTNAME=	${PORTNAME}-src-r${PORTVERSION}
 MAINTAINER=	ale@FreeBSD.org
 COMMENT=	NOSQL distributed document-oriented database
 
-# mongodb is AGPLv3, C++ driver is AL2
-LICENSE=	AGPLv3 AL2
+# mongodb is AGPLv3, C++ driver is APACHE20
+LICENSE=	AGPLv3 APACHE20
 LICENSE_COMB=	multi
 
 LIB_DEPENDS=	libexecinfo.so:${PORTSDIR}/devel/libexecinfo \
@@ -69,8 +69,6 @@ SMOKE_TESTS+=	smokeSsl
 .else
 SCONS_TARGET=	core tools
 .endif
-
-.include <bsd.port.pre.mk>
 
 .if ${OSVERSION} >= 1000024
 EXTRA_PATCHES=	${PATCHDIR}/clang-patch-src_mongo_db_fts_stemmer.cpp \

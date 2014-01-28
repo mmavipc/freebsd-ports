@@ -5,7 +5,7 @@ PORTNAME=	pyside
 PORTVERSION=	1.1.1
 PORTREVISION=	0
 CATEGORIES=	devel
-MASTER_SITES=	http://www.pyside.org/files/
+MASTER_SITES=	http://nivit.altervista.org/FreeBSD/ports/distfiles/
 PKGNAMESUFFIX=	${PYTHON_PKGNAMESUFFIX}
 DISTNAME=	${PORTNAME}-qt${QT4_VERSION:R}+${PORTVERSION}
 
@@ -14,9 +14,9 @@ COMMENT=	Python bindings for the Qt applications and UI framework
 
 LICENSE=	LGPL21
 
-LIB_DEPENDS=	apiextractor:${PORTSDIR}/devel/apiextractor \
-		genrunner:${PORTSDIR}/devel/generatorrunner \
-		shiboken-${PYTHON_VERSION}:${PORTSDIR}/devel/shiboken
+LIB_DEPENDS=	libapiextractor.so:${PORTSDIR}/devel/apiextractor \
+		libgenrunner.so:${PORTSDIR}/devel/generatorrunner \
+		libshiboken-${PYTHON_VERSION}.so:${PORTSDIR}/devel/shiboken
 
 MANUAL_PACKAGE_BUILD=	requires x11-toolkits/qt4-gui with QGTKSTYLE enabled
 
@@ -34,7 +34,7 @@ PLIST_SUB=	PORTVERSION=${PORTVERSION} \
 USE_BZIP2=	yes
 USES=		cmake
 USE_LDCONFIG=	yes
-USE_PYTHON=	-2.7
+USE_PYTHON=	2
 
 NO_STAGE=	yes
 .include <bsd.port.pre.mk>

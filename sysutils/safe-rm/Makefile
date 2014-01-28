@@ -15,21 +15,13 @@ USES=		perl5
 USE_PERL5=	run
 NO_BUILD=	yes
 
-FETCH_ARGS=	-pRr
+DOCS=		COPYING Changes README
 
-PORTDOCS=	COPYING Changes README
-PLIST_FILES=	bin/safe-rm
-
-NO_STAGE=	yes
 .include <bsd.port.options.mk>
 
 do-install:
-	${INSTALL_SCRIPT} ${WRKSRC}/safe-rm ${PREFIX}/bin
-
-post-install:
-.if ${PORT_OPTIONS:MDOCS}
-	@${MKDIR} ${DOCSDIR}
-	${INSTALL_MAN} ${PORTDOCS:S,^,${WRKSRC}/,} ${DOCSDIR}
-.endif
+	${INSTALL_SCRIPT} ${WRKSRC}/safe-rm ${STAGEDIR}${PREFIX}/bin
+	@${MKDIR} ${STAGEDIR}${DOCSDIR}
+	${INSTALL_MAN} ${DOCS:S,^,${WRKSRC}/,} ${STAGEDIR}${DOCSDIR}
 
 .include <bsd.port.mk>

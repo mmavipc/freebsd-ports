@@ -61,8 +61,7 @@ USE_AUTOTOOLS=	libtool aclocal automake
 AUTOMAKE_ARGS=	--add-missing
 USE_BZIP2=	yes
 USE_GCC=	any
-USE_FAM=	yes
-USES=		gettext pkgconfig gmake perl5
+USES=		fam gettext gmake perl5 pkgconfig
 USE_OPENSSL=	yes
 USE_SUBMAKE=	yes
 
@@ -182,8 +181,8 @@ BUILD_DEPENDS+=	aspell:${PORTSDIR}/textproc/aspell
 RUN_DEPENDS+=	aspell:${PORTSDIR}/textproc/aspell
 CONFIGURE_ARGS+=--with-ispell=${LOCALBASE}/bin/aspell
 .elif ${PORT_OPTIONS:MISPELL}
-BUILD_DEPENDS+=	ispell:${PORTSDIR}/textproc/ispell
-RUN_DEPENDS+=	ispell:${PORTSDIR}/textproc/ispell
+BUILD_DEPENDS+=	ispell:${PORTSDIR}/textproc/aspell-ispell
+RUN_DEPENDS+=	ispell:${PORTSDIR}/textproc/aspell-ispell
 CONFIGURE_ARGS+=--with-ispell=${LOCALBASE}/bin/ispell
 .else
 CONFIGURE_ARGS+=--without-ispell

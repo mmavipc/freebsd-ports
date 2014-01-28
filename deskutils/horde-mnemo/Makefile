@@ -8,7 +8,7 @@ PKGNAMEPREFIX=	horde-
 MAINTAINER=	horde@FreeBSD.org
 COMMENT=	Horde web based notes manager
 
-LICENSE=	AL2
+LICENSE=	APACHE20
 LICENSE_FILE=	${WRKSRC}/LICENSE
 
 LATEST_LINK=	horde-${PORTNAME}
@@ -37,7 +37,6 @@ OPTIONS_DEFAULT=	PDF
 OPTIONS_DEFINE=		PDF
 PDF_DESC=		Support PDF generation
 
-NO_STAGE=	yes
 .include <bsd.port.pre.mk>
 
 .if ${PORT_OPTIONS:MPDF}

@@ -51,7 +51,6 @@
     SUBDIR += bsdsfv
     SUBDIR += bsmtrace
     SUBDIR += bsp_upektfmess
-    SUBDIR += bubblegum
     SUBDIR += bugs
     SUBDIR += burpsuite
     SUBDIR += ca_root_nss
@@ -100,9 +99,9 @@
     SUBDIR += cryptstring
     SUBDIR += cvm
     SUBDIR += cyrus-sasl2
+    SUBDIR += cyrus-sasl2-gssapi
     SUBDIR += cyrus-sasl2-ldapdb
     SUBDIR += cyrus-sasl2-saslauthd
-    SUBDIR += dazuko
     SUBDIR += dcetest
     SUBDIR += ddos_scan
     SUBDIR += denyhosts
@@ -111,7 +110,6 @@
     SUBDIR += digest
     SUBDIR += dirbuster
     SUBDIR += dirmngr
-    SUBDIR += dissembler
     SUBDIR += distcache
     SUBDIR += distcache-devel
     SUBDIR += dmitry
@@ -250,6 +248,7 @@
     SUBDIR += kpcli
     SUBDIR += krb5
     SUBDIR += krb5-appl
+    SUBDIR += krb5-maint
     SUBDIR += kripp
     SUBDIR += kwallet
     SUBDIR += l0pht-watch
@@ -269,6 +268,7 @@
     SUBDIR += libident
     SUBDIR += libkpass
     SUBDIR += libksba
+    SUBDIR += libmatekeyring
     SUBDIR += libmcrypt
     SUBDIR += libntlm
     SUBDIR += libotr
@@ -295,7 +295,6 @@
     SUBDIR += linux-f10-libtasn1
     SUBDIR += linux-f10-nss
     SUBDIR += linux-f10-openssl
-    SUBDIR += linux-pam-docs
     SUBDIR += lockdown
     SUBDIR += log2timeline
     SUBDIR += logcheck
@@ -307,7 +306,9 @@
     SUBDIR += mailzu
     SUBDIR += makepasswd
     SUBDIR += manipulate_data
+    SUBDIR += masscan
     SUBDIR += massh
+    SUBDIR += mate-keyring
     SUBDIR += matrixssl
     SUBDIR += mcrypt
     SUBDIR += md4coll
@@ -372,7 +373,6 @@
     SUBDIR += openvpn-beta
     SUBDIR += openvpn-devel
     SUBDIR += ophcrack
-    SUBDIR += opieprint
     SUBDIR += orthrus
     SUBDIR += osiris
     SUBDIR += ossec-hids-client
@@ -475,13 +475,16 @@
     SUBDIR += p5-Crypt-PBKDF2
     SUBDIR += p5-Crypt-PGPSimple
     SUBDIR += p5-Crypt-PassGen
+    SUBDIR += p5-Crypt-Passwd-XS
     SUBDIR += p5-Crypt-PasswdMD5
+    SUBDIR += p5-Crypt-Password-Util
     SUBDIR += p5-Crypt-Primes
     SUBDIR += p5-Crypt-RC4
     SUBDIR += p5-Crypt-RC5
     SUBDIR += p5-Crypt-RC6
     SUBDIR += p5-Crypt-RIPEMD160
     SUBDIR += p5-Crypt-RSA
+    SUBDIR += p5-Crypt-RSA-Yandex
     SUBDIR += p5-Crypt-Rabbit
     SUBDIR += p5-Crypt-RandPasswd
     SUBDIR += p5-Crypt-Random
@@ -509,6 +512,7 @@
     SUBDIR += p5-Crypt-X509
     SUBDIR += p5-Crypt-xDBM_File
     SUBDIR += p5-CryptX
+    SUBDIR += p5-Dancer-Plugin-Auth-Extensible
     SUBDIR += p5-Dancer-Plugin-Passphrase
     SUBDIR += p5-Data-Entropy
     SUBDIR += p5-Data-Password
@@ -595,6 +599,7 @@
     SUBDIR += p5-Text-Password-Pronounceable
     SUBDIR += p5-Tie-EncryptedHash
     SUBDIR += p5-Tree-Authz
+    SUBDIR += p5-Unix-Passwd-File
     SUBDIR += p5-Yahoo-BBAuth
     SUBDIR += p5-dicewaregen
     SUBDIR += p5-openxpki
@@ -634,7 +639,6 @@
     SUBDIR += pbc
     SUBDIR += pbnj
     SUBDIR += pcsc-tools
-    SUBDIR += pdfcrack
     SUBDIR += pear-Auth
     SUBDIR += pear-Auth_HTTP
     SUBDIR += pear-Auth_OpenID
@@ -667,6 +671,7 @@
     SUBDIR += pear-Net_Portscan
     SUBDIR += pear-Text_Password
     SUBDIR += pecl-crack
+    SUBDIR += pecl-crypto
     SUBDIR += pecl-gnupg
     SUBDIR += pecl-pam
     SUBDIR += pecl-scrypt
@@ -720,6 +725,7 @@
     SUBDIR += please
     SUBDIR += polarssl
     SUBDIR += poly1305aes
+    SUBDIR += pond
     SUBDIR += portsentry
     SUBDIR += ppars
     SUBDIR += prelude-lml
@@ -823,7 +829,6 @@
     SUBDIR += radiusniff
     SUBDIR += rainbowcrack
     SUBDIR += ranpwd
-    SUBDIR += rarcrack
     SUBDIR += ratproxy
     SUBDIR += rats
     SUBDIR += razorback-api
@@ -924,7 +929,6 @@
     SUBDIR += snort-rep
     SUBDIR += snortreport
     SUBDIR += snortsam
-    SUBDIR += snortsms
     SUBDIR += snortsnarf
     SUBDIR += softhsm
     SUBDIR += spass
@@ -932,7 +936,6 @@
     SUBDIR += spybye
     SUBDIR += sqlmap
     SUBDIR += sqlninja
-    SUBDIR += squidclamav
     SUBDIR += srm
     SUBDIR += srp
     SUBDIR += ssdeep

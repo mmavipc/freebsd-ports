@@ -15,7 +15,6 @@
     SUBDIR += climm
     SUBDIR += coccinella
     SUBDIR += convey
-    SUBDIR += decibel
     SUBDIR += echat
     SUBDIR += ejabberd
     SUBDIR += ekiga
@@ -62,7 +61,6 @@
     SUBDIR += ktp-text-ui
     SUBDIR += libjingle
     SUBDIR += libjreen
-    SUBDIR += libmsn
     SUBDIR += libnice
     SUBDIR += libpurple
     SUBDIR += libtelepathy
@@ -74,7 +72,6 @@
     SUBDIR += licq-osd
     SUBDIR += licq-qt-gui
     SUBDIR += linpopup
-    SUBDIR += linux-ymessenger
     SUBDIR += loudmouth
     SUBDIR += mbpurple
     SUBDIR += mcabber
@@ -133,6 +130,7 @@
     SUBDIR += py-jabberbot
     SUBDIR += py-punjab
     SUBDIR += py-pyxmpp
+    SUBDIR += py-skype4py
     SUBDIR += py-twistedWords
     SUBDIR += py-xmpppy
     SUBDIR += py-xmpppy-irc
@@ -150,7 +148,6 @@
     SUBDIR += sendxmpp
     SUBDIR += skype
     SUBDIR += skype-devel
-    SUBDIR += tapioca-qt
     SUBDIR += telepathy-butterfly
     SUBDIR += telepathy-farsight
     SUBDIR += telepathy-gabble
@@ -161,7 +158,6 @@
     SUBDIR += telepathy-logger-qt4
     SUBDIR += telepathy-mission-control
     SUBDIR += telepathy-python
-    SUBDIR += telepathy-qt
     SUBDIR += telepathy-qt4
     SUBDIR += telepathy-salut
     SUBDIR += telepathy-sofiasip
@@ -176,7 +172,6 @@
     SUBDIR += vacuum-im
     SUBDIR += vicq
     SUBDIR += vqcc-gtk
-    SUBDIR += xfce4-messenger-plugin
     SUBDIR += yoono
     SUBDIR += ysm
     SUBDIR += zephyr

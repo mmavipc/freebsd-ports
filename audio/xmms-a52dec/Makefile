@@ -10,19 +10,15 @@ MASTER_SITES=	SF
 MAINTAINER=	ports@FreeBSD.org
 COMMENT=	A52 (aka AC3) decoder plugin for XMMS
 
-LIB_DEPENDS=	xmms.4:${PORTSDIR}/multimedia/xmms \
-		a52.0:${PORTSDIR}/audio/liba52
+LIB_DEPENDS=	libxmms.so:${PORTSDIR}/multimedia/xmms \
+		liba52.so:${PORTSDIR}/audio/liba52
 RUN_DEPENDS=	${LOCALBASE}/lib/xmms/Output/libOSSSurround.so:${PORTSDIR}/audio/xmms-osssurround
 
 USE_BZIP2=	yes
-NO_STAGE=	yes
 USE_GNOME=	gtk12
 CFLAGS+=	`xmms-config --cflags` -L${LOCALBASE}/lib
 
-.include <bsd.port.pre.mk>
-.if ${ARCH} == "amd64"
-CFLAGS+=	-fPIC
-.endif
+CFLAGS_amd64=	-fPIC
 
 PLIST_FILES=	lib/xmms/Input/liba52dec.so
 
@@ -30,6 +26,8 @@ do-build:
 	cd ${WRKSRC} && ${CC} ${CFLAGS} -shared -o liba52dec.so xmms-a52dec.c -la52
 
 do-install:
-	${INSTALL_PROGRAM} ${WRKSRC}/liba52dec.so ${PREFIX}/lib/xmms/Input/
+	${MKDIR} ${STAGEDIR}${PREFIX}/lib/xmms/Input
+	${INSTALL_PROGRAM} ${WRKSRC}/liba52dec.so \
+		${STAGEDIR}${PREFIX}/lib/xmms/Input/
 
-.include <bsd.port.post.mk>
+.include <bsd.port.mk>

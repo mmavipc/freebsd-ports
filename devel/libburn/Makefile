@@ -2,7 +2,7 @@
 # $FreeBSD$
 
 PORTNAME=	libburn
-PORTVERSION=	1.3.2
+PORTVERSION=	1.3.4
 CATEGORIES=	devel
 MASTER_SITES=	http://files.libburnia-project.org/releases/
 
@@ -15,7 +15,4 @@ GNU_CONFIGURE=	yes
 USE_LDCONFIG=	yes
 WRKSRC=		${WRKDIR}/${PORTNAME}-${PORTVERSION}
 
-MAN1=		cdrskin.1
-
-NO_STAGE=	yes
 .include <bsd.port.mk>

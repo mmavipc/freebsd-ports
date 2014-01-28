@@ -7,7 +7,7 @@ CATEGORIES?=	mail news ipv6
 MASTER_SITES=	ftp://ftp.cac.washington.edu/alpine/
 DIST_SUBDIR=	alpine-${PORTVERSION}
 
-MAINTAINER=	c.petrik.sosa@gmail.com
+MAINTAINER=	ports@FreeBSD.org
 COMMENT?=	Mail and news client descended from Pine
 
 OPTIONS_DEFINE+=	THREADS MOUSE NLS ISPELL NOSPELL
@@ -72,8 +72,8 @@ BUILD_DEPENDS+=	aspell:${PORTSDIR}/textproc/aspell
 RUN_DEPENDS+=	aspell:${PORTSDIR}/textproc/aspell
 .else
 CONFIGURE_ARGS+=	--with-interactive-spellcheck=${LOCALBASE}/bin/ispell
-BUILD_DEPENDS+=	ispell:${PORTSDIR}/textproc/ispell
-RUN_DEPENDS+=	ispell:${PORTSDIR}/textproc/ispell
+BUILD_DEPENDS+=	ispell:${PORTSDIR}/textproc/aspell-ispell
+RUN_DEPENDS+=	ispell:${PORTSDIR}/textproc/aspell-ispell
 .endif
 .else
 CONFIGURE_ARGS+=--without-simple-spellcheck --without-interactive-spellcheck

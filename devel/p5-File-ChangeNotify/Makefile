@@ -2,7 +2,8 @@
 # $FreeBSD$
 
 PORTNAME=	File-ChangeNotify
-PORTVERSION=	0.22
+PORTVERSION=	0.24
+PORTREVISION=	1
 CATEGORIES=	devel perl5
 MASTER_SITES=	CPAN
 PKGNAMEPREFIX=	p5-
@@ -20,16 +21,7 @@ RUN_DEPENDS=	p5-Moose>=2:${PORTSDIR}/devel/p5-Moose \
 BUILD_DEPENDS:=	${RUN_DEPENDS}
 TEST_DEPENDS=	p5-Test-Exception>0:${PORTSDIR}/devel/p5-Test-Exception
 
-MAN3=		File::ChangeNotify.3 \
-		File::ChangeNotify::ConfigData.3 \
-		File::ChangeNotify::Event.3 \
-		File::ChangeNotify::Watcher.3 \
-		File::ChangeNotify::Watcher::Default.3 \
-		File::ChangeNotify::Watcher::Inotify.3 \
-		File::ChangeNotify::Watcher::KQueue.3
-
 USES=		perl5
 USE_PERL5=	modbuild
 
-NO_STAGE=	yes
 .include <bsd.port.mk>

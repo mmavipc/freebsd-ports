@@ -3,7 +3,7 @@
 
 PORTNAME=	XML
 DISTVERSION=	3.98-1.1
-PORTREVISION=	1
+PORTREVISION=	2
 CATEGORIES=	textproc
 DISTNAME=	${PORTNAME}_${DISTVERSION}
 
@@ -12,9 +12,7 @@ COMMENT=	Tools for parsing and generating XML
 
 LICENSE=	BSD
 
-USE_R_MOD=	yes
-R_MOD_AUTOPLIST=	yes
+USES=	cran:auto-plist
 USE_GNOME=	libxml2
 
-NO_STAGE=	yes
 .include <bsd.port.mk>

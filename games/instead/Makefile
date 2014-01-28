@@ -2,37 +2,48 @@
 # $FreeBSD$
 
 PORTNAME=	instead
-PORTVERSION=	1.9.1
+PORTVERSION=	2.0.1
 CATEGORIES=	games
-MASTER_SITES=	SF/instead/instead/${PORTVERSION}/ \
-		http://mirror.amdmi3.ru/distfiles/
+MASTER_SITES=	SF/instead/instead/${PORTVERSION}/
 DISTNAME=	instead_${PORTVERSION}
 
 MAINTAINER=	amdmi3@FreeBSD.org
 COMMENT=	Simple Text Adventure, The Interpreter
 
-HAS_CONFIGURE=	yes
-USE_GMAKE=	yes
-USE_GNOME=	gtk20
+LICENSE=	MIT
+
+USES=		cmake:outsource pkgconfig iconv
+CMAKE_ARGS=	-DMANDIR=man
 USE_LUA=	5.1
-USE_SDL=	sdl image ttf mixer
-USES=		pkgconfig iconv
-LDFLAGS+=	-L${LOCALBASE}/lib ${ICONV_LIB}
 
-CONFIGURE_SCRIPT=	configure.sh
-CONFIGURE_ENV=	PREFIX="${PREFIX}"
-
-WRKSRC=		${WRKDIR}/instead-${PORTVERSION}
-MAN6=		instead.6
+WRKSRC=		${WRKDIR}/${PORTNAME}-${PORTVERSION}
 
 PORTDOCS=	*
+PORTDATA=	*
 
-NO_STAGE=	yes
-.include <bsd.port.options.mk>
+OPTIONS_DEFINE=	DOCS
+OPTIONS_DEFAULT=SDL GTK2
+OPTIONS_SINGLE=	SDL_VERSION
+OPTIONS_SINGLE_SDL_VERSION=	SDL SDL2
+OPTIONS_RADIO=	GTK_VERSION
+OPTIONS_RADIO_GTK_VERSION=	GTK2 GTK3
 
-.if ! ${PORT_OPTIONS:MDOCS}
-post-patch:
-	@${REINPLACE_CMD} -e '/INSTALL.*DOCPATH/ d' ${WRKSRC}/doc/Makefile
-.endif
+SDL_VERSION_DESC=SDL version
+SDL_DESC=	Use SDL 1.2
+SDL2_DESC=	Use SDL 2.0
+GTK_VERSION_DESC=GTK version for file open dialog
+GTK2_DESC=	Use GTK 2
+GTK3_DESC=	Use GTK 3
+
+SDL_USE=	SDL=sdl,image,ttf,mixer
+SDL2_USE=	SDL=sdl2,image2,ttf2,mixer2
+SDL2_CMAKE_ON=	-DWITH_SDL2=ON
+SDL2_CMAKE_OFF=	-DWITH_SDL2=OFF
+GTK2_USE=	GNOME=gtk20
+GTK2_CMAKE_ON=	-DWITH_GTK2=ON
+GTK2_CMAKE_OFF=	-DWITH_GTK2=OFF
+GTK3_USE=	GNOME=gtk30
+GTK3_CMAKE_ON=	-DWITH_GTK3=ON
+GTK3_CMAKE_OFF=	-DWITH_GTK3=OFF
 
 .include <bsd.port.mk>

@@ -27,13 +27,16 @@ CONFIGURE_ARGS=		${SQLRELAY_CONFIGURE_ARGS} \
 			--disable-zope
 MAKE_JOBS_UNSAFE=yes
 USE_LDCONFIG=	yes
+NO_STAGE=	yes
 
 PORTDOCS=	*
 
 .include "${.CURDIR}/Makefile.common"
 
-OPTIONS_DEFINE=	MSQL MYSQL ODBC PGSQL SQLITE3 FREETDS FIREBIRD DOCS
+OPTIONS_DEFINE=	MSQL MYSQL ODBC ORACLE PGSQL SQLITE3 FREETDS FIREBIRD DOCS
 OPTIONS_SUB=	yes
+
+ORACLE_CONFIGURE_ENABLE=	oracle
 
 .include <bsd.port.options.mk>
 
@@ -91,8 +94,8 @@ CONFIGURE_ARGS+=	--disable-freetds
 
 post-patch:
 	${REINPLACE_CMD} -E \
-		-e 's,(freebsd.*)/usr/local(.*rc.d),\1${PREFIX}\2/sqlrelay.sh-sample,' \
-		-e 's,(freebsd/sqlrelay )(.*etc),\1$$(sysconfdir)/sqlrelay-sample,' \
+		-e 's,\$$\(initroot\),\$$\(initroot\)${PREFIX},g' \
+		-e 's,/etc/rc.conf,/etc/defaults/rc.conf,g' \
 			${WRKSRC}/init/Makefile
 	${REINPLACE_CMD} -E \
 		-e 's,/usr/local[[:>:]],${PREFIX},g;' \

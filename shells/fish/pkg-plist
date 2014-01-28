@@ -4,20 +4,11 @@ bin/fish_pager
 bin/fishd
 bin/mimedb
 %%ETCDIR%%/config.fish
-%%PORTDOCS%%%%DOCSDIR%%/commands.html
-%%PORTDOCS%%%%DOCSDIR%%/design.html
-%%PORTDOCS%%%%DOCSDIR%%/doc_8h_source.html
-%%PORTDOCS%%%%DOCSDIR%%/doxygen.css
-%%PORTDOCS%%%%DOCSDIR%%/doxygen.png
-%%PORTDOCS%%%%DOCSDIR%%/faq.html
-%%PORTDOCS%%%%DOCSDIR%%/files.html
-%%PORTDOCS%%%%DOCSDIR%%/index.html
-%%PORTDOCS%%%%DOCSDIR%%/license.html
-%%PORTDOCS%%%%DOCSDIR%%/pages.html
-%%PORTDOCS%%%%DOCSDIR%%/tab_b.gif
-%%PORTDOCS%%%%DOCSDIR%%/tab_l.gif
-%%PORTDOCS%%%%DOCSDIR%%/tab_r.gif
-%%PORTDOCS%%%%DOCSDIR%%/tabs.css
+man/man1/fish.1.gz
+man/man1/fish_indent.1.gz
+man/man1/fish_pager.1.gz
+man/man1/fishd.1.gz
+man/man1/mimedb.1.gz
 %%DATADIR%%/completions/abook.fish
 %%DATADIR%%/completions/acat.fish
 %%DATADIR%%/completions/accept.fish
@@ -45,6 +36,7 @@ bin/mimedb
 %%DATADIR%%/completions/apt-key.fish
 %%DATADIR%%/completions/apt-listbugs.fish
 %%DATADIR%%/completions/apt-listchanges.fish
+%%DATADIR%%/completions/apt-mark.fish
 %%DATADIR%%/completions/apt-move.fish
 %%DATADIR%%/completions/apt-proxy-import.fish
 %%DATADIR%%/completions/apt-rdepends.fish
@@ -77,6 +69,7 @@ bin/mimedb
 %%DATADIR%%/completions/btdownloadcurses.py.fish
 %%DATADIR%%/completions/btdownloadheadless.py.fish
 %%DATADIR%%/completions/builtin.fish
+%%DATADIR%%/completions/bundle.fish
 %%DATADIR%%/completions/bunzip2.fish
 %%DATADIR%%/completions/bzcat.fish
 %%DATADIR%%/completions/bzip2.fish
@@ -85,6 +78,7 @@ bin/mimedb
 %%DATADIR%%/completions/cabal-dev.fish
 %%DATADIR%%/completions/cabal.fish
 %%DATADIR%%/completions/cancel.fish
+%%DATADIR%%/completions/canto.fish
 %%DATADIR%%/completions/case.fish
 %%DATADIR%%/completions/cat.fish
 %%DATADIR%%/completions/cd.fish
@@ -179,6 +173,7 @@ bin/mimedb
 %%DATADIR%%/completions/gvim.fish
 %%DATADIR%%/completions/gvimdiff.fish
 %%DATADIR%%/completions/gzip.fish
+%%DATADIR%%/completions/head.fish
 %%DATADIR%%/completions/help.fish
 %%DATADIR%%/completions/hg.fish
 %%DATADIR%%/completions/highlight.fish
@@ -220,6 +215,7 @@ bin/mimedb
 %%DATADIR%%/completions/lsof.fish
 %%DATADIR%%/completions/lua.fish
 %%DATADIR%%/completions/lualatex.fish
+%%DATADIR%%/completions/lunchy.fish
 %%DATADIR%%/completions/lxpanel.fish
 %%DATADIR%%/completions/m4.fish
 %%DATADIR%%/completions/make.fish
@@ -244,6 +240,7 @@ bin/mimedb
 %%DATADIR%%/completions/namei.fish
 %%DATADIR%%/completions/ncdu.fish
 %%DATADIR%%/completions/netcat.fish
+%%DATADIR%%/completions/netctl.fish
 %%DATADIR%%/completions/nextd.fish
 %%DATADIR%%/completions/nice.fish
 %%DATADIR%%/completions/nl.fish
@@ -278,11 +275,13 @@ bin/mimedb
 %%DATADIR%%/completions/pkill.fish
 %%DATADIR%%/completions/poff.fish
 %%DATADIR%%/completions/pon.fish
+%%DATADIR%%/completions/portmaster.fish
 %%DATADIR%%/completions/ports.fish
 %%DATADIR%%/completions/prevd.fish
 %%DATADIR%%/completions/prt-get.fish
 %%DATADIR%%/completions/ps.fish
 %%DATADIR%%/completions/ps2pdf.fish
+%%DATADIR%%/completions/psql.fish
 %%DATADIR%%/completions/psub.fish
 %%DATADIR%%/completions/pushd.fish
 %%DATADIR%%/completions/pydf.fish
@@ -335,6 +334,7 @@ bin/mimedb
 %%DATADIR%%/completions/sudo.fish
 %%DATADIR%%/completions/svn.fish
 %%DATADIR%%/completions/sylpheed.fish
+%%DATADIR%%/completions/systemctl.fish
 %%DATADIR%%/completions/tail.fish
 %%DATADIR%%/completions/tar.fish
 %%DATADIR%%/completions/tee.fish
@@ -360,9 +360,11 @@ bin/mimedb
 %%DATADIR%%/completions/update-eix-remote.fish
 %%DATADIR%%/completions/update-eix.fish
 %%DATADIR%%/completions/useradd.fish
+%%DATADIR%%/completions/vagrant.fish
 %%DATADIR%%/completions/valgrind.fish
 %%DATADIR%%/completions/vared.fish
 %%DATADIR%%/completions/vi.fish
+%%DATADIR%%/completions/vim-addons.fish
 %%DATADIR%%/completions/vim.fish
 %%DATADIR%%/completions/vimdiff.fish
 %%DATADIR%%/completions/w.fish
@@ -395,6 +397,7 @@ bin/mimedb
 %%DATADIR%%/completions/yum.fish
 %%DATADIR%%/completions/zcat.fish
 %%DATADIR%%/completions/zip.fish
+%%DATADIR%%/completions/zypper.fish
 %%DATADIR%%/config.fish
 %%DATADIR%%/functions/N_.fish
 %%DATADIR%%/functions/_.fish
@@ -489,8 +492,10 @@ bin/mimedb
 %%DATADIR%%/functions/__fish_prt_ports.fish
 %%DATADIR%%/functions/__fish_prt_use_package.fish
 %%DATADIR%%/functions/__fish_prt_use_port.fish
+%%DATADIR%%/functions/__fish_pwd.fish
 %%DATADIR%%/functions/__fish_seen_subcommand_from.fish
 %%DATADIR%%/functions/__fish_test_arg.fish
+%%DATADIR%%/functions/__fish_urlencode.fish
 %%DATADIR%%/functions/__fish_use_subcommand.fish
 %%DATADIR%%/functions/__terlar_git_prompt.fish
 %%DATADIR%%/functions/alias.fish
@@ -511,6 +516,7 @@ bin/mimedb
 %%DATADIR%%/functions/grep.fish
 %%DATADIR%%/functions/help.fish
 %%DATADIR%%/functions/history.fish
+%%DATADIR%%/functions/hostname.fish
 %%DATADIR%%/functions/isatty.fish
 %%DATADIR%%/functions/la.fish
 %%DATADIR%%/functions/ll.fish
@@ -544,6 +550,7 @@ bin/mimedb
 %%DATADIR%%/tools/web_config/sample_prompts/classic_git.fish
 %%DATADIR%%/tools/web_config/sample_prompts/classic_status.fish
 %%DATADIR%%/tools/web_config/sample_prompts/informative.fish
+%%DATADIR%%/tools/web_config/sample_prompts/informative_git.fish
 %%DATADIR%%/tools/web_config/sample_prompts/justadollar.fish
 %%DATADIR%%/tools/web_config/sample_prompts/lonetwin.fish
 %%DATADIR%%/tools/web_config/sample_prompts/minimalist.fish
@@ -555,16 +562,15 @@ bin/mimedb
 %%DATADIR%%/tools/web_config/sample_prompts/user_host_path.fish
 %%DATADIR%%/tools/web_config/webconfig.py
 %%NLS%%share/locale/de/LC_MESSAGES/fish.mo
+%%NLS%%share/locale/en/LC_MESSAGES/fish.mo
 %%NLS%%share/locale/fr/LC_MESSAGES/fish.mo
 %%NLS%%share/locale/sv/LC_MESSAGES/fish.mo
-%%NLS%%share/locale/en/LC_MESSAGES/fish.mo
 @dirrm %%DATADIR%%/tools/web_config/sample_prompts
 @dirrm %%DATADIR%%/tools/web_config
 @dirrm %%DATADIR%%/tools
 @dirrm %%DATADIR%%/functions
 @dirrm %%DATADIR%%/completions
 @dirrm %%DATADIR%%
-%%PORTDOCS%%@dirrm %%DOCSDIR%%
 @dirrm %%ETCDIR%%
 @exec cp /etc/shells /etc/shells.bak; (grep -v %D/bin/fish /etc/shells.bak; echo %D/bin/fish) > /etc/shells; rm -f /etc/shells.bak
 @unexec cp /etc/shells /etc/shells.bak; (grep -v %D/bin/fish /etc/shells.bak) > /etc/shells; rm -f /etc/shells.bak

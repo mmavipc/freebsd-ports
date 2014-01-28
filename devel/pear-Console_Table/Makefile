@@ -2,7 +2,7 @@
 # $FreeBSD$
 
 PORTNAME=	Console_Table
-PORTVERSION=	1.1.4
+PORTVERSION=	1.1.6
 CATEGORIES=	devel pear
 
 MAINTAINER=	miwi@FreeBSD.org
@@ -13,7 +13,6 @@ RUN_DEPENDS=	${PEARDIR}/PEAR.php:${PORTSDIR}/devel/pear
 
 PEAR_AUTOINSTALL=	yes
 
-NO_STAGE=	yes
 .include <bsd.port.pre.mk>
 .include "${PORTSDIR}/devel/pear/bsd.pear.mk"
 .include <bsd.port.post.mk>

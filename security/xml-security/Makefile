@@ -15,7 +15,7 @@ BUILD_DEPENDS=	${JAVALIBDIR}/commons-logging.jar:${PORTSDIR}/java/jakarta-common
 		${JAVALIBDIR}/xalan.jar:${PORTSDIR}/textproc/xalan-j
 RUN_DEPENDS=	${JAVALIBDIR}/commons-logging.jar:${PORTSDIR}/java/jakarta-commons-logging
 
-LICENSE=	AL2
+LICENSE=	APACHE20
 
 OPTIONS_DEFINE=	DOCS EXAMPLES
 USE_ZIP=	yes
@@ -36,10 +36,6 @@ PLIST_FILES=	%%JAVAJARDIR%%/xmlsec.jar
 .if ${PORT_OPTIONS:MDOCS}
 ALL_TARGET+=	javadoc
 .endif
-
-do-build:
-	@(cd ${BUILD_WRKSRC}; \
-		${SETENV} ${MAKE_ENV} ${ANT} ${ALL_TARGET})
 
 do-install:
 	@${ECHO} -n ">> Installing JAR as ${JAVAJARDIR}/xmlsec.jar..."

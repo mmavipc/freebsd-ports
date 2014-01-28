@@ -1,8 +1,7 @@
 # $FreeBSD$
 
 PORTNAME=	sendmail
-PORTVERSION=	8.14.7
-PORTREVISION=	1
+PORTVERSION=	8.14.8
 CATEGORIES=	mail ipv6
 MASTER_SITES=	ftp://ftp.sendmail.org/pub/sendmail/ \
 		${MASTER_SITE_RINGSERVER:S,%SUBDIR%,net/mail/sendmail/&,}
@@ -46,8 +45,12 @@ MILTER_DESC=		Build libmilter
 MILTER_SHARED_DESC=	Build shared libmilter
 MILTER_POOL_DESC=	Enable milter thread pools
 
-.include <bsd.port.options.mk>
+BDB_USE=	BDB=yes
+LDAP_USE=	OPENLDAP=yes
+SASL_LIB_DEPENDS=	libsasl2.so:${PORTSDIR}/security/cyrus-sasl2
+SASLAUTHD_RUN_DEPENDS=	${LOCALBASE}/sbin/saslauthd:${PORTSDIR}/security/cyrus-sasl2-saslauthd
 
+.include <bsd.port.options.mk>
 .if ${PORT_OPTIONS:MSHMEM} && !defined(BUILDING_INDEX)
 IPCCHECK!=	ipcrm -q 0 2>&1 || true
 .if ${IPCCHECK:Mimplemented}
@@ -56,22 +59,16 @@ IGNORE=		your system does not support sysvipc
 .endif
 
 .if ${PORT_OPTIONS:MBDB}
-USE_BDB=	yes
 BDB_SUFFIX=	+${BDB_INCLUDE_DIR:S,^${LOCALBASE}/include/,,}
 CONFLICTS+=	sendmail-ldap-8.* sendmail-sasl-8.* sendmail-sasl2-8.* sendmail-tls-8.*
 .endif
 .if ${PORT_OPTIONS:MLDAP}
 LDAP_SUFFIX?=	+ldap
 CONFLICTS+=	sendmail-sasl-8.* sendmail-sasl2-8.* sendmail-tls-8.*
-USE_OPENLDAP=	yes
 .endif
 .if ${PORT_OPTIONS:MSASL}
 SASL_SUFFIX?=	+sasl2
 CONFLICTS+=	sendmail-ldap-8.* sendmail-sasl-8.* sendmail-tls-8.*
-LIB_DEPENDS+=	sasl2:${PORTSDIR}/security/cyrus-sasl2
-.if ${PORT_OPTIONS:MSASLAUTHD}
-RUN_DEPENDS+=	${LOCALBASE}/sbin/saslauthd:${PORTSDIR}/security/cyrus-sasl2-saslauthd
-.endif
 .endif
 .if ${PORT_OPTIONS:MCYRUSLOOKUP}
 .if ! ${PORT_OPTIONS:MSOCKETMAP}
@@ -132,8 +129,9 @@ PLIST_SUB+=	MILTER_SHARED="@comment "
 .endif
 .endif
 
-SED_SCRIPT=	-e "s;\`-pthread\';\`${PTHREAD_LIBS}\';" \
-		-e "s;\`-O\';\`${CFLAGS}\';"
+SED_SCRIPT=	-e "s|\`-pthread\'|\`${PTHREAD_LIBS}\'|" \
+		-e "s|\`-O\'|\`${CFLAGS}\'|" \
+		-e 's|%%CC%%|${CC}|' -e 's|%%LD%%|${LD}|'
 
 .if ! ${PORT_OPTIONS:MNIS}
 SED_SCRIPT+=	-e "s;-DNIS ;;"
@@ -148,17 +146,12 @@ post-patch:
 	@${CP} -pR ${WRKSRC}/libmilter ${WRKSRC}/libsharedmilter
 	${CP} ${FILESDIR}/sharedlibrary.m4 \
 		${WRKSRC}/devtools/M4/UNIX/sharedlibrary.m4
-	@${MV} ${WRKSRC}/libsharedmilter/Makefile.m4 \
-		${WRKSRC}/libsharedmilter/Makefile.m4.sed
-	@${SED} -e 's=`library=`sharedlibrary=' \
-		${WRKSRC}/libsharedmilter/Makefile.m4.sed \
-		> ${WRKSRC}/libsharedmilter/Makefile.m4
+	${REINPLACE_CMD} -e 's=`library=`sharedlibrary=' \
+		${WRKSRC}/libsharedmilter/Makefile.m4
 .endif
 
 do-configure:
-	@${MV} ${WRKSRC}/devtools/OS/FreeBSD ${WRKSRC}/devtools/OS/FreeBSD.sed
-	${SED} ${SED_SCRIPT} ${WRKSRC}/devtools/OS/FreeBSD.sed \
-		> ${WRKSRC}/devtools/OS/FreeBSD
+	${REINPLACE_CMD} ${SED_SCRIPT} ${WRKSRC}/devtools/OS/FreeBSD
 	${SED} -e "s=%%PREFIX%%=${PREFIX}=g" \
 		-e "s=%%LOCALBASE%%=${LOCALBASE}=g" \
 		${SITE} > ${WCONF}/site.config.m4

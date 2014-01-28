@@ -30,6 +30,7 @@
     SUBDIR += iozone
     SUBDIR += iozone21
     SUBDIR += iperf
+    SUBDIR += iperf3
     SUBDIR += libmicro
     SUBDIR += lmbench
     SUBDIR += mdtest
@@ -64,6 +65,7 @@
     SUBDIR += siege
     SUBDIR += sipp
     SUBDIR += slowloris
+    SUBDIR += spec-sfs
     SUBDIR += spp
     SUBDIR += stream
     SUBDIR += super-smack

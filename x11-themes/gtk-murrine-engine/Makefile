@@ -3,7 +3,7 @@
 
 PORTNAME=	murrine
 PORTVERSION=	0.98.2
-PORTREVISION=	1
+PORTREVISION=	2
 CATEGORIES=	x11-themes
 MASTER_SITES=	GNOME
 PKGNAMEPREFIX=	gtk-
@@ -22,7 +22,6 @@ USES=		gmake pkgconfig
 OPTIONS_DEFINE=	ANIMATION
 ANIMATION_DESC=	Animation support
 
-NO_STAGE=	yes
 .include <bsd.port.options.mk>
 
 .if ${PORT_OPTIONS:MANIMATION} 

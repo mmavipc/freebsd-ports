@@ -2,12 +2,13 @@
 # $FreeBSD$
 
 PORTNAME=	openjdk6
-PORTVERSION=	b28
-PORTREVISION?=	3
+PORTVERSION=	b30
+PORTREVISION?=	0
+PORTEPOCH=	1
 CATEGORIES=	java devel
 MASTER_SITES=	${MASTER_SITE_APACHE:S,%SUBDIR%/,ant/binaries/:ant,} \
 		http://download.java.net/openjdk/jtreg/promoted/4.1/b05/:jtreg \
-		https://java.net/projects/openjdk6/downloads/download/ \
+		https://java.net/downloads/openjdk6/ \
 		LOCAL
 MASTER_SITE_SUBDIR=	jkim
 DISTNAME=	openjdk-6-src-${PORTVERSION}-${OPENJDK_BUILDDATE}
@@ -29,7 +30,7 @@ LIB_DEPENDS=	libfreetype.so:${PORTSDIR}/print/freetype2
 RUN_DEPENDS=	javavm:${PORTSDIR}/java/javavmwrapper \
 		${LOCALBASE}/lib/X11/fonts/dejavu:${PORTSDIR}/x11-fonts/dejavu
 
-OPENJDK_BUILDDATE=	04_oct_2013
+OPENJDK_BUILDDATE=	21_jan_2014
 
 OPTIONS_DEFINE=	ICEDTEA IPV6 POLICY SOUND TZUPDATE
 OPTIONS_DEFAULT=ICEDTEA IPV6 TZUPDATE
@@ -50,6 +51,7 @@ TEST_DESC=	Add support for running regression test
 PKGDEINSTALL=	${WRKDIR}/pkg-deinstall
 PKGINSTALL=	${WRKDIR}/pkg-install
 
+USE_XZ=		yes
 USES=		compiler gmake iconv motif
 
 .include <bsd.port.options.mk>
@@ -65,7 +67,7 @@ USE_XORG=	x11 xext xi xt xtst
 
 # do not depend on devel/apache-ant to avoid circular dependency, but
 # use .tar.bz2 distfile to avoid duplicated downloads
-ANTVERSION=	1.9.2
+ANTVERSION=	1.9.3
 ANTFILE=	apache-ant-${ANTVERSION}-bin.tar.bz2
 
 JTREG_BUILD=	b05_29_nov_2012
@@ -101,7 +103,6 @@ BOOTSTRAPJDKDIR?=	${LOCALBASE}/bootstrap-openjdk
 BUILD_DEPENDS+=		${BOOTSTRAPJDKDIR}/bin/javac:${PORTSDIR}/java/bootstrap-openjdk
 .endif
 
-FETCH_ARGS=	-Fpr
 MAKE_ENV=	LANG=C LC_ALL=C OS= \
 		ALT_JDK_IMPORT_PATH=${BOOTSTRAPJDKDIR} \
 		ALT_BOOTDIR=${BOOTSTRAPJDKDIR} \
@@ -192,7 +193,7 @@ ICONV_LIBS=	-L${LOCALBASE}/lib ${ICONV_LIB}
 ZLIB_LIBS?=	-lz
 
 .if ${COMPILER_TYPE} == "clang"
-MAKE_ENV+=	COMPILER_WARNINGS_FATAL=false
+MAKE_ENV+=	COMPILER_WARNINGS_FATAL=false DEBUG_CFLAGS/i486=-g
 .if empty(PORT_OPTIONS:MDEBUG) && empty(PORT_OPTIONS:MFASTDEBUG)
 MAKE_ENV+=	WARNINGS_ARE_ERRORS=-w
 .endif
@@ -228,6 +229,12 @@ post-patch:
 	@${REINPLACE_CMD} -e "s|%%CXX_LIBS%%|${CXX_LIBS}|" \
 	    ${WRKSRC}/corba/make/common/Defs-bsd.gmk \
 	    ${WRKSRC}/jdk/make/common/Defs-bsd.gmk
+.if ${COMPILER_TYPE} == "clang"
+	@${REINPLACE_CMD} -e "s|-fno-omit-frame-pointer|-fno-omit-frame-pointer -mno-omit-leaf-frame-pointer|" \
+	    ${WRKSRC}/corba/make/common/Defs-bsd.gmk \
+	    ${WRKSRC}/hotspot/make/bsd/makefiles/amd64.make \
+	    ${WRKSRC}/jdk/make/common/Defs-bsd.gmk
+.endif
 	@${REINPLACE_CMD} -e "s|%%ICONV_INC%%|${ICONV_INCLUDE}|" \
 	    -e "s|%%ICONV_LIB%%|${ICONV_LIBS}|" \
 	    ${WRKSRC}/Makefile ${WRKSRC}/jdk/make/java/instrument/Makefile \

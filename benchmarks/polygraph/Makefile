@@ -9,10 +9,10 @@ MASTER_SITES=	http://www.web-polygraph.org/downloads/srcs/ \
 DISTNAME=	${PORTNAME}-${PORTVERSION}-src
 EXTRACT_SUFX=	.tgz
 
-MAINTAINER=	as@bsdgroup.de
+MAINTAINER=	ports@FreeBSD.org
 COMMENT=	A benchmarking tool for Web proxies
 
-LICENSE=	AL2
+LICENSE=	APACHE20
 LICENSE_FILE=	${WRKSRC}/LICENSE
 
 USE_GCC=	4.2+

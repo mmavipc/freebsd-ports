@@ -4,7 +4,7 @@
 PORTNAME=		bash
 PATCHLEVEL=		45
 PORTVERSION=		4.2.${PATCHLEVEL:S/^0//g}
-PORTREVISION?=		0
+PORTREVISION?=		1
 CATEGORIES=		shells
 MASTER_SITES=		${MASTER_SITE_GNU:S/$/:bash/} \
 			ftp://ftp.cwru.edu/pub/%SUBDIR%/:faq
@@ -34,7 +34,6 @@ HELP_DESC=		Install the help files
 
 USES+=			bison
 
-NO_STAGE=	yes
 .include <bsd.port.options.mk>
 
 .if ${PORT_OPTIONS:MIMPLICITCD}
@@ -45,7 +44,6 @@ EXTRA_PATCHES+=		${PATCHDIR}/xpatch-implicitcd
 EXTRA_PATCHES+=		${PATCHDIR}/xpatch-colonbreakswords
 .endif
 
-MAN1=			bash.1 bashbug.1
 INFO=			bash
 
 MAKE_JOBS_UNSAFE=	yes
@@ -93,7 +91,8 @@ CPPFLAGS+=		${PTHREAD_CFLAGS} \
 			-I${LOCALBASE}/include
 LDFLAGS+=		-L${LOCALBASE}/lib
 
-CONFIGURE_ENV=		YACC="bison -y"
+CONFIGURE_ENV=		YACC="bison -y" \
+			bash_cv_dev_fd=absent
 
 post-patch:
 	@${REINPLACE_CMD} -e "s|%%PREFIX%%|${PREFIX}|g" ${WRKSRC}/doc/bash.1
@@ -117,26 +116,24 @@ pre-build:
 	@${ECHO_CMD} $$((${PORTREVISION}-1)) > ${WRKSRC}/.build
 
 pre-install:
-	@${SETENV} PKG_PREFIX="${PREFIX}" \
+	@${SETENV} PKG_PREFIX="${STAGEDIR}${PREFIX}" \
 		${SH} ${PKGINSTALL} ${PKGNAME} PRE-INSTALL
 
 post-install:
-	@cd ${PREFIX}/bin ; ${LN} -sf bash rbash
+	@cd ${STAGEDIR}${PREFIX}/bin ; ${LN} -sf bash rbash
 .if ${PORT_OPTIONS:MDOCS}
-	@${MKDIR} ${DOCSDIR}
+	@${MKDIR} ${STAGEDIR}${DOCSDIR}
 .if !defined(WITH_INCLUDED_FAQ)
 	@${INSTALL_DATA} ${DISTDIR}/${DIST_SUBDIR}/FAQ \
-		${WRKSRC}/doc/INTRO ${DOCSDIR}
+		${WRKSRC}/doc/INTRO ${STAGEDIR}${DOCSDIR}
 .else
 	@${INSTALL_DATA} ${WRKSRC}/doc/FAQ \
-		${WRKSRC}/doc/INTRO ${DOCSDIR}
+		${WRKSRC}/doc/INTRO ${STAGEDIR}${DOCSDIR}
 .endif
 	@for d in ${PORTDOCS:NFAQ:NINTRO}; do \
-		${INSTALL_DATA} ${WRKSRC}/$${d} ${DOCSDIR}; \
+		${INSTALL_DATA} ${WRKSRC}/$${d} ${STAGEDIR}${DOCSDIR}; \
 	done
 .endif
-	@${SETENV} PKG_PREFIX="${PREFIX}" PKG_DESTDIR="${DESTDIR}" \
-		${SH} ${PKGINSTALL} ${PKGNAME} POST-INSTALL
 
 regress: build
 	cd ${WRKSRC}; ${SETENV} ${MAKE_ENV} ${MAKE} ${MAKE_ARGS} test

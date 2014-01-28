@@ -40,7 +40,6 @@
     SUBDIR += dosage
     SUBDIR += drivel
     SUBDIR += easystroke
-    SUBDIR += ecru
     SUBDIR += egroupware
     SUBDIR += epoch
     SUBDIR += etask
@@ -75,7 +74,6 @@
     SUBDIR += gnotime
     SUBDIR += gnustep-notebook
     SUBDIR += gnustep-wrapper
-    SUBDIR += google-gadgets
     SUBDIR += gourmet
     SUBDIR += griffith
     SUBDIR += growl-for-linux
@@ -93,15 +91,15 @@
     SUBDIR += hamster-applet
     SUBDIR += hebcal
     SUBDIR += helpviewer
+    SUBDIR += horde-groupware
+    SUBDIR += horde-kronolith
+    SUBDIR += horde-mnemo
+    SUBDIR += horde-nag
     SUBDIR += horde3-hermes
     SUBDIR += horde3-klutz
     SUBDIR += horde3-kronolith
     SUBDIR += horde3-mnemo
     SUBDIR += horde3-nag
-    SUBDIR += horde-groupware
-    SUBDIR += horde-kronolith
-    SUBDIR += horde-mnemo
-    SUBDIR += horde-nag
     SUBDIR += hot-babe
     SUBDIR += howm
     SUBDIR += ical
@@ -126,10 +124,8 @@
     SUBDIR += libopensync-plugin-evolution2-devel
     SUBDIR += libopensync-plugin-file
     SUBDIR += libopensync-plugin-python
-    SUBDIR += libopensync-plugin-python-devel
     SUBDIR += libopensync-plugin-sunbird
     SUBDIR += libopensync-plugin-synce
-    SUBDIR += libopensync-plugin-synce-devel
     SUBDIR += libopensync-plugin-synce-legacy
     SUBDIR += libopensync-plugin-vformat-devel
     SUBDIR += libstreamanalyzer
@@ -139,6 +135,11 @@
     SUBDIR += ljit
     SUBDIR += logjam
     SUBDIR += lxshortcut
+    SUBDIR += mate-character-map
+    SUBDIR += mate-file-manager-open-terminal
+    SUBDIR += mate-menu-editor
+    SUBDIR += mate-notification-daemon
+    SUBDIR += mate-utils
     SUBDIR += mcal
     SUBDIR += mdh
     SUBDIR += mencal
@@ -198,7 +199,6 @@
     SUBDIR += py-vobject
     SUBDIR += pybookreader
     SUBDIR += pypanel
-    SUBDIR += q4wine
     SUBDIR += qlabels
     SUBDIR += qorganizer
     SUBDIR += qrfcview
@@ -210,6 +210,7 @@
     SUBDIR += rolo
     SUBDIR += rox-memo
     SUBDIR += rubrica
+    SUBDIR += rubygem-taskjuggler
     SUBDIR += semantik
     SUBDIR += silence
     SUBDIR += simpleagenda
@@ -228,7 +229,7 @@
     SUBDIR += systempreferences
     SUBDIR += tagutils
     SUBDIR += taskcoach
-    SUBDIR += taskjuggler
+    SUBDIR += taskd
     SUBDIR += taskwarrior
     SUBDIR += teapot
     SUBDIR += tel

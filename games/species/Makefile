@@ -3,40 +3,43 @@
 
 PORTNAME=	species
 PORTVERSION=	1.2d
+PORTREVISION=	1
 CATEGORIES=	games
-MASTER_SITES=	${MASTER_SITE_LOCAL}
-MASTER_SITE_SUBDIR=	alepulver
+MASTER_SITES=	LOCAL/alepulver
 DISTNAME=	redcoder
 
 MAINTAINER=	ports@FreeBSD.org
 COMMENT=	Corewars evolver - generates warriors using genetic algorithms
 
+LICENSE=	GPLv1 # (or later)
+
 USE_BZIP2=	yes
-USE_GMAKE=	yes
+USES=		gmake dos2unix
 WRKSRC=		${WRKDIR}/${PORTNAME}
 
 OPTIONS_DEFINE=	VISITOOL
 VISITOOL_DESC=	Buil GUI tool for displaying evolution
 
-NO_STAGE=	yes
+OPTIONS_SUB=	yes
+
+VISITOOL_USE=	WX=2.4
+VISITOOL_ALL_TARGET=	all visitool
+
 .include <bsd.port.options.mk>
 
-.if ${PORT_OPTIONS:MVISITOOL}
-USE_WX=		2.4
-ALL_TARGET=	all visitool
-PLIST_SUB+=	VISITOOL=""
-.else
-PLIST_SUB+=	VISITOOL="@comment "
+.if empty(PORT_OPTIONS:MVISITOOL)
+MAKE_ENV+=	WX_CONFIG="${TRUE}"
 .endif
 
 do-install:
-	${INSTALL_PROGRAM} ${WRKSRC}/${PORTNAME} ${PREFIX}/bin
-	${MKDIR} ${DATADIR}
-	cd ${WRKSRC} && ${INSTALL_DATA} koen.* species.ini *.rc ${DATADIR}
-	cd ${WRKSRC} && ${CP} -r bench evolver_hill wilfiz ${DATADIR}
+	${INSTALL_PROGRAM} ${WRKSRC}/${PORTNAME} ${STAGEDIR}${PREFIX}/bin
+	@${MKDIR} ${STAGEDIR}${DATADIR}
+	cd ${WRKSRC} && ${INSTALL_DATA} koen.* species.ini *.rc ${STAGEDIR}${DATADIR}
+.for i in bench evolver_hill wilfiz
+	@(cd ${WRKSRC} && ${COPYTREE_SHARE} ${i} ${STAGEDIR}${DATADIR})
+.endfor
 .if ${PORT_OPTIONS:MVISITOOL}
-	${INSTALL_PROGRAM} ${WRKSRC}/visitool \
-		${PREFIX}/bin/${PORTNAME}-visitool
+	${INSTALL_PROGRAM} ${WRKSRC}/visitool ${STAGEDIR}${PREFIX}/bin/${PORTNAME}-visitool
 .endif
 
 .include <bsd.port.mk>

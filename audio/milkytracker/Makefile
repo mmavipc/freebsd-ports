@@ -2,11 +2,11 @@
 # $FreeBSD$
 
 PORTNAME=	milkytracker
-PORTVERSION=	0.90.85
-PORTREVISION=	3
+PORTVERSION=	0.90.86
+PORTREVISION=	1
 CATEGORIES=	audio
 MASTER_SITES=	http://www.milkytracker.org/files/ \
-		CRITICAL/${PORTNAME}/${PORTVERSION}/${PORTREVISION}
+		CRITICAL
 
 MAINTAINER=	ehaupt@FreeBSD.org
 COMMENT=	Music creation tool inspired by Fast Tracker 2
@@ -15,8 +15,8 @@ LICENSE=	GPLv3
 
 NOT_FOR_ARCH=	powerpc
 
-LIB_DEPENDS+=	jack:${PORTSDIR}/audio/jack \
-		zzip:${PORTSDIR}/devel/zziplib
+LIB_DEPENDS+=	libjack.so:${PORTSDIR}/audio/jack \
+		libzzip.so:${PORTSDIR}/devel/zziplib
 
 USES=		pkgconfig
 GNU_CONFIGURE=	yes
@@ -40,7 +40,7 @@ post-install:
 		${STAGEDIR}${PREFIX}/share/pixmaps/${f:C/carton/milkytracker/}
 .endfor
 	${MKDIR} ${STAGEDIR}${DESKTOPDIR}
-	${INSTALL_DATA} ${WRKSRC}/${PORTNAME}.desktop ${STAGEDIR}${DESKTOPDIR}
+	${INSTALL_DATA} ${WRKSRC}/resources/${PORTNAME}.desktop ${STAGEDIR}${DESKTOPDIR}
 
 .if ${PORT_OPTIONS:MDOCS}
 	${MKDIR} ${STAGEDIR}${DOCSDIR}

@@ -123,6 +123,7 @@
     SUBDIR += gstreamer1-plugins-dv
     SUBDIR += gstreamer1-plugins-dvdread
     SUBDIR += gstreamer1-plugins-good
+    SUBDIR += gstreamer1-plugins-kate
     SUBDIR += gstreamer1-plugins-mpeg2dec
     SUBDIR += gstreamer1-plugins-mpeg2enc
     SUBDIR += gstreamer1-plugins-resindvd
@@ -133,6 +134,7 @@
     SUBDIR += gstreamer1-plugins-v4l2
     SUBDIR += gstreamer1-plugins-vpx
     SUBDIR += gstreamer1-plugins-x264
+    SUBDIR += gstreamer1-vaapi
     SUBDIR += gstreamermm
     SUBDIR += gtk-recordmydesktop
     SUBDIR += gtk-youtube-viewer
@@ -193,13 +195,13 @@
     SUBDIR += linux-f10-libtheora
     SUBDIR += linux-f10-libv4l
     SUBDIR += linux-huludesktop
-    SUBDIR += linux-ov511-kmod
     SUBDIR += linux-realplayer
     SUBDIR += linux-tsmuxer
     SUBDIR += linux-xmovie
     SUBDIR += linux_dvbwrapper-kmod
     SUBDIR += linux_v4l2wrapper-kmod
     SUBDIR += lives
+    SUBDIR += livestreamer
     SUBDIR += lsdvd
     SUBDIR += lxdvdrip
     SUBDIR += m2tstoavi
@@ -261,6 +263,7 @@
     SUBDIR += p5-Umph-Prompt
     SUBDIR += p5-Video-OpenQuicktime
     SUBDIR += phonon
+    SUBDIR += phonon-designerplugin
     SUBDIR += phonon-gstreamer
     SUBDIR += phonon-vlc
     SUBDIR += phonon-xine
@@ -279,18 +282,20 @@
     SUBDIR += pwcbsd
     SUBDIR += pwcview
     SUBDIR += py-enzyme
-    SUBDIR += py-guessit
+    SUBDIR += py-ffmpeg
     SUBDIR += py-gstreamer
+    SUBDIR += py-guessit
     SUBDIR += py-kaa-base
     SUBDIR += py-kaa-imlib2
     SUBDIR += py-kaa-metadata
-    SUBDIR += py-subliminal
+    SUBDIR += py-librtmp
     SUBDIR += py-mlt
     SUBDIR += py-openlp
     SUBDIR += py-periscope
     SUBDIR += py-pybmp
     SUBDIR += py-qt4-multimedia
     SUBDIR += py-qt4-phonon
+    SUBDIR += py-subliminal
     SUBDIR += py-tvnamer
     SUBDIR += pyjama
     SUBDIR += pymp
@@ -314,6 +319,7 @@
     SUBDIR += shell-fm
     SUBDIR += smile
     SUBDIR += smpeg
+    SUBDIR += smpeg2
     SUBDIR += smplayer
     SUBDIR += smplayer-skins
     SUBDIR += smplayer-themes
@@ -334,7 +340,6 @@
     SUBDIR += tivodecode
     SUBDIR += totem
     SUBDIR += totem-pl-parser
-    SUBDIR += tovid
     SUBDIR += transcode
     SUBDIR += tstools
     SUBDIR += tunapie
@@ -390,7 +395,6 @@
     SUBDIR += xbmc-addon-pvr
     SUBDIR += xbmc-addon-xvdr
     SUBDIR += xbmc-pvr
-    SUBDIR += xfce4-media
     SUBDIR += xfce4-parole
     SUBDIR += xfce4-xmms-plugin
     SUBDIR += xine

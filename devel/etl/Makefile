@@ -2,24 +2,25 @@
 # $FreeBSD$
 
 PORTNAME=	etl
-PORTVERSION=	0.04.15
+PORTVERSION=	0.04.17
 CATEGORIES=	devel lang
-MASTER_SITES=	SF/synfig/ETL/${PORTVERSION}
+MASTER_SITES=	SF/synfig/releases/${SYNFIG_VERSION}/source/
 DISTNAME=	ETL-${PORTVERSION}
 
 MAINTAINER=	dhn@FreeBSD.org
 COMMENT=	Voria Extended Class and Template Library
 
-USES=		gmake pathfix pkgconfig
+OPTIONS_DEFINE=	DOCS
+
+SYNFIG_VERSION=	0.64.1
+
+USES=	gmake pathfix pkgconfig
 GNU_CONFIGURE=	yes
 
-NO_STAGE=	yes
 post-install:
-.if !defined(NOPORTDOCS)
-	@${MKDIR} ${DOCSDIR}
+	@${MKDIR} ${STAGEDIR}${DOCSDIR}
 .for doc in AUTHORS ChangeLog INSTALL NEWS README
-	${INSTALL_DATA} ${WRKSRC}/${doc} ${DOCSDIR}
+	${INSTALL_DATA} ${WRKSRC}/${doc} ${STAGEDIR}${DOCSDIR}
 .endfor
-.endif
 
 .include <bsd.port.mk>

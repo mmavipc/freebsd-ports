@@ -2,8 +2,7 @@
 # $FreeBSD$
 
 PORTNAME=	ohai
-PORTVERSION=	6.16.0
-PORTREVISION=	1
+PORTVERSION=	6.18.0
 CATEGORIES=	sysutils rubygems
 MASTER_SITES=	RG
 
@@ -24,5 +23,4 @@ RUBYGEM_AUTOPLIST=	yes
 
 PLIST_FILES=	bin/ohai
 
-NO_STAGE=	yes
 .include <bsd.port.mk>

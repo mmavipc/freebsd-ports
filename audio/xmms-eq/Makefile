@@ -12,10 +12,9 @@ DISTNAME=	${PORTNAME}-xmms-${PORTVERSION}
 MAINTAINER=	ports@FreeBSD.org
 COMMENT=	Real-time graphical equalizer plugin for XMMS
 
-LIB_DEPENDS=	xmms:${PORTSDIR}/multimedia/xmms
+LIB_DEPENDS=	libxmms.so:${PORTSDIR}/multimedia/xmms
 
 USE_BZIP2=	yes
-NO_STAGE=	yes
 USE_GNOME=	gtk12
 GNU_CONFIGURE=	yes
 
@@ -46,10 +45,5 @@ post-patch:
 		s|-ffast-math||g' \
 		${CONFIGURE_WRKSRC}/${CONFIGURE_SCRIPT}
 .endif
-
-post-install:
-	@${ECHO_CMD}
-	@${CAT} ${PKGMESSAGE}
-	@${ECHO_CMD}
 
 .include <bsd.port.mk>

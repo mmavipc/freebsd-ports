@@ -3,7 +3,7 @@
 
 PORTNAME=	qgis
 PORTVERSION=	1.8.0
-PORTREVISION=	4
+PORTREVISION=	5
 CATEGORIES=	graphics geography
 MASTER_SITES=	http://qgis.org/downloads/ \
 		http://download.osgeo.org/qgis/src/
@@ -23,7 +23,7 @@ USE_BZIP2=	yes
 USE_PYTHON=	yes
 USES=		bison cmake
 USE_SQLITE=	yes
-USE_QT4=	gui svg xml network sql designer linguist_build \
+USE_QT4=	gui svg xml network sql designer testlib linguist_build \
 		qmake_build moc_build rcc_build uic_build
 
 USE_LDCONFIG=	yes

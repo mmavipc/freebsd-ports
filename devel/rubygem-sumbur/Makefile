@@ -9,10 +9,8 @@ MASTER_SITES=	RG
 MAINTAINER=	vg@FreeBSD.org
 COMMENT=	Consistent spreading for server balancing
 
-RUBY_VER=	1.9
 USE_RUBY=	yes
 USE_RUBYGEMS=	yes
 RUBYGEM_AUTOPLIST=	yes
 
-NO_STAGE=	yes
 .include <bsd.port.mk>

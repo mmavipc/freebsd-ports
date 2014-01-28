@@ -11,19 +11,19 @@ DISTNAME=	${PORTNAME}-${PORTVERSION}-src
 MAINTAINER=	wen@FreeBSD.org
 COMMENT=	API Library for Working with SBML File
 
-LIB_DEPENDS=	xml2.5:${PORTSDIR}/textproc/libxml2
+LIB_DEPENDS=	libxml2.so:${PORTSDIR}/textproc/libxml2
 
 OPTIONS_DEFINE=	PYTHON RUBY
 
 USE_GMAKE=	yes
 USE_ZIP=	yes
+USE_GCC=	any
 GNU_CONFIGURE=	yes
 USE_LDCONFIG=	yes
 WRKSRC=		${WRKDIR}/${PORTNAME}-${PORTVERSION}
 MAKE_JOBS_UNSAFE=	yes
 
 NO_STAGE=	yes
-.include <bsd.port.pre.mk>
 .include <bsd.port.options.mk>
 
 .if ${PORT_OPTIONS:MPYTHON}
@@ -56,4 +56,4 @@ post-install:
 		&& ${FIND} . -type d -exec ${MKDIR} ${EXAMPLESDIR}/\{} \; \
 		&& ${FIND} . -type f -exec ${INSTALL_DATA} \{} ${EXAMPLESDIR}/\{} \;
 .endif
-.include <bsd.port.post.mk>
+.include <bsd.port.mk>

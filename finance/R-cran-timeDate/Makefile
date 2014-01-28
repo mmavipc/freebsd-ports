@@ -3,7 +3,7 @@
 
 PORTNAME=	timeDate
 PORTVERSION=	3010.98
-PORTREVISION=	2
+PORTREVISION=	3
 CATEGORIES=	finance
 DISTNAME=	${PORTNAME}_${PORTVERSION}
 
@@ -13,8 +13,6 @@ COMMENT=	Chronological and Calendar Objects
 LICENSE=	GPLv2 GPLv3
 LICENSE_COMB=	dual
 
-USE_R_MOD=	yes
-R_MOD_AUTOPLIST=	yes
+USES=	cran:auto-plist
 
-NO_STAGE=	yes
 .include <bsd.port.mk>

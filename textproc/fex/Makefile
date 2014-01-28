@@ -10,14 +10,12 @@ MASTER_SITES=	http://semicomplete.googlecode.com/files/ \
 MAINTAINER=	zi@FreeBSD.org
 COMMENT=	A powerful field extraction tool
 
-LICENSE=	AL2
+LICENSE=	APACHE20
 
 MAKE_ENV+=	INSTALLMAN=${PREFIX}/man
 
-PLIST_FILES=	bin/fex
-MAN1=		fex.1
+PLIST_FILES=	bin/fex man/man1/fex.1.gz
 
-NO_STAGE=	yes
 post-patch:
 	@${REINPLACE_CMD} -e 's|CC=gcc|CC=${CC}|g' ${WRKSRC}/Makefile
 

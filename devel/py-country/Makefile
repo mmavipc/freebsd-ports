@@ -2,7 +2,7 @@
 # $FreeBSD$
 
 PORTNAME=	country
-PORTVERSION=	1.1
+PORTVERSION=	1.3
 CATEGORIES=	devel python
 MASTER_SITES=	CHEESESHOP
 MASTER_SITE_SUBDIR=source/p/pycountry
@@ -17,7 +17,7 @@ USE_PYTHON=	yes
 USES=		gettext:build
 USE_PYDISTUTILS=	easy_install
 PYDISTUTILS_PKGNAME=	pycountry
-PYTHON_PY3K_PLIST_HACK=	yes
+PYDISTUTILS_AUTOPLIST=	yes
 
 NO_STAGE=	yes
 

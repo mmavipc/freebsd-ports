@@ -2,7 +2,7 @@
 # $FreeBSD$
 
 PORTNAME=	rubytter
-PORTVERSION=	1.4.2
+PORTVERSION=	1.5.1
 CATEGORIES=	net rubygems
 MASTER_SITES=	RG
 
@@ -17,5 +17,4 @@ USE_RUBYGEMS=	yes
 USE_RAKE=	yes
 RUBYGEM_AUTOPLIST=	yes
 
-NO_STAGE=	yes
 .include <bsd.port.mk>

@@ -8,7 +8,7 @@ CATEGORIES=	games
 MASTER_SITES=	FRUGALWARE/games-extra/${PORTNAME}
 DISTNAME=	${PORTNAME}-${PORTVERSION}-1
 
-MAINTAINER=	c.petrik.sosa@gmail.com
+MAINTAINER=	ports@FreeBSD.org
 COMMENT=	Arcade game that relies on quick reflexes
 
 LICENSE=	GPLv2
@@ -19,6 +19,8 @@ USE_SDL=	mixer image ttf net
 USES=		gmake
 
 BROKEN=		Does not build
+DEPRECATED=	Broken for more then 6 month
+EXPIRATION_DATE=	2014-02-27
 
 INSTALLS_ICONS=	yes
 

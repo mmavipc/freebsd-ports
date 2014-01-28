@@ -21,27 +21,27 @@ INSIGHT_DESC=	Tcl/Tk GUI (experimental!)
 CONFLICTS?=	gdb-[7-9]*
 USE_BZIP2=	yes
 USE_GCC=	any
-USE_GMAKE=	yes
-USES=		gettext iconv
+USES=		gettext iconv gmake
 GNU_CONFIGURE=	yes
 CONFIGURE_ENV+=	CONFIGURED_M4=m4 CONFIGURED_BISON=byacc
 CONFIGURE_ARGS=	--program-suffix=${PORTVERSION:S/.//g} \
+		--disable-werror \
 		--enable-target=all \
 		--enable-tui ${ICONV_CONFIGURE_ARG}
 CFLAGS:=	${CFLAGS:C/ +$//}	# blanks at EOL creep in sometimes
 CFLAGS+=	-DRL_NO_COMPAT
 EXCLUDE=	dejagnu expect readline sim texinfo intl
 EXTRACT_AFTER_ARGS=	${EXCLUDE:S/^/--exclude /}
-VER=	${PORTVERSION:S/.//}
+VER=		${PORTVERSION:S/.//}
 PLIST_SUB=	VER=${VER}
-MAN1=	gdb${VER}.1
+MAN1=		gdb${VER}.1
 
 NO_STAGE=	yes
 .include <bsd.port.options.mk>
 
 .if ${PORT_OPTIONS:MINSIGHT}
 PKGNAMESUFFIX=	-insight
-USE_TK=	84+
+USE_TK=		84+
 LIB_DEPENDS=	itk:${PORTSDIR}/x11-toolkits/itk
 RUN_DEPENDS=	${LOCALBASE}/lib/iwidgets:${PORTSDIR}/x11-toolkits/iwidgets
 DISTFILES+=	gdbtk-6.6${EXTRACT_SUFX}:gdbtk
@@ -73,11 +73,9 @@ PLIST_SUB+=	INSIGHT='@comment '
 CONFLICTS+=	gdb-insight*
 .endif
 
-.include <bsd.port.pre.mk>
-
-.if ${ARCH} == "ia64" || ${ARCH} == "powerpc"
-BROKEN=		Does not configure on ia64 or powerpc
-.endif
+.for a in ia64 powerpc
+BROKEN_${a}=	Does not configure on ia64 or powerpc
+.endfor
 
 .if ${ARCH} == "amd64"
 CONFIGURE_TARGET=	x86_64-portbld-freebsd${OSREL}
@@ -113,4 +111,4 @@ do-install:
 			${PREFIX}/lib/insight1.0
 .endif
 
-.include <bsd.port.post.mk>
+.include <bsd.port.mk>

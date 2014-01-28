@@ -61,11 +61,9 @@ OPTIONS_DEFAULT=VORBIS
 .include <bsd.port.options.mk>
 
 .if ${PORT_OPTIONS:MVORBIS}
-LIB_DEPENDS+=	vorbisfile.6:${PORTSDIR}/audio/libvorbis
+LIB_DEPENDS+=	libvorbisfile.so:${PORTSDIR}/audio/libvorbis
 CONFIGURE_ENV+=	OGG_SUPPORT=YES
 .endif
-
-.include <bsd.port.pre.mk>
 
 .if !exists(${SRC_BASE}/sys/Makefile)
 IGNORE=		requires kernel source to be installed
@@ -127,4 +125,4 @@ do-install:
 	@${SH} ${PKGINSTALL} ${PKGNAME} POST-INSTALL
 	@${CAT} ${PKGMESSAGE}
 
-.include <bsd.port.post.mk>
+.include <bsd.port.mk>

@@ -10,35 +10,34 @@ MASTER_SITES=	http://www.sourcefiles.org/Games/Sports/Miscellaneous/
 MAINTAINER=	ports@FreeBSD.org
 COMMENT=	Shufflepuck Cafe Clone
 
-LIB_DEPENDS=	jpeg:${PORTSDIR}/graphics/jpeg \
-		png15:${PORTSDIR}/graphics/png \
-		vorbis:${PORTSDIR}/audio/libvorbis \
-		freetype:${PORTSDIR}/print/freetype2
+LICENSE=	GPLv2
+
+LIB_DEPENDS=	libjpeg.so:${PORTSDIR}/graphics/jpeg \
+		libpng15.so:${PORTSDIR}/graphics/png \
+		libvorbis.so:${PORTSDIR}/audio/libvorbis \
+		libfreetype.so:${PORTSDIR}/print/freetype2
 
 USE_SDL=	sdl
-USE_GMAKE=	yes
+USES=		gmake
 ALL_TARGET=	${PORTNAME}
 MAKE_JOBS_UNSAFE=	yes
 
-CFLAGS+=	-I${LOCALBASE}/include/libpng15
-
-MANCOMPRESSED=	yes
-
-PLIST_FILES=	bin/${PORTNAME}
-
-MAN6=		${PORTNAME}.6
-
-NO_STAGE=	yes
-.include <bsd.port.pre.mk>
+PLIST_FILES=	bin/${PORTNAME} man/man6/tuxpuck.6.gz
 
 post-patch:
-	cd ${WRKSRC}; \
-	${REINPLACE_CMD} 's|timer_create|_timer_create|g' \
-	tuxpuck.c video.c timer.c intro.c tuxpuck.h
-	${REINPLACE_CMD} -e 's|sdl-config|$$(SDL_CONFIG)|g' ${WRKSRC}/utils/Makefile
+.for i in intro.c timer.c tuxpuck.c tuxpuck.h video.c
+	@${REINPLACE_CMD} -e \
+		's|timer_create|_timer_create|g' ${WRKSRC}/${i}
+.endfor
+.for i in data utils
+	@${REINPLACE_CMD} -e \
+		's|^CC|#CC| ; \
+		 s|^CFLAGS|#CFLAGS| ; \
+		 s|sdl-config|$$(SDL_CONFIG)|' ${WRKSRC}/${i}/Makefile
+.endfor
 
 do-install:
-	${INSTALL_PROGRAM} ${WRKSRC}/${PORTNAME} ${PREFIX}/bin
-	${INSTALL_MAN} ${WRKSRC}/man/${MAN6}.gz ${MAN6PREFIX}/man/man6
+	${INSTALL_PROGRAM} ${WRKSRC}/${PORTNAME} ${STAGEDIR}${PREFIX}/bin
+	${INSTALL_MAN} ${WRKSRC}/man/tuxpuck.6.gz ${STAGEDIR}${MAN6PREFIX}/man/man6
 
-.include <bsd.port.post.mk>
+.include <bsd.port.mk>

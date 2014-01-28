@@ -17,16 +17,16 @@ LIB_DEPENDS=	libgsl.so:${PORTSDIR}/math/gsl \
 # 		qwt.5:${PORTSDIR}/x11-toolkits/qwt5 \
 # 		qwtplot3d-qt4:${PORTSDIR}/math/qwtplot3d-qt4
 
-USES=		gmake qmake
+USES=		dos2unix gmake qmake
 USE_BZIP2=	yes
 USE_QT4=	gui opengl svg qt3support network assistantclient \
-		moc_build qmake_build rcc_build
+		moc_build rcc_build
 USE_GL=		glu
 QMAKE_ARGS+=	LOCALBASE=${LOCALBASE} PYTHON_CMD=${PYTHON_CMD}
-USE_DOS2UNIX=	*.pro
+DOS2UNIX_GLOB=	*.pro
 
 DESKTOP_ENTRIES="QtiPlot" "Data analysis and plotting" \
-		"${DATADIR}/qtiplot.png" \
+		"${PREFIX}/share/pixmaps/qtiplot.png" \
 		"qtiplot" "" true
 
 OPTIONS_DEFINE=	DOCS PYTHON NLS DEBUG
@@ -96,12 +96,12 @@ post-patch:
 
 pre-configure:
 .if ${PORT_OPTIONS:MNLS}
-	cd ${WRKSRC}/qtiplot && ${LOCALBASE}/bin/lrelease-qt4 -compress qtiplot.pro
+	cd ${WRKSRC}/qtiplot && ${LRELEASE} -compress qtiplot.pro
 .endif
 
 post-install:
 	${STRIP_CMD} ${STRIP_FILES:S,^,${STAGEDIR}${PREFIX}/,}
-	${INSTALL_DATA} ${WRKSRC}/qtiplot_logo.png ${STAGEDIR}${DATADIR}/qtiplot.png
+	${INSTALL_DATA} ${WRKSRC}/qtiplot_logo.png ${STAGEDIR}${PREFIX}share/pixmaps/qtiplot.png
 .if ${PORT_OPTIONS:MPYTHON}
 .for s in qtiplotrc.py qtiUtil.py
 	cd ${WRKSRC}/qtiplot && ${PYTHON_CMD} -c "import py_compile; py_compile.compile('${s}')"

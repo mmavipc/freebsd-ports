@@ -3,7 +3,7 @@
 
 PORTNAME=	DCluster
 DISTVERSION=	0.2-6
-PORTREVISION=	3
+PORTREVISION=	4
 CATEGORIES=	science
 DISTNAME=	${PORTNAME}_${DISTVERSION}
 
@@ -15,8 +15,6 @@ LICENSE_COMB=	dual
 
 RUN_DEPENDS=	R-cran-spdep>0:${PORTSDIR}/math/R-cran-spdep
 
-USE_R_MOD=	yes
-R_MOD_AUTOPLIST=	yes
+USES=	cran:auto-plist
 
-NO_STAGE=	yes
 .include <bsd.port.mk>

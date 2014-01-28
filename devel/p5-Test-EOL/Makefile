@@ -8,7 +8,7 @@ MASTER_SITES=	CPAN
 MASTER_SITE_SUBDIR=	CPAN:BOBTFISH
 PKGNAMEPREFIX=	p5-
 
-MAINTAINER=	milki@rescomp.berkeley.edu
+MAINTAINER=	milki@FreeBSD.org
 COMMENT=	Check the correct line endings in your project
 
 LICENSE=	ART10 GPLv1
@@ -21,7 +21,4 @@ TEST_DEPENDS=	p5-Pod-Coverage>=1.08:${PORTSDIR}/devel/p5-Pod-Coverage \
 USES=		perl5
 USE_PERL5=	configure
 
-MAN3=		Test::EOL.3
-
-NO_STAGE=	yes
 .include <bsd.port.mk>

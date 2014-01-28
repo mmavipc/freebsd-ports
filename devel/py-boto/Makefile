@@ -2,7 +2,7 @@
 # $FreeBSD$
 
 PORTNAME=	boto
-PORTVERSION=	2.14.0
+PORTVERSION=	2.23.0
 CATEGORIES=	devel python
 MASTER_SITES=	CHEESESHOP
 PKGNAMEPREFIX=	${PYTHON_PKGNAMEPREFIX}
@@ -12,10 +12,10 @@ COMMENT=	Python interface to Amazon Web Services
 
 LICENSE=	MIT
 
-USE_PYTHON=	2
-USE_PYDISTUTILS=easy_install
+USE_PYTHON=		2
+USE_PYDISTUTILS=	yes
+PYDISTUTILS_AUTOPLIST=	yes
 
 CONFLICTS=	p5-Net-Amazon-Route53-[0-9]*
-NO_STAGE=	yes
 
 .include <bsd.port.mk>

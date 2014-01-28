@@ -2,7 +2,7 @@
 # $FreeBSD$
 
 PORTNAME=	lxml
-PORTVERSION=	3.2.3
+PORTVERSION=	3.2.5
 CATEGORIES=	devel python
 MASTER_SITES=	CHEESESHOP
 PKGNAMEPREFIX=	${PYTHON_PKGNAMEPREFIX}
@@ -10,22 +10,20 @@ PKGNAMEPREFIX=	${PYTHON_PKGNAMEPREFIX}
 MAINTAINER=	wg@FreeBSD.org
 COMMENT=	Pythonic binding for the libxml2 and libxslt libraries
 
-LICENSE=	BSD
+LICENSE=	BSD3CLAUSE
 
 LIB_DEPENDS=	libxml2.so:${PORTSDIR}/textproc/libxml2 \
 		libxslt.so:${PORTSDIR}/textproc/libxslt
 
 USE_PYTHON=	yes
 USE_PYDISTUTILS=yes
-PYTHON_PY3K_PLIST_HACK=	yes
+PYDISTUTILS_AUTOPLIST=	yes
 
 DOCSDIR=	${PREFIX}/share/doc/py-${PORTNAME}
 DOCS_FILES=	CHANGES.txt CREDITS.txt TODO.txt README.rst
+PORTDOCS=	*
 
 OPTIONS_DEFINE=	DOCS
-
-post-patch:
-	@${REINPLACE_CMD} -e 's|setuptools|distutils.core|' ${WRKSRC}/${PYSETUP}
 
 post-install:
 	@${MKDIR} ${STAGEDIR}${DOCSDIR}

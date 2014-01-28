@@ -12,12 +12,12 @@ DISTNAME=	xmms-${PORTNAME}-${PORTVERSION}
 MAINTAINER=	ports@FreeBSD.org
 COMMENT=	Crossfading/Gapless Plugin
 
-LIB_DEPENDS?=	xmms.4:${PORTSDIR}/multimedia/xmms
+LIB_DEPENDS?=	libxmms.so:${PORTSDIR}/multimedia/xmms
 
 HAS_CONFIGURE=	yes
 USE_CSTD=	gnu89
-NO_STAGE=	yes
 USES=		pkgconfig
+
 APP?=		xmms
 .if ${APP} == bmp
 PORTVERSION=	0.3.12
@@ -29,23 +29,20 @@ PLIST_FILES=	${PLUGDIR}/libcrossfade.so
 DOCSDIR?=	${PREFIX}/share/doc/${UNIQUENAME}
 CONFIGURE_ARGS+=	--enable-player=${APP}
 
-.ifndef WITHOUT_SAMPLERATE
-LIB_DEPENDS+=	samplerate.1:${PORTSDIR}/audio/libsamplerate
-CPPFLAGS+=	-I${LOCALBASE}/include
-LDFLAGS+=	-L${LOCALBASE}/lib
-CONFIGURE_ARGS+=--enable-samplerate
-.endif
+OPTIONS_DEFINE=	DOCS SAMPLERATE
+SAMPLERATE_LIB_DEPENDS=	libsamplerate.so:${PORTSDIR}/audio/libsamplerate
+SAMPLERATE_CPPFLAGS=	-I${LOCALBASE}/include
+SAMPLERATE_LDFLAGS=		-L${LOCALBASE}/lib
+SAMPLERATE_CONFIGURE_ENABLE=	samplerate
 
 post-patch:
 	@${REINPLACE_CMD} -e '/objformat=/s|aout|elf|; \
 		s|dummy audacious|&2|g' ${WRKSRC}/configure
 
 do-install:
-	@${MKDIR} ${PREFIX}/${PLUGDIR}/
-	${INSTALL_PROGRAM} ${WRKSRC}/.libs/libcrossfade.so ${PREFIX}/${PLUGDIR}/
-.ifndef NOPORTDOCS
-	@${INSTALL} -d ${DOCSDIR}/
-	@${INSTALL_DATA} ${WRKSRC}/README ${DOCSDIR}/
-.endif
+	@${MKDIR} ${STAGEDIR}${PREFIX}/${PLUGDIR}
+	${INSTALL_PROGRAM} ${WRKSRC}/.libs/libcrossfade.so ${STAGEDIR}${PREFIX}/${PLUGDIR}
+	@${MKDIR} ${STAGEDIR}${DOCSDIR}
+	${INSTALL_DATA} ${WRKSRC}/README ${STAGEDIR}${DOCSDIR}
 
 .include <bsd.port.mk>

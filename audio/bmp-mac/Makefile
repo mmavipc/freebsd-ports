@@ -12,24 +12,27 @@ DISTNAME=	${PKGNAMEPREFIX}${PORTNAME}-${PORTVERSION}
 MAINTAINER=	ports@FreeBSD.org
 COMMENT=	Monkey's Audio Codec non-win32 port
 
-LIB_DEPENDS=	beep.2:${PORTSDIR}/multimedia/beep-media-player \
-		mac.2:${PORTSDIR}/audio/mac
+LIB_DEPENDS=	libmac.so:${PORTSDIR}/audio/mac \
+		libbeep.so:${PORTSDIR}/multimedia/beep-media-player
 
-NO_STAGE=	yes
 USES=		gmake pkgconfig
-GNU_CONFIGURE=	yes
-USE_AUTOTOOLS=	autoconf libtool
-CPPFLAGS+=	"-I${LOCALBASE}/include"
-PLUGDIR=	lib/bmp/Input
-PLUGFILE=	lib${PKGNAMEPREFIX}${PORTNAME}.so
-PLIST_FILES=	${PLUGDIR}/${PLUGFILE}
+USE_AUTOTOOLS=	libtoolize aclocal automake autoconf
+LIBTOOLIZE_ARGS=--force --copy 
+AUTOMAKE_ARGS=	--add-missing --copy 
+
+CPPFLAGS+=	-I${LOCALBASE}/include
+LDFLAGS+=	-L${LOCALBASE}/lib
+
+PLIST_FILES=	lib/bmp/Input/libbmp-mac.so
 
 post-patch:
-	@${FIND} ${WRKSRC} -name Makefile.in | ${XARGS} ${REINPLACE_CMD} -e \
-		's|-D.*_DISABLE_DEPRECATED||g'
+	@${REINPLACE_CMD} -e \
+		's|-D.*_DISABLE_DEPRECATED|| ; \
+		 s|@BMP_LIBS@|@GTK_LIBS@|' ${WRKSRC}/src/Makefile.am
 
 do-install:
-	@${MKDIR} ${PREFIX}/${PLUGDIR}
-	${INSTALL_PROGRAM} ${WRKSRC}/src/.libs/${PLUGFILE} ${PREFIX}/${PLUGDIR}/
+	@${MKDIR} ${STAGEDIR}${PREFIX}/lib/bmp/Input
+	(cd ${WRKSRC}/src/.libs && ${INSTALL_LIB} libbmp-mac.so \
+		${STAGEDIR}${PREFIX}/lib/bmp/Input)
 
 .include <bsd.port.mk>

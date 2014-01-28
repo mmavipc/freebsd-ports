@@ -12,9 +12,9 @@ EXTRACT_SUFX=	# empty
 MAINTAINER=	sangwoos@gmail.com
 COMMENT=	OO, component based, framework for molecular dynamics (MD) simulations
 
-LIB_DEPENDS=	png15:${PORTSDIR}/graphics/png \
-		jpeg.11:${PORTSDIR}/graphics/jpeg \
-		tiff.4:${PORTSDIR}/graphics/tiff
+LIB_DEPENDS=	libpng15.so:${PORTSDIR}/graphics/png \
+		libjpeg.so:${PORTSDIR}/graphics/jpeg \
+		libtiff.so:${PORTSDIR}/graphics/tiff
 
 GNU_CONFIGURE=	yes
 USE_XORG=	xmu xt sm ice xext x11 xi
@@ -31,7 +31,6 @@ OPTIONS_DEFINE=	GLUT
 OPTIONS_DEFAULT=	GLUT
 
 NO_STAGE=	yes
-.include <bsd.port.pre.mk>
 .include <bsd.port.options.mk>
 
 .if ${PORT_OPTIONS:MGLUT}
@@ -48,4 +47,4 @@ post-install:
 		${CPIO} -pdmu -R ${SHAREOWN}:${SHAREGRP} ${EXAMPLESDIR}
 .endif
 
-.include <bsd.port.post.mk>
+.include <bsd.port.mk>

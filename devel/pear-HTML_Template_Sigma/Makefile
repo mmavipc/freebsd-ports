@@ -2,7 +2,7 @@
 # $FreeBSD$
 
 PORTNAME=	HTML_Template_Sigma
-PORTVERSION=	1.2.0
+PORTVERSION=	1.3.0
 CATEGORIES=	devel www pear
 
 MAINTAINER=	miwi@FreeBSD.org
@@ -19,7 +19,6 @@ do-install-tests-msg: .USE
 	@${ECHO_MSG} "     (These tests require PHPUnit - see"
 	@${ECHO_MSG} "     <http://pear.php.net/package-info.php?package=PHPUnit>;;)."
 
-NO_STAGE=	yes
 .include <bsd.port.pre.mk>
 .include "${PORTSDIR}/devel/pear/bsd.pear.mk"
 .include <bsd.port.post.mk>

@@ -21,19 +21,14 @@ NUMPY_DESC=	Enable array support via NumPy
 
 PYEASYINSTALL_ARCHDEP=	yes
 PYDISTUTILS_PKGNAME=	${PORTNAME:U}
-USE_PYTHON=	-2.7
+USE_PYTHON=	2
 USE_PYDISTUTILS=easy_install
 WRKSRC=		${WRKDIR}/${DISTNAME}/swig/python
 
-NO_STAGE=	yes
-.include <bsd.port.options.mk>
-
-.if ${PORT_OPTIONS:MNUMPY}
-BUILD_DEPENDS+=	${PKGNAMEPREFIX}numpy>=1.0.0:${PORTSDIR}/math/py-numpy
-RUN_DEPENDS+=	${PKGNAMEPREFIX}numpy>=1.0.0:${PORTSDIR}/math/py-numpy
-.endif
+NUMPY_BUILD_DEPENDS=	${PKGNAMEPREFIX}numpy>=1.0.0:${PORTSDIR}/math/py-numpy
+NUMPY_RUN_DEPENDS=	${PKGNAMEPREFIX}numpy>=1.0.0:${PORTSDIR}/math/py-numpy
 
 post-install:
-	${INSTALL_SCRIPT} ${WRKSRC}/scripts/*.py ${PREFIX}/bin/
+	${INSTALL_SCRIPT} ${WRKSRC}/scripts/*.py ${STAGEDIR}${PREFIX}/bin/
 
 .include <bsd.port.mk>

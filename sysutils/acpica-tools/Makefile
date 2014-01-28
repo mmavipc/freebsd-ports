@@ -1,7 +1,7 @@
 # $FreeBSD$
 
 PORTNAME=	acpica
-PORTVERSION=	20130927
+PORTVERSION=	20140114
 CATEGORIES=	sysutils devel
 MASTER_SITES=	https://acpica.org/sites/acpica/files/ \
 		LOCAL
@@ -12,29 +12,26 @@ DISTNAME=	${PORTNAME}-unix2-${PORTVERSION}
 MAINTAINER=	jkim@FreeBSD.org
 COMMENT=	Tools from the ACPI Component Architecture (ACPICA) project
 
-LICENSE=	BSD
+LICENSE=	BSD3CLAUSE
 
-MAKE_ARGS=	HOST=_FreeBSD INSTALLFLAGS="${INSTALL_PROGRAM:S/^${INSTALL}//}"
 USES=		gmake
-WRKSRC_SUBDIR=	generate/unix
-LFLAGS=		-i -s
 
 # XXX 20130927 broke support for yacc.
 USES+=		bison
-YACC=		bison
-YFLAGS=		-y
+YACC=		${LOCALBASE}/bin/bison
 
-# XXX 20130927 did not include Makefile.config.
-post-extract:
-	@${CP} -f ${FILESDIR}/Makefile.config ${WRKSRC}
+ACPICA_TOOLS=	acpibin acpidump acpiexec acpihelp acpinames acpisrc
+ACPICA_TOOLS+=	acpixtract iasl
+#ACPICA_TOOLS+=	acpiexamples
 
-post-patch:
-	@${REINPLACE_CMD} -e 's|^CC[[:blank:]]*=.*|CC = ${CC}|' \
-	    -e 's|^INSTALL[[:blank:]]*=.*|INSTALL = ${INSTALL}|g' \
-	    -e 's|^LEX[[:blank:]]*=.*|LEX = ${FLEX}|' \
-	    -e 's|^LFLAGS[[:blank:]]*\+=.*|LFLAGS = ${LFLAGS}|' \
-	    -e 's|^YACC[[:blank:]]*=.*|YACC = ${YACC}|' \
-	    -e 's|^YFLAGS[[:blank:]]*\+=.*|YFLAGS = ${YFLAGS}|' \
-	    ${WRKSRC}/Makefile.config
+PLIST_FILES=	${ACPICA_TOOLS:S,^,bin/,}
+WRKSRC_SUBDIR=	generate/unix
+
+MAKE_ARGS=	HOST=_FreeBSD NOOPT=TRUE PROGS="${ACPICA_TOOLS}"
+MAKE_ARGS+=	CC="${CC}" LEX="${FLEX}" YACC="${YACC}"
+
+do-install:
+	@${INSTALL_PROGRAM} ${ACPICA_TOOLS:S,^,${WRKSRC}/bin/,} \
+	    ${STAGEDIR}${PREFIX}/bin
 
 .include <bsd.port.mk>

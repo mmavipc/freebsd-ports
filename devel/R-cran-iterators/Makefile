@@ -3,17 +3,15 @@
 
 PORTNAME=	iterators
 PORTVERSION=	1.0.6
-PORTREVISION=	6
+PORTREVISION=	7
 CATEGORIES=	devel
 DISTNAME=	${PORTNAME}_${PORTVERSION}
 
 MAINTAINER=	tota@FreeBSD.org
 COMMENT=	Iterator construct for R
 
-LICENSE=	AL2
+LICENSE=	APACHE20
 
-USE_R_MOD=	yes
-R_MOD_AUTOPLIST=	yes
+USES=	cran:auto-plist
 
-NO_STAGE=	yes
 .include <bsd.port.mk>

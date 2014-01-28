@@ -98,6 +98,7 @@
     SUBDIR += crip
     SUBDIR += cripple
     SUBDIR += csound
+    SUBDIR += csound6
     SUBDIR += ctronome
     SUBDIR += cuberok
     SUBDIR += cue2toc
@@ -226,13 +227,11 @@
     SUBDIR += gnomoradio
     SUBDIR += gnormalize
     SUBDIR += gnuitar
-    SUBDIR += gnump3d
     SUBDIR += gnupod
     SUBDIR += gnustep-cdplayer
     SUBDIR += gogglesmm
     SUBDIR += goobox
     SUBDIR += gqmpeg
-    SUBDIR += gqmpeg-devel
     SUBDIR += gqradio
     SUBDIR += gramofile
     SUBDIR += grip
@@ -260,8 +259,8 @@
     SUBDIR += gstreamer-plugins-mp3
     SUBDIR += gstreamer-plugins-musepack
     SUBDIR += gstreamer-plugins-nas
-    SUBDIR += gstreamer-plugins-opus
     SUBDIR += gstreamer-plugins-ogg
+    SUBDIR += gstreamer-plugins-opus
     SUBDIR += gstreamer-plugins-pulse
     SUBDIR += gstreamer-plugins-shout2
     SUBDIR += gstreamer-plugins-sidplay
@@ -277,7 +276,6 @@
     SUBDIR += gstreamer1-plugins-amrnb
     SUBDIR += gstreamer1-plugins-amrwbdec
     SUBDIR += gstreamer1-plugins-cdparanoia
-    SUBDIR += gstreamer1-plugins-celt
     SUBDIR += gstreamer1-plugins-faac
     SUBDIR += gstreamer1-plugins-faad
     SUBDIR += gstreamer1-plugins-flac
@@ -313,6 +311,7 @@
     SUBDIR += hs-OpenAL
     SUBDIR += hs-libmpd
     SUBDIR += hydrogen
+    SUBDIR += icecast-kh
     SUBDIR += icecast2
     SUBDIR += icegenerator
     SUBDIR += ices
@@ -344,6 +343,7 @@
     SUBDIR += kaudiocreator
     SUBDIR += kexis
     SUBDIR += kid3-kde4
+    SUBDIR += kid3-qt4
     SUBDIR += kio-audiocd
     SUBDIR += kmix
     SUBDIR += kscd
@@ -408,6 +408,7 @@
     SUBDIR += libshout2
     SUBDIR += libsidplay
     SUBDIR += libsidplay2
+    SUBDIR += libsidplayfp
     SUBDIR += libsmf
     SUBDIR += libsndfile
     SUBDIR += libtremor
@@ -440,7 +441,6 @@
     SUBDIR += linuxsampler
     SUBDIR += liquidsoap
     SUBDIR += listener
-    SUBDIR += liteamp
     SUBDIR += lmms
     SUBDIR += lpac
     SUBDIR += lua51-mpd
@@ -453,6 +453,7 @@
     SUBDIR += malint
     SUBDIR += mangler
     SUBDIR += maplay
+    SUBDIR += mate-media
     SUBDIR += mbox
     SUBDIR += mbrolavox
     SUBDIR += mcplay
@@ -495,7 +496,6 @@
     SUBDIR += mp3unicode
     SUBDIR += mp3val
     SUBDIR += mp3wrap
-    SUBDIR += mpc
     SUBDIR += mpdas
     SUBDIR += mpdbrowser
     SUBDIR += mpdcon
@@ -514,6 +514,7 @@
     SUBDIR += musica
     SUBDIR += musicbox-tag-editor
     SUBDIR += musiccontrol
+    SUBDIR += musicpc
     SUBDIR += musicpd
     SUBDIR += mythplugin-mythmusic
     SUBDIR += napster
@@ -534,6 +535,7 @@
     SUBDIR += optimfrog
     SUBDIR += opus
     SUBDIR += opus-tools
+    SUBDIR += opusfile
     SUBDIR += osalp
     SUBDIR += osd-lyrics
     SUBDIR += osdmixer
@@ -606,8 +608,6 @@
     SUBDIR += py-al
     SUBDIR += py-ao
     SUBDIR += py-apetag
-    SUBDIR += py-pyacoustid
-    SUBDIR += py-pyaudio
     SUBDIR += py-cddb
     SUBDIR += py-discogs-client
     SUBDIR += py-eyed3
@@ -622,6 +622,8 @@
     SUBDIR += py-mutagen
     SUBDIR += py-ogg
     SUBDIR += py-openal
+    SUBDIR += py-pyacoustid
+    SUBDIR += py-pyaudio
     SUBDIR += py-pylast
     SUBDIR += py-pyliblo
     SUBDIR += py-shout
@@ -665,8 +667,8 @@
     SUBDIR += ruby-taglib
     SUBDIR += ruby-xmms2
     SUBDIR += rubygem-librmpd
-    SUBDIR += rubygem-ogginfo
     SUBDIR += rubygem-ruby-mp3info
+    SUBDIR += rubygem-ruby-ogginfo
     SUBDIR += rubygem-shout
     SUBDIR += rubyripper
     SUBDIR += s3mod

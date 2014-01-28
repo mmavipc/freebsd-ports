@@ -14,7 +14,6 @@ LICENSE=	LGPL20
 
 USE_QT4=	corelib dbus gui \
 		moc_build qmake_build rcc_build uic_build
-FETCH_ARGS=	-Fpr
 USE_BZIP2=	yes
 USES=		cmake:outsource
 USE_LDCONFIG=	yes
@@ -25,7 +24,6 @@ GENDOCS_DESC=	Build documentation (requires doxygen)
 OPTIONS_DEFAULT+=	GENDOCS
 .endif
 
-NO_STAGE=	yes
 .include <bsd.port.options.mk>
 
 .if ${PORT_OPTIONS:MGENDOCS}

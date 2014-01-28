@@ -2,9 +2,9 @@
 # $FreeBSD$
 
 PORTNAME=	brebis
-PORTVERSION=	0.7
+PORTVERSION=	0.9
 CATEGORIES=	sysutils archivers
-MASTER_SITES=	http://brebisproject.org/attachments/download/8/ \
+MASTER_SITES=	http://brebisproject.org/attachments/download/18/ \
 		LOCAL/martymac
 
 MAINTAINER=	martymac@FreeBSD.org
@@ -15,21 +15,17 @@ LICENSE=	GPLv3
 USE_PYTHON=	3.3+
 USE_PYDISTUTILS=	yes
 
-PLIST_SUB+=	PYTHON_SUFFIX=${PYTHON_SUFFIX}
+PLIST_SUB+=	PYTHON_SUFFIX=${PYTHON_SUFFIX} \
+		PYDISTUTILS_EGGINFO=${PYDISTUTILS_EGGINFO}
+PYDISTUTILS_NOEGGINFO=	yes
 
 PORTDOCS=	README
-
-.include <bsd.port.pre.mk>
 
 post-patch:
 	@${REINPLACE_CMD} "s|'share','man'|'${MANPREFIX}/man'|" ${WRKSRC}/setup.py
 
 post-install:
-.if ${PORT_OPTIONS:MDOCS}
 	${MKDIR} ${STAGEDIR}${DOCSDIR}
-.for doc in ${PORTDOCS}
-	${INSTALL_DATA} ${WRKSRC}/${doc} ${STAGEDIR}${DOCSDIR}
-.endfor
-.endif
+	${INSTALL_DATA} ${WRKSRC}/README ${STAGEDIR}${DOCSDIR}
 
-.include <bsd.port.post.mk>
+.include <bsd.port.mk>

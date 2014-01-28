@@ -58,7 +58,6 @@
     SUBDIR += dbow
     SUBDIR += dbtool
     SUBDIR += dbview
-    SUBDIR += drizzle
     SUBDIR += emma
     SUBDIR += epgsql
     SUBDIR += erlang-mysql
@@ -75,9 +74,9 @@
     SUBDIR += flare
     SUBDIR += fortytwo-bdb
     SUBDIR += fpc-dblib
+    SUBDIR += fpc-fpindexer
     SUBDIR += fpc-gdbm
     SUBDIR += fpc-ibase
-    SUBDIR += fpc-fpindexer
     SUBDIR += fpc-mysql
     SUBDIR += fpc-odbc
     SUBDIR += fpc-oracle
@@ -97,7 +96,6 @@
     SUBDIR += gnats4
     SUBDIR += gnatsweb4
     SUBDIR += godis
-    SUBDIR += gomysql
     SUBDIR += gosqlite3
     SUBDIR += gqlplus
     SUBDIR += grass
@@ -121,10 +119,10 @@
     SUBDIR += jasperserver
     SUBDIR += java-mybatis
     SUBDIR += jdb
-    SUBDIR += jdbc-oracle8i
-    SUBDIR += jdbc-oracle9i
     SUBDIR += jdbc-oracle10g
     SUBDIR += jdbc-oracle11g
+    SUBDIR += jdbc-oracle8i
+    SUBDIR += jdbc-oracle9i
     SUBDIR += jdbm2
     SUBDIR += jrobin
     SUBDIR += jrrd
@@ -203,7 +201,6 @@
     SUBDIR += memcacheq
     SUBDIR += mergeant
     SUBDIR += metakit
-    SUBDIR += mird
     SUBDIR += mongodb
     SUBDIR += mrtg-mysql-load
     SUBDIR += msql
@@ -264,6 +261,7 @@
     SUBDIR += p5-AnyEvent-BDB
     SUBDIR += p5-AnyEvent-CouchDB
     SUBDIR += p5-AnyEvent-DBD-Pg
+    SUBDIR += p5-AnyEvent-Memcached
     SUBDIR += p5-AnyEvent-Redis
     SUBDIR += p5-AsciiDB-TagFile
     SUBDIR += p5-BDB
@@ -315,7 +313,6 @@
     SUBDIR += p5-DBD-Excel
     SUBDIR += p5-DBD-FrontBase
     SUBDIR += p5-DBD-Google
-    SUBDIR += p5-DBD-InterBase
     SUBDIR += p5-DBD-LDAP
     SUBDIR += p5-DBD-Mock
     SUBDIR += p5-DBD-Multi
@@ -417,12 +414,12 @@
     SUBDIR += p5-DBIx-XHTML_Table
     SUBDIR += p5-DBIx-XML_RDB
     SUBDIR += p5-DBM-Deep
-    SUBDIR += p5-DBZ_File
     SUBDIR += p5-DMOZ-ParseRDF
     SUBDIR += p5-DR-Tarantool
     SUBDIR += p5-DWH_File
     SUBDIR += p5-Dancer-Plugin-DBIC
     SUBDIR += p5-Dancer-Plugin-Database
+    SUBDIR += p5-Dancer-Plugin-Database-Core
     SUBDIR += p5-Dancer-Plugin-Redis
     SUBDIR += p5-Dancer-Session-Memcached
     SUBDIR += p5-Data-Page
@@ -437,9 +434,9 @@
     SUBDIR += p5-Iterator-DBI
     SUBDIR += p5-Jifty-DBI
     SUBDIR += p5-KyotoCabinet
-    SUBDIR += p5-MR-Tarantool
     SUBDIR += p5-MLDBM
     SUBDIR += p5-MLDBM-Sync
+    SUBDIR += p5-MR-Tarantool
     SUBDIR += p5-Memcached-libmemcached
     SUBDIR += p5-Metadata
     SUBDIR += p5-MongoDB
@@ -540,6 +537,7 @@
     SUBDIR += pecl-dbase
     SUBDIR += pecl-drizzle
     SUBDIR += pecl-handlersocket
+    SUBDIR += pecl-leveldb
     SUBDIR += pecl-mdbtools
     SUBDIR += pecl-memcache
     SUBDIR += pecl-memcached
@@ -574,6 +572,7 @@
     SUBDIR += pgpool-II-23
     SUBDIR += pgpool-II-30
     SUBDIR += pgpoolAdmin
+    SUBDIR += pgrouting
     SUBDIR += pgsphere
     SUBDIR += pgtcl
     SUBDIR += pgtop
@@ -658,13 +657,11 @@
     SUBDIR += phpminiadmin
     SUBDIR += phpmyadmin
     SUBDIR += phppgadmin
-    SUBDIR += postgis
+    SUBDIR += postgis-jdbc
     SUBDIR += postgis20
     SUBDIR += postgis21
-    SUBDIR += postgis-jdbc
     SUBDIR += postgresql-jdbc
     SUBDIR += postgresql-libpgeasy
-    SUBDIR += postgresql-libpq++
     SUBDIR += postgresql-libpqxx
     SUBDIR += postgresql-libpqxx3
     SUBDIR += postgresql-odbc
@@ -729,6 +726,8 @@
     SUBDIR += py-MySQLdb51
     SUBDIR += py-MySQLdb55
     SUBDIR += py-PyGreSQL
+    SUBDIR += py-Pyrseas
+    SUBDIR += py-alembic
     SUBDIR += py-apsw
     SUBDIR += py-bsddb
     SUBDIR += py-bsddb3
@@ -845,7 +844,6 @@
     SUBDIR += rubygem-couchrest
     SUBDIR += rubygem-data_objects
     SUBDIR += rubygem-datamapper
-    SUBDIR += rubygem-delayed_job_data_mapper
     SUBDIR += rubygem-dm-active_model
     SUBDIR += rubygem-dm-aggregates
     SUBDIR += rubygem-dm-chunked_query
@@ -923,6 +921,7 @@
     SUBDIR += usogres
     SUBDIR += vfront
     SUBDIR += virtuoso
+    SUBDIR += vsqlite
     SUBDIR += wfb2sql
     SUBDIR += wmjsql
     SUBDIR += xapian-bindings

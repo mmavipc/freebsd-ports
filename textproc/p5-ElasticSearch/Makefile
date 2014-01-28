@@ -3,13 +3,16 @@
 
 PORTNAME=	ElasticSearch
 PORTVERSION=	0.65
-PORTREVISION=	1
+PORTREVISION=	2
 CATEGORIES=	textproc perl5
 MASTER_SITES=	CPAN/../by-authors/id/D/DR/DRTECH/
 PKGNAMEPREFIX=	p5-
 
 MAINTAINER=	tj@FreeBSD.org
 COMMENT=	ElasticSearch API
+
+LICENSE=	ART10 GPLv1
+LICENSE_COMB=	dual
 
 BUILD_DEPENDS:=	p5-File-Temp>=0:${PORTSDIR}/devel/p5-File-Temp
 RUN_DEPENDS:=	p5-ElasticSearch-SearchBuilder>=0:${PORTSDIR}/textproc/p5-ElasticSearch-SearchBuilder \
@@ -24,7 +27,6 @@ RUN_DEPENDS:=	p5-ElasticSearch-SearchBuilder>=0:${PORTSDIR}/textproc/p5-ElasticS
 		p5-HTTP-Lite>=0:${PORTSDIR}/www/p5-HTTP-Lite \
 		p5-HTTP-Message>=0:${PORTSDIR}/www/p5-HTTP-Message \
 		p5-HTTP-Tiny>=0:${PORTSDIR}/www/p5-HTTP-Tiny \
-		p5-IO>=0:${PORTSDIR}/devel/p5-IO \
 		p5-IO-Compress>=0:${PORTSDIR}/archivers/p5-IO-Compress \
 		p5-JSON>=0:${PORTSDIR}/converters/p5-JSON \
 		p5-libwww>=0:${PORTSDIR}/www/p5-libwww \
@@ -39,16 +41,4 @@ TEST_DEPENDS=	p5-Test-Differences>=0:${PORTSDIR}/devel/p5-Test-Differences \
 USES=		perl5
 USE_PERL5=	configure
 
-MAN3=		ElasticSearch.3 \
-		ElasticSearch::Error.3 \
-		ElasticSearch::QueryParser.3 \
-		ElasticSearch::ScrolledSearch.3 \
-		ElasticSearch::TestServer.3 \
-		ElasticSearch::Transport.3 \
-		ElasticSearch::Transport::HTTP.3 \
-		ElasticSearch::Transport::HTTPLite.3 \
-		ElasticSearch::Transport::HTTPTiny.3 \
-		ElasticSearch::Util.3
-
-NO_STAGE=	yes
 .include <bsd.port.mk>

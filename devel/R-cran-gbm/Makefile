@@ -2,7 +2,7 @@
 
 PORTNAME=	gbm
 DISTVERSION=	2.0-8
-PORTREVISION=	3
+PORTREVISION=	4
 CATEGORIES=	devel
 DISTNAME=	${PORTNAME}_${DISTVERSION}
 
@@ -11,8 +11,6 @@ COMMENT=	Extensions to AdaBoost algorithm
 
 LICENSE=	GPLv2
 
-USE_R_MOD=	yes
-R_MOD_AUTOPLIST=	yes
+USES=	cran:auto-plist
 
-NO_STAGE=	yes
 .include <bsd.port.mk>

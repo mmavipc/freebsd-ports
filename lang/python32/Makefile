@@ -1,35 +1,39 @@
 # $FreeBSD$
 
-PORTNAME=	python32
-PORTVERSION=	3.2.5
-PORTREVISION=	3
-CATEGORIES=	lang python ipv6
-MASTER_SITES=	PYTHON
+PORTNAME=		python32
+PORTVERSION=		3.2.5
+PORTREVISION=		6
+CATEGORIES=		lang python ipv6
+MASTER_SITES=		PYTHON
 MASTER_SITE_SUBDIR=	${PYTHON_MASTER_SITE_SUBDIR}
-DISTFILES=	${PYTHON_DISTFILE}
+DISTFILES=		${PYTHON_DISTFILE}
+DIST_SUBDIR=		python
 
 MAINTAINER=	python@FreeBSD.org
 COMMENT=	Interpreted object-oriented programming language
 
-DIST_SUBDIR=	python
-WRKSRC=		${PYTHON_WRKSRC}/portbld.static
-PATCH_WRKSRC=	${PYTHON_WRKSRC}
-GNU_CONFIGURE=	yes
-CONFIGURE_SCRIPT=	../configure # must be relative
-CONFIGURE_ENV=	OPT="" SVNVERSION="echo freebsd"
-MAKE_ENV=	VPATH="${PYTHON_WRKSRC}"
-USE_LDCONFIG=	yes
-INSTALL_TARGET=	altinstall
-MAN1=		${PYTHON_VERSION}.1
+LICENSE=	PSFL
 
+GNU_CONFIGURE=		yes
+CONFIGURE_SCRIPT=	../configure # must be relative
+CONFIGURE_ENV=		OPT="" SVNVERSION="echo freebsd"
+MAKE_ENV=		VPATH="${PYTHON_WRKSRC}"
+
+INSTALL_TARGET=	altinstall
+
+USE_LDCONFIG=	yes
 USE_PYTHON=	yes
 USE_XZ=		yes
-PYTHON_VERSION=	python3.2
+
+PYTHON_VERSION=		python3.2
 PYTHON_NO_DEPENDS=	yes
+
+WRKSRC=		${PYTHON_WRKSRC}/portbld.static
+SHARED_WRKSRC=	${PYTHON_WRKSRC}/portbld.shared
+PATCH_WRKSRC=	${PYTHON_WRKSRC}
 
 PYABIVER=	# default empty, for after appending
 
-SHARED_WRKSRC=	${PYTHON_WRKSRC}/portbld.shared
 PLIST_SUB=	PYVER=${PYTHON_VERSION:S/python//} \
 		PYMAJOR=${PYTHON_MAJOR_VER} \
 		PYVER_WITHPAT=${PORTVERSION:S/.rc/rc/} \
@@ -39,7 +43,7 @@ DATADIR=	${PREFIX}/share/${PYTHON_VERSION}
 
 PLATFORMS=	plat-freebsd4 plat-freebsd5 plat-freebsd6 \
 		plat-freebsd7 plat-freebsd8 plat-freebsd9 \
-		plat-freebsd10
+		plat-freebsd10 plat-freebsd11
 
 BIN_SCRIPTS=	2to3 idle3 pydoc3
 BIN_FILES=	python python-shared python-config python-shared-config \
@@ -52,7 +56,6 @@ OPTIONS_DEFAULT=	THREADS UCS4 PYMALLOC IPV6
 
 NLS_DESC=	Enable Gettext support for the locale module
 
-NO_STAGE=	yes
 .include <bsd.port.options.mk>
 
 .if ${PORT_OPTIONS:MNLS}
@@ -116,6 +119,8 @@ pre-patch:
 		${PATCH_WRKSRC}/Lib/plat-freebsd9
 	${CP} -r ${PATCH_WRKSRC}/Lib/plat-freebsd8 \
 		${PATCH_WRKSRC}/Lib/plat-freebsd10
+	${CP} -r ${PATCH_WRKSRC}/Lib/plat-freebsd8 \
+		${PATCH_WRKSRC}/Lib/plat-freebsd11
 	${MKDIR} ${WRKSRC} ${SHARED_WRKSRC}/Modules
 .for script in ${BIN_SCRIPTS}
 	${SED} -e '1s,^.*$$,#!${PREFIX}/bin/${PYTHON_VERSION},' \
@@ -150,6 +155,10 @@ post-patch:
 	    's/disabled_module_list =[^]]*/&, "nis"/' \
 		${PATCH_WRKSRC}/setup.py
 .endif
+# Fix for http://bugs.python.org/issue12852 (especially on 10.x+);
+# not needed for python33+
+	${REINPLACE_CMD} -e 's|_XOPEN_SOURCE 600|_XOPEN_SOURCE 700|' \
+		${PATCH_WRKSRC}/configure
 
 post-configure:
 	${TAR} -C ${WRKSRC} -cf - . | ${TAR} -C ${SHARED_WRKSRC} -xf -
@@ -170,42 +179,44 @@ pre-build:
 
 pre-su-install:
 .for platform in ${PLATFORMS}
-	${MKDIR} ${PYTHONPREFIX_LIBDIR}/${platform}
+	${MKDIR} ${STAGEDIR}${PYTHONPREFIX_LIBDIR}/${platform}
 .for file in IN.py regen
 	${INSTALL_DATA} ${WRKSRC}/Lib/${platform}/${file} \
-		${PYTHONPREFIX_LIBDIR}/${platform}/
+		${STAGEDIR}${PYTHONPREFIX_LIBDIR}/${platform}/
 .endfor
 .endfor
 
 post-install:
 	@# install config providers
-	${INSTALL_SCRIPT} ${WRKDIR}/${PYTHON_VERSION}-config ${PREFIX}/bin
-	${INSTALL_SCRIPT} ${WRKDIR}/${PYTHON_VERSION:S/thon/thon-shared/}-config ${PREFIX}/bin
+	${INSTALL_SCRIPT} ${WRKDIR}/${PYTHON_VERSION}-config \
+		${STAGEDIR}${PREFIX}/bin
+	${INSTALL_SCRIPT} ${WRKDIR}/${PYTHON_VERSION:S/thon/thon-shared/}-config \
+		${STAGEDIR}${PREFIX}/bin
 
 	@# shared version of executable and library
 	${INSTALL_PROGRAM} ${SHARED_WRKSRC}/lib${PYTHON_VERSION}${PYABIVER}.so.1 \
-		${PREFIX}/lib
-	cd ${PREFIX}/lib; ${LN} -sf lib${PYTHON_VERSION}${PYABIVER}.so.1 \
-		lib${PYTHON_VERSION}${PYABIVER}.so
-	${LN} -sf ${PREFIX}/lib/lib${PYTHON_VERSION}${PYABIVER}.so ${PYTHONPREFIX_LIBDIR}/config
+		${STAGEDIR}${PREFIX}/lib
+	(cd ${STAGEDIR}${PREFIX}/lib; ${LN} -sf lib${PYTHON_VERSION}${PYABIVER}.so.1 \
+		lib${PYTHON_VERSION}${PYABIVER}.so)
+	${LN} -sf lib${PYTHON_VERSION}${PYABIVER}.so \
+		${STAGEDIR}${PYTHONPREFIX_LIBDIR}/config
 	${INSTALL_PROGRAM} \
 		${SHARED_WRKSRC}/${PYTHON_VERSION:S/thon/thon-shared/} \
-		${PREFIX}/bin
+		${STAGEDIR}${PREFIX}/bin
 
 	@# additional files installing by ports
 .for script in ${BIN_SCRIPTS}
 	${INSTALL_SCRIPT} \
 		${WRKDIR}/`${ECHO_CMD} ${script} | ${SED} -E ${BINLINKS_SUB}` \
-		${PREFIX}/bin
+		${STAGEDIR}${PREFIX}/bin
 .endfor
-	@${MKDIR} ${MANPREFIX}/man/man1
 	${INSTALL_MAN} ${PYTHON_WRKSRC}/Misc/python.man \
-		${MANPREFIX}/man/man1/${PYTHON_VERSION}.1
+		${STAGEDIR}${MAN1PREFIX}/man/man1/${PYTHON_VERSION}.1
 
 .if !defined(NOPORTDATA)
-	@${MKDIR} ${DATADIR}
+	@${MKDIR} ${STAGEDIR}${DATADIR}
 	@cd ${PYTHON_WRKSRC}; ${TAR} -cf - Tools | \
-		(cd ${DATADIR}; ${TAR} -xf -)
+		(cd ${STAGEDIR}${DATADIR}; ${TAR} -xf -)
 .endif
 
 	@${CAT} ${PKGMESSAGE}

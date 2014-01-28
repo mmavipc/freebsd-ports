@@ -2,8 +2,7 @@
 # $FreeBSD$
 
 PORTNAME=	libvorbis
-PORTVERSION=	1.3.3
-PORTREVISION=	1
+PORTVERSION=	1.3.4
 PORTEPOCH=	3
 CATEGORIES=	audio
 MASTER_SITES=	http://downloads.xiph.org/releases/vorbis/
@@ -25,6 +24,6 @@ CONFIGURE_ARGS=	--with-ogg=${LOCALBASE} \
 OPTIONS_DEFINE=	DOCS
 
 regression-test: build
-	@cd ${WRKSRC} && ${SETENV} ${MAKE_ENV} ${MAKE} check
+	@cd ${WRKSRC} && ${SETENV} ${MAKE_ENV} ${MAKE_CMD} check
 
 .include <bsd.port.mk>

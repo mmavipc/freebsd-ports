@@ -2,7 +2,7 @@
 # $FreeBSD$
 
 PORTNAME=	pcbsd-utils
-PORTVERSION=	1382605460
+PORTVERSION=	1390905942
 CATEGORIES=	sysutils
 MASTER_SITES=	http://www.pcbsd.org/~kris/software/ \
 		ftp://ftp.pcbsd.org/pub/software/
@@ -17,7 +17,7 @@ RUN_DEPENDS=	pkg-static:${PORTSDIR}/ports-mgmt/pkg \
 		sipcalc:${PORTSDIR}/net-mgmt/sipcalc \
 		eject:${PORTSDIR}/sysutils/eject \
 		unzip:${PORTSDIR}/archivers/unzip \
-		${PYTHON_PKGNAMEPREFIX}requests>=1.0.0:${PORTSDIR}/www/py-requests \
+		${PYTHON_PKGNAMEPREFIX}requests1>=1.0.0:${PORTSDIR}/www/py-requests1 \
 		jailme:${PORTSDIR}/sysutils/jailme
 
 WRKSRC=		${WRKDIR}/src-sh
@@ -28,18 +28,8 @@ USE_PYTHON=	yes
 
 .include <bsd.port.pre.mk>
 
-.if ${OSVERSION} < 900030
-IGNORE=		requires FreeBSD 9.0 or later
-.endif
-
-.if ${OSVERSION} > 1000000
-PLIST_FILES+=	share/pbi-manager/.pbime \
-		share/pbi-manager/.pbimount \
-		share/pbi-manager/.ldconfig \
-		share/pbi-manager/.mount_nullfs \
-		etc/man.d/pbi.conf \
-		sbin/app \
-		sbin/pbi
+.if ${OSVERSION} < 1000000
+IGNORE=		requires FreeBSD 10 or later
 .endif
 
 do-install:

@@ -3,15 +3,16 @@
 
 PORTNAME=	RSvgDevice
 PORTVERSION=	0.6.4.3
-PORTREVISION=	1
+PORTREVISION=	2
 CATEGORIES=	math
 DISTNAME=	${PORTNAME}_${PORTVERSION}
 
 MAINTAINER=	dbn@FreeBSD.org
 COMMENT=	A R SVG graphics device
 
-USE_R_MOD=	yes
-R_MOD_AUTOPLIST=	yes
+LICENSE=	GPLv2 GPLv3
+LICENSE_COMB=	dual
 
-NO_STAGE=	yes
+USES=	cran:auto-plist
+
 .include <bsd.port.mk>

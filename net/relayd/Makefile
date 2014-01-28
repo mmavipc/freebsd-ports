@@ -1,7 +1,8 @@
 # $FreeBSD$
 
 PORTNAME=	relayd
-PORTVERSION=	5.3.20131024
+PORTVERSION=	5.4.20131122
+PORTREVISION=	2
 CATEGORIES=	net
 MASTER_SITES=	GH
 
@@ -11,12 +12,9 @@ COMMENT=	OpenBSD relay daemon
 LICENSE=	BSD
 
 GH_ACCOUNT=	mmatuska
-GH_COMMIT=	d6a05fb
-MANCOMPRESSED=	yes
+GH_COMMIT=	a4f6140
 
 WRKSRC=		${WRKDIR}/${GH_ACCOUNT}-${GH_PROJECT}-${GH_COMMIT}/src/usr.sbin
-MAN5=		relayd.conf.5
-MAN8=		relayctl.8 relayd.8
 USE_GITHUB=	yes
 USE_RC_SUBR=	relayd
 
@@ -30,7 +28,6 @@ GROUPS=		_relayd
 OPTIONS_DEFINE=	LIBEVENT_STATIC
 LIBEVENT_STATIC_DESC=	Build with static libevent
 
-NO_STAGE=	yes
 .include <bsd.port.pre.mk>
 
 .if ${PORT_OPTIONS:MLIBEVENT_STATIC}
@@ -54,8 +51,9 @@ post-patch:
 
 post-install:
 	@${INSTALL_DATA} ${WRKSRC}/../etc/relayd.conf \
-		${PREFIX}/etc/relayd.conf.sample
-	@${CP} -n ${PREFIX}/etc/relayd.conf.sample \
-		${PREFIX}/etc/relayd.conf || ${TRUE}
+		${STAGEDIR}${PREFIX}/etc/relayd.conf.sample
+	@${CP} -n ${WRKSRC}/../etc/relayd.conf \
+		${STAGEDIR}${PREFIX}/etc/relayd.conf || ${TRUE}
 
 .include <bsd.port.post.mk>
+

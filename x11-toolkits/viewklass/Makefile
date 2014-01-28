@@ -8,18 +8,19 @@ CATEGORIES=	x11-toolkits
 MASTER_SITES=	SF/${PORTNAME}/${PORTNAME}/ViewKlass-${PORTVERSION}
 DISTNAME=	ViewKlass-${PORTVERSION}
 
-MAINTAINER=	araujo@FreeBSD.org
+MAINTAINER=	ports@FreeBSD.org
 COMMENT=	C++ Framework for Motif
 
-BUILD_DEPENDS=	imake:${PORTSDIR}/devel/imake
+LICENSE=	LGPL20 # (or later)
 
-USES=		motif
-GNU_CONFIGURE=	yes
+USES=		imake:env motif
+USE_AUTOTOOLS=	autoconf213
 
-NO_STAGE=	yes
 post-patch:
-	@${REINPLACE_CMD} -e 's/^CFLAGS=/CFLAGS+=/g ; \
-		s/^CXXFLAGS=/CXXFLAGS+=/g ; \
-		s/-g -Wall//g' ${WRKSRC}/Makefile.in
+	@${REINPLACE_CMD} -e \
+		'/^CFLAGS=/s|-g|@CFLAGS@| ; \
+		 /^CXXFLAGS=/s|-g|@CXXFLAGS@| ; \
+		 s| $$(exec_prefix)| $$(DESTDIR)$$(exec_prefix)| ; \
+		 s| $$(prefix)| $$(DESTDIR)$$(prefix)|' ${WRKSRC}/Makefile.in
 
 .include <bsd.port.mk>

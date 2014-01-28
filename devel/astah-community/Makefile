@@ -2,7 +2,7 @@
 # $FreeBSD$
 
 PORTNAME=	astah
-PORTVERSION=	6.7.0
+PORTVERSION=	6.8.0
 CATEGORIES=	devel java
 MASTER_SITES=	#
 PKGNAMESUFFIX=	-community
@@ -11,12 +11,17 @@ DISTNAME=	${PORTNAME}${PKGNAMESUFFIX}-${PORTVERSION:S!.!_!g}-${REVISION}
 MAINTAINER=	tota@FreeBSD.org
 COMMENT=	Java/UML Object-Oriented Design Tool
 
-RESTRICTED=	See http://astah.net/faq/community/enduser-license-agreement
+LICENSE=	EULA
+LICENSE_NAME=	End User License Agreement
+LICENSE_TEXT=	${RESTRICTED}
+LICENSE_PERMS=	no-dist-mirror no-dist-sell no-pkg-mirror no-pkg-sell no-auto-accept
+
+RESTRICTED=	License restrictions -- See http://astah.net/faq/community/enduser-license-agreement
 
 USE_ZIP=	yes
 USE_JAVA=	yes
 JAVA_VERSION=	1.7+
-REVISION=	43495
+REVISION=	d254c5
 
 WRKSRC=		${WRKDIR}/${PORTNAME}${PKGNAMESUFFIX:S!-!_!}
 
@@ -42,7 +47,6 @@ REINPLACE_ARGS=	-i ""
 
 OPTIONS_DEFINE=	DOCS EXAMPLES
 
-NO_STAGE=	yes
 .include <bsd.port.pre.mk>
 
 .if !exists(${DISTDIR}/${DISTNAME}${EXTRACT_SUFX})
@@ -54,33 +58,29 @@ IGNORE=		needs you to fetch manually the distribution file\
 
 post-patch:
 .for script in ${PLIST_FILES:S!bin/!!}
-	${REINPLACE_CMD} -e "s!%%JAVA_HOME%%!${JAVA_HOME}!g; \
+	@${REINPLACE_CMD} -e "s!%%JAVA_HOME%%!${JAVA_HOME}!g; \
 	                     s!%%DATADIR%%!${DATADIR}!" \
 		 ${WRKSRC}/${script}
 .endfor
 .if ${PORT_OPTIONS:MDOCS}
-	${REINPLACE_CMD} 's/png\\/png\//' ${WRKSRC}/api/en/doc/astahAPI_reference.html
+	@${REINPLACE_CMD} 's/png\\/png\//' ${WRKSRC}/api/en/doc/astahAPI_reference.html
 .endif
 
 do-install:
 .for script in ${PLIST_FILES:S!bin/!!}
-	${INSTALL_SCRIPT} ${WRKSRC}/${script} ${PREFIX}/bin
+	${INSTALL_SCRIPT} ${WRKSRC}/${script} ${STAGEDIR}${PREFIX}/bin
 .endfor
-	${MKDIR} ${DATADIR}
-	(cd ${WRKSRC} && ${COPYTREE_SHARE} "${PORTDATA}" ${DATADIR})
-.if ${PORT_OPTIONS:MDOCS}
-	${MKDIR} ${DOCSDIR}
+	@${MKDIR} ${STAGEDIR}${DATADIR}
+	(cd ${WRKSRC} && ${COPYTREE_SHARE} "${PORTDATA}" ${STAGEDIR}${DATADIR})
+	@${MKDIR} ${STAGEDIR}${DOCSDIR}
 .for docfile in ${PORTDOCS:Napi}
-	${INSTALL_DATA} ${WRKSRC}/${docfile} ${DOCSDIR}
+	${INSTALL_DATA} ${WRKSRC}/${docfile} ${STAGEDIR}${DOCSDIR}
 .endfor
-	${MKDIR} ${DOCSDIR}/api
-	(cd ${WRKSRC}/api && ${COPYTREE_SHARE} \* ${DOCSDIR}/api)
-.endif
-.if ${PORT_OPTIONS:MEXAMPLES}
-	${MKDIR} ${EXAMPLESDIR}
+	@${MKDIR} ${STAGEDIR}${DOCSDIR}/api
+	(cd ${WRKSRC}/api && ${COPYTREE_SHARE} \* ${STAGEDIR}${DOCSDIR}/api)
+	@${MKDIR} ${STAGEDIR}${EXAMPLESDIR}
 .for examplefile in ${PORTEXAMPLES}
-	${INSTALL_DATA} ${WRKSRC}/${examplefile} ${EXAMPLESDIR}
+	${INSTALL_DATA} ${WRKSRC}/${examplefile} ${STAGEDIR}${EXAMPLESDIR}
 .endfor
-.endif
 
 .include <bsd.port.post.mk>

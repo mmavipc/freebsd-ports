@@ -11,7 +11,7 @@ DISTNAME=	liveice-xmms
 MAINTAINER=	ports@FreeBSD.org
 COMMENT=	Use XMMS for streaming audio to Icecast servers
 
-LIB_DEPENDS=	xmms.4:${PORTSDIR}/multimedia/xmms
+LIB_DEPENDS=	libxmms.so:${PORTSDIR}/multimedia/xmms
 RUN_DEPENDS=	lame:${PORTSDIR}/audio/lame
 
 WRKSRC=		${WRKDIR}/LiveIce-${PORTVERSION}
@@ -19,7 +19,6 @@ WRKSRC=		${WRKDIR}/LiveIce-${PORTVERSION}
 PLIST_FILES=	lib/xmms/Effect/libliveice.la \
 		lib/xmms/Effect/libliveice.so
 USE_LDCONFIG=	yes
-NO_STAGE=	yes
 USE_GNOME=	gtk12
 GNU_CONFIGURE=	yes
 

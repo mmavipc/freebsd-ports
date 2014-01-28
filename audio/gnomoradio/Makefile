@@ -9,17 +9,16 @@ MASTER_SITES=		${MASTER_SITE_SAVANNAH}
 MASTER_SITE_SUBDIR=	${PORTNAME}
 
 MAINTAINER=		gahr@FreeBSD.org
-COMMENT=		A program for finding and playing free music from the Internet
+COMMENT=		Program for finding and playing free music from the Internet
 
-LIB_DEPENDS=		sigc-2.0:${PORTSDIR}/devel/libsigc++20 \
-			gtkmm-2.4:${PORTSDIR}/x11-toolkits/gtkmm24 \
-			gconfmm-2.6:${PORTSDIR}/devel/gconfmm26 \
-			xml\\+\\+-2.6:${PORTSDIR}/textproc/libxml++26 \
-			vorbis:${PORTSDIR}/audio/libvorbis \
-			ao:${PORTSDIR}/audio/libao
+LIB_DEPENDS=		libsigc-2.0.so:${PORTSDIR}/devel/libsigc++20 \
+			libgtkmm-2.4.so:${PORTSDIR}/x11-toolkits/gtkmm24 \
+			libgconfmm-2.6.so:${PORTSDIR}/devel/gconfmm26 \
+			libxml++-2.6.so:${PORTSDIR}/textproc/libxml++26 \
+			libvorbis.so:${PORTSDIR}/audio/libvorbis \
+			libao.so:${PORTSDIR}/audio/libao
 
 USES=			pathfix pkgconfig
-NO_STAGE=	yes
 USE_GNOME=		gnomeprefix
 USE_AUTOTOOLS=		libtool
 USE_LDCONFIG=		yes

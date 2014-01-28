@@ -8,7 +8,7 @@ PKGNAMEPREFIX=	horde-
 MAINTAINER=	horde@FreeBSD.org
 COMMENT=	Horde email filter rules manager
 
-LICENSE=	AL2
+LICENSE=	APACHE20
 LICENSE_FILE=	${WRKSRC}/LICENSE
 
 LATEST_LINK=	horde-${PORTNAME}
@@ -33,7 +33,6 @@ USE_HORDE_RUN=	Horde_Role \
 RUN_DEPENDS+=	${PEARDIR}/Net/Sieve.php:${PORTSDIR}/net/pear-Net_Sieve \
 		${PEARDIR}/Net/Socket.php:${PORTSDIR}/net/pear-Net_Socket
 
-NO_STAGE=	yes
 .include <bsd.port.pre.mk>
 .include "${PORTSDIR}/devel/pear-channel-horde/bsd.horde.mk"
 .include <bsd.port.post.mk>

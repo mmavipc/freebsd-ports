@@ -3,7 +3,7 @@
 
 PORTNAME=	fBasics
 PORTVERSION=	3010.86
-PORTREVISION=	2
+PORTREVISION=	3
 CATEGORIES=	finance
 DISTNAME=	${PORTNAME}_${PORTVERSION}
 
@@ -18,8 +18,6 @@ RUN_DEPENDS=	R-cran-timeDate>0:${PORTSDIR}/finance/R-cran-timeDate \
 		R-cran-stabledist>0:${PORTSDIR}/math/R-cran-stabledist \
 		R-cran-gss>0:${PORTSDIR}/math/R-cran-gss
 
-USE_R_MOD=	yes
-R_MOD_AUTOPLIST=	yes
+USES=	cran:auto-plist
 
-NO_STAGE=	yes
 .include <bsd.port.mk>

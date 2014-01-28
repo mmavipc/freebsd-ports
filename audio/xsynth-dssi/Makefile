@@ -12,15 +12,14 @@ COMMENT=	Classic analog style software synthesizer
 
 BUILD_DEPENDS=	${LOCALBASE}/include/dssi.h:${PORTSDIR}/audio/dssi \
 		${LOCALBASE}/include/ladspa.h:${PORTSDIR}/audio/ladspa
-LIB_DEPENDS=	dssialsacompat.0:${PORTSDIR}/audio/libdssialsacompat \
-		lo:${PORTSDIR}/audio/liblo \
-		jack.0:${PORTSDIR}/audio/jack
+LIB_DEPENDS=	libdssialsacompat.so:${PORTSDIR}/audio/libdssialsacompat \
+		liblo.so:${PORTSDIR}/audio/liblo \
+		libjack.so:${PORTSDIR}/audio/jack
 
 LICENSE=	GPLv2 LGPL21
 LICENSE_COMB=	multi
 
 USE_GNOME=	gtk20
-NO_STAGE=	yes
 USES=		gmake pkgconfig
 USE_AUTOTOOLS=	libtool
 

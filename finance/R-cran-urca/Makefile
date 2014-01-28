@@ -3,7 +3,7 @@
 
 PORTNAME=	urca
 DISTVERSION=	1.2-8
-PORTREVISION=	1
+PORTREVISION=	2
 CATEGORIES=	finance
 DISTNAME=	${PORTNAME}_${DISTVERSION}
 
@@ -13,8 +13,6 @@ COMMENT=	Unit root and cointegration tests for time series data
 LICENSE=	GPLv2 GPLv3
 LICENSE_COMB=	dual
 
-USE_R_MOD=	yes
-R_MOD_AUTOPLIST=	yes
+USES=	cran:auto-plist
 
-NO_STAGE=	yes
 .include <bsd.port.mk>

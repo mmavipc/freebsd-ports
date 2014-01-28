@@ -3,7 +3,7 @@
 
 PORTNAME=	gsubfn
 DISTVERSION=	0.6-5
-PORTREVISION=	3
+PORTREVISION=	4
 CATEGORIES=	devel
 DISTNAME=	${PORTNAME}_${DISTVERSION}
 
@@ -14,8 +14,6 @@ LICENSE=        GPLv2
 
 RUN_DEPENDS=    R-cran-proto>=0.3.9.2_6:${PORTSDIR}/devel/R-cran-proto
 
-USE_R_MOD=      yes
-R_MOD_AUTOPLIST=        yes
+USES=	cran:auto-plist
 
-NO_STAGE=	yes
 .include <bsd.port.mk>

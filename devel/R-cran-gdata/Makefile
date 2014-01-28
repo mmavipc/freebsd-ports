@@ -3,7 +3,7 @@
 
 PORTNAME=	gdata
 PORTVERSION=	2.13.2
-PORTREVISION=	1
+PORTREVISION=	2
 CATEGORIES=	devel
 DISTNAME=	${PORTNAME}_${PORTVERSION}
 
@@ -14,10 +14,7 @@ LICENSE=	GPLv2
 
 RUN_DEPENDS=	R-cran-gtools>0:${PORTSDIR}/devel/R-cran-gtools
 
-USES=		perl5
+USES=		cran:auto-plist perl5 
 USE_PERL5=	run
-USE_R_MOD=	yes
-R_MOD_AUTOPLIST=	yes
 
-NO_STAGE=	yes
 .include <bsd.port.mk>

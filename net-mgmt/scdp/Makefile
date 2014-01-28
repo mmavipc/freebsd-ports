@@ -14,9 +14,8 @@ COMMENT=	Tool that sends CDP (CISCO Discovery Protocol) Packets
 BUILD_DEPENDS=	${LIBNET_CONFIG}:${PORTSDIR}/net/libnet10
 
 LICENSE=	GPLv2
-LICENSE_FILE=	${WRKSRC}/COPYING
 
-USE_GMAKE=	yes
+USES=		gmake
 GNU_CONFIGURE=	yes
 CONFIGURE_ENV=	libnet_config="${LIBNET_CONFIG}"
 CFLAGS+=	`${LIBNET_CONFIG} --cflags`
@@ -24,7 +23,6 @@ PLIST_FILES=	bin/scdp
 
 LIBNET_CONFIG?=	${LOCALBASE}/bin/libnet10-config
 
-NO_STAGE=	yes
 post-patch:
 	${REINPLACE_CMD} -e 's,malloc.h,stdlib.h,' ${WRKSRC}/scdp.c
 	${REINPLACE_CMD} -e 's|libnet-config|${LIBNET_CONFIG}|' \

@@ -4,7 +4,7 @@
 PORTNAME=	kqemu
 PORTVERSION=	1.3.0.p11
 PORTREVISION=	12
-CATEGORIES=	emulators kld
+CATEGORIES=	emulators
 MASTER_SITES=	http://bellard.org/qemu/ \
 		http://qemu.org/ \
 		${MASTER_SITE_LOCAL}
@@ -19,8 +19,6 @@ COMMENT=	Kernel Accelerator for QEMU CPU Emulator
 LICENSE=	GPLv2
 LICENSE_FILE=	${WRKSRC}/COPYING
 
-SSP_UNSAFE=	kernel module does not support ssp
-
 ONLY_FOR_ARCHS=	i386 amd64
 HAS_CONFIGURE=	yes
 USE_GMAKE=	yes
@@ -30,7 +28,8 @@ CONFLICTS=	kqemu-kmod-devel-[0-9]*
 
 USE_RC_SUBR=	kqemu
 
-NO_STAGE=	yes
+USES=		kmod
+
 .include <bsd.port.pre.mk>
 
 PORTDOCS=	kqemu-doc.html kqemu-tech.html
@@ -38,30 +37,22 @@ PLIST_FILES=	"include/kqemu/kqemu.h"
 PLIST_FILES+=	"@dirrm include/kqemu"
 PLIST_FILES+=	"@cwd /"
 PLIST_FILES+=	${KMODDIR:C,^/,,}/kqemu.ko
-PLIST_FILES+=	"@unexec kldxref ${KMODDIR}"
-PLIST_FILES+=	"@cwd"
+PLIST_FILES+=	"@cwd ${PREFIX}"
 
 MAKEFILE=	Makefile.freebsd
 
-MAKE_ARGS+=	LDFLAGS=${LDFLAGS:S/^-Wl,//}
+MAKE_ARGS+=	LDFLAGS="${LDFLAGS:S/^-Wl,//}"
 
 .if ${ARCH} == "amd64"
 GMAKE_ARGS+=	ARCH=x86_64
 .endif
 
-# install where x11/nvidia-driver does also:
-KMODDIR=	/boot/modules
-
-MAKE_ENV+=	KMODDIR="${KMODDIR}"
-
-SYSDIR?=	${SRC_BASE}/sys
-MAKE_ENV+=	SYSDIR="${SYSDIR}"
-
-.if !exists(${SYSDIR}/Makefile)
-IGNORE=		requires kernel source to be installed
-.endif
-
 CFLAGS+=	${DEBUG_FLAGS}
+
+# Not sure about the exact OSVERSION:
+.if ${OSVERSION} > 1000015
+BROKEN=		KPI changes in 10 and up, use bhyve or vbox
+.endif
 
 post-patch:
 	@${REINPLACE_CMD} -e '/CC=/s,gcc,${CC},' ${WRKSRC}/common/Makefile
@@ -72,13 +63,13 @@ do-build:
 	@(cd ${BUILD_WRKSRC}; ${SETENV} ${MAKE_ENV} ${MAKE} ${MAKE_FLAGS} ${MAKEFILE} ${MAKE_ARGS} ${ALL_TARGET})
 
 do-install:
-	@(cd ${INSTALL_WRKSRC} && ${SETENV} ${MAKE_ENV} ${MAKE} ${MAKE_FLAGS} ${MAKEFILE} ${INSTALL_TARGET})
-	${MKDIR} ${PREFIX}/include/kqemu
-	${INSTALL_DATA} ${WRKSRC}/kqemu.h ${PREFIX}/include/kqemu
+	@(cd ${INSTALL_WRKSRC} && ${SETENV} ${MAKE_ENV} ${MAKE} DESTDIR=${STAGEDIR} ${MAKE_FLAGS} ${MAKEFILE} ${INSTALL_TARGET})
+	${MKDIR} ${STAGEDIR}${PREFIX}/include/kqemu
+	${INSTALL_DATA} ${WRKSRC}/kqemu.h ${STAGEDIR}${PREFIX}/include/kqemu
 .if ${PORT_OPTIONS:MDOCS}
-	${MKDIR} ${DOCSDIR}
+	${MKDIR} ${STAGEDIR}${DOCSDIR}
 	${INSTALL_DATA} ${WRKSRC}/kqemu-doc.html ${WRKSRC}/kqemu-tech.html \
-		${DOCSDIR}
+		${STAGEDIR}${DOCSDIR}
 .endif
 
 .include <bsd.port.post.mk>

@@ -3,7 +3,7 @@
 
 PORTNAME=	LearnBayes
 PORTVERSION=	2.12
-PORTREVISION=	4
+PORTREVISION=	5
 CATEGORIES=	math
 DISTNAME=	${PORTNAME}_${PORTVERSION}
 
@@ -13,8 +13,6 @@ COMMENT=	Functions for Learning Bayesian Inference
 LICENSE=	GPLv2 GPLv3
 LICENSE_COMB=	dual
 
-USE_R_MOD=	yes
-R_MOD_AUTOPLIST=	yes
+USES=	cran:auto-plist
 
-NO_STAGE=	yes
 .include <bsd.port.mk>

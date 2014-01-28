@@ -18,6 +18,7 @@ RUN_DEPENDS=	${LOCALBASE}/bin/fc-cache:${PORTSDIR}/x11-fonts/fontconfig	\
 		${LOCALBASE}/share/misc/terminfo.db:${PORTSDIR}/devel/ncurses
 
 USES=			pkgconfig shebangfix
+USE_GCC=		yes # segfaults when trying to scroll with the mouse wheel if clang
 USE_XORG=		xpm xft xrender
 GNU_CONFIGURE=		yes
 CPPFLAGS+=		-I${LOCALBASE}/include
@@ -54,7 +55,8 @@ NOTIFY_DESC=		Freedesktop startup notification support
 
 OPTIONS_DEFAULT=PERL XIM UNICODE3 ISO14755 COMBINING RXVT_SCROLLBAR	\
 		NEXT_SCROLLBAR XTERM_SCROLLBAR BACKSPACE_KEY DELETE_KEY	\
-		MOUSEWHEEL SMART_RESIZE IMLOCALE_FIX GDK_PIXBUF
+		MOUSEWHEEL SMART_RESIZE IMLOCALE_FIX GDK_PIXBUF		\
+		256_COLOR
 
 PORTDOCS1=	Changes README.FAQ README.configure
 PORTDOCS=	README.xvt ${PORTDOCS1}

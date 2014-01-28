@@ -2,8 +2,8 @@
 # $FreeBSD$
 
 PORTNAME=	virtualbox-ose
-DISTVERSION=	4.2.18
-CATEGORIES=	emulators kld
+DISTVERSION=	4.3.6
+CATEGORIES=	emulators
 MASTER_SITES=	http://download.virtualbox.org/virtualbox/${DISTVERSION}/ \
 		http://tmp.chruetertee.ch/ \
 		http://disasterarea.chruetertee.ch/
@@ -23,10 +23,11 @@ BUILD_DEPENDS=	yasm:${PORTSDIR}/devel/yasm \
 UNIQUENAME=	${PORTNAME}${PKGNAMESUFFIX}
 WRKSRC=		${WRKDIR}/VirtualBox-${PORTVERSION}
 USE_RC_SUBR=	vboxguest vboxservice
-USES=		iconv
+USES=		iconv kmod
+USE_GCC=	any
 ONLY_FOR_ARCHS=	i386 amd64
-FETCH_ARGS=	-pRr
 USE_BZIP2=	yes
+USE_PYTHON_BUILD=	yes
 MAKE_JOBS_UNSAFE=	yes
 
 HAS_CONFIGURE=	yes
@@ -39,14 +40,10 @@ CONFLICTS_INSTALL=	virtualbox-ose-additions-devel-[3,4]* virtualbox-ose-[3,4]* v
 
 OPTIONS_DEFINE=	DEBUG X11 OPENGL
 OPTIONS_DEFAULT=	X11
+OPTIONS_SUB=	DEBUG X11 OPENGL
 
-NO_STAGE=	yes
 .include <bsd.port.options.mk>
 
-PLIST_SUB+=	KMODDIR=${KMODDIR:C,^/,,}
-
-KMODDIR=	/boot/modules
-SRC_BASE?=	/usr/src
 VIDEODIR=	${PREFIX}/lib/xorg/modules/drivers
 INPUTDIR=	${PREFIX}/lib/xorg/modules/input
 
@@ -62,27 +59,20 @@ MAKE_FLAGS=	SYSDIR=${SRC_BASE}/sys
 KMK_FLAGS+=	BUILD_TYPE=debug
 KMK_BUILDTYPE=	debug
 MAKE_FLAGS+=	DEBUG_FLAGS="-O1 -g"
-PLIST_SUB+=	WITH_DEBUG=""
-.else
-PLIST_SUB+=	WITH_DEBUG="@comment "
 .endif
 
 .if ${PORT_OPTIONS:MX11}
 VBOX_WITH_X11=	1
 USE_XORG=	xcursor xmu inputproto xorg-server xrandr
-PLIST_SUB+=	X11=""
 .else
 VBOX_WITH_X11=
-PLIST_SUB+=	X11="@comment "
 .endif
 
 .if ${PORT_OPTIONS:MOPENGL}
 USE_XORG+=	xcomposite xdamage xext xfixes
 USE_GL=		gl
-PLIST_SUB+=	OPENGL=""
 .else
 CONFIGURE_ARGS+=--disable-opengl
-PLIST_SUB+=	OPENGL="@comment "
 .endif
 
 .if ${ARCH} == i386
@@ -92,10 +82,6 @@ KMK_ARCH=	freebsd.${ARCH}
 .endif
 
 XSERVER_ABI:=	${XSERVER_VER:S/.//:R}
-
-.if !exists(${SRC_BASE}/sys/kern/bus_if.m)
-IGNORE=		requires kernel sources
-.endif
 
 .include <bsd.port.pre.mk>
 
@@ -134,64 +120,56 @@ do-build:
 	cd ${VBOX_BIN}/src && make ${MAKE_FLAGS}
 
 do-install:
-	${MKDIR} ${KMODDIR}
-	${INSTALL_KLD} ${VBOX_BIN}/src/vboxguest/vboxguest.ko ${KMODDIR}
+	${INSTALL_KLD} ${VBOX_BIN}/src/vboxguest/vboxguest.ko ${STAGEDIR}${KMODDIR}
 .if ${PORT_OPTIONS:MDEBUG}
-	${INSTALL_KLD} ${VBOX_BIN}/src/vboxguest/vboxguest.ko.symbols ${KMODDIR}
+	${INSTALL_KLD} ${VBOX_BIN}/src/vboxguest/vboxguest.ko.symbols ${STAGEDIR}${KMODDIR}
 .endif
 .if ${PORT_OPTIONS:MX11}
-	${INSTALL_KLD} ${VBOX_BIN}/vboxvideo.ko ${KMODDIR}
-.if ${PORT_OPTIONS:MDEBUG}
-	${INSTALL_KLD} ${VBOX_BIN}/vboxvideo.ko.symbols ${KMODDIR}
+	${INSTALL_KLD} ${VBOX_BIN}/vboxvideo.ko ${STAGEDIR}${KMODDIR}
 .endif
-.endif
-	@/usr/sbin/kldxref ${KMODDIR}
 
-	${MKDIR} ${PREFIX}/etc/rc.d/
+	${MKDIR} ${STAGEDIR}${PREFIX}/etc/rc.d/
 
-	${MKDIR} ${PREFIX}/sbin
-	${INSTALL_PROGRAM} ${VBOX_BIN}/VBoxControl ${PREFIX}/sbin/
-	${INSTALL_PROGRAM} ${VBOX_BIN}/VBoxService ${PREFIX}/sbin/
+	${MKDIR} ${STAGEDIR}${PREFIX}/sbin
+	${INSTALL_PROGRAM} ${VBOX_BIN}/VBoxControl ${STAGEDIR}${PREFIX}/sbin/
+	${INSTALL_PROGRAM} ${VBOX_BIN}/VBoxService ${STAGEDIR}${PREFIX}/sbin/
 
 .if ${PORT_OPTIONS:MX11}
-	${INSTALL_PROGRAM} ${VBOX_BIN}/VBoxClient ${PREFIX}/bin/
+	${INSTALL_PROGRAM} ${VBOX_BIN}/VBoxClient ${STAGEDIR}${PREFIX}/bin/
 
-	${MKDIR} ${PREFIX}/bin
+	${MKDIR} ${STAGEDIR}${PREFIX}/bin
 	${INSTALL_SCRIPT} ${WRKSRC}/src/VBox/Additions/x11/Installer/98vboxadd-xclient \
-		${PREFIX}/bin/VBoxClient-all
+		${STAGEDIR}${PREFIX}/bin/VBoxClient-all
 
 	# X11 autostart
-	${MKDIR} ${PREFIX}/etc/xdg/autostart/
+	${MKDIR} ${STAGEDIR}${PREFIX}/etc/xdg/autostart/
 	${INSTALL_DATA} ${WRKSRC}/src/VBox/Additions/x11/Installer/vboxclient.desktop \
-		${PREFIX}/etc/xdg/autostart/
+		${STAGEDIR}${PREFIX}/etc/xdg/autostart/
 
 	# KDE autostart
-	${MKDIR} ${PREFIX}/share/autostart/
+	${MKDIR} ${STAGEDIR}${PREFIX}/share/autostart/
 	${INSTALL_DATA} ${WRKSRC}/src/VBox/Additions/x11/Installer/vboxclient.desktop \
-		${PREFIX}/share/autostart/
+		${STAGEDIR}${PREFIX}/share/autostart/
 
-	${MKDIR} ${VIDEODIR}
-	${INSTALL_DATA} ${VBOX_BIN}/vboxvideo_drv_${XSERVER_ABI}.so ${VIDEODIR}/vboxvideo_drv.so
+	${MKDIR} ${STAGEDIR}${VIDEODIR}
+	${INSTALL_DATA} ${VBOX_BIN}/vboxvideo_drv_${XSERVER_ABI}.so ${STAGEDIR}${VIDEODIR}/vboxvideo_drv.so
 
-	${MKDIR} ${INPUTDIR}
-	${INSTALL_DATA} ${VBOX_BIN}/vboxmouse_drv_${XSERVER_ABI}.so ${INPUTDIR}/vboxmouse_drv.so
+	${MKDIR} ${STAGEDIR}${INPUTDIR}
+	${INSTALL_DATA} ${VBOX_BIN}/vboxmouse_drv_${XSERVER_ABI}.so ${STAGEDIR}${INPUTDIR}/vboxmouse_drv.so
 .endif
 
 .if ${PORT_OPTIONS:MOPENGL}
-	${MKDIR} ${PREFIX}/lib
-	${INSTALL_DATA} ${VBOX_BIN}/VBoxOGL.so ${PREFIX}/lib/
-	${INSTALL_DATA} ${VBOX_BIN}/VBoxOGLarrayspu.so ${PREFIX}/lib/
-	${INSTALL_DATA} ${VBOX_BIN}/VBoxOGLcrutil.so ${PREFIX}/lib/
-	${INSTALL_DATA} ${VBOX_BIN}/VBoxOGLerrorspu.so ${PREFIX}/lib/
-	${INSTALL_DATA} ${VBOX_BIN}/VBoxOGLfeedbackspu.so ${PREFIX}/lib/
-	${INSTALL_DATA} ${VBOX_BIN}/VBoxOGLpackspu.so ${PREFIX}/lib/
-	${INSTALL_DATA} ${VBOX_BIN}/VBoxOGLpassthroughspu.so ${PREFIX}/lib/
+	${MKDIR} ${STAGEDIR}${PREFIX}/lib
+	${INSTALL_DATA} ${VBOX_BIN}/VBoxOGL.so ${STAGEDIR}${PREFIX}/lib/
+	${INSTALL_DATA} ${VBOX_BIN}/VBoxOGLarrayspu.so ${STAGEDIR}${PREFIX}/lib/
+	${INSTALL_DATA} ${VBOX_BIN}/VBoxOGLcrutil.so ${STAGEDIR}${PREFIX}/lib/
+	${INSTALL_DATA} ${VBOX_BIN}/VBoxOGLerrorspu.so ${STAGEDIR}${PREFIX}/lib/
+	${INSTALL_DATA} ${VBOX_BIN}/VBoxOGLfeedbackspu.so ${STAGEDIR}${PREFIX}/lib/
+	${INSTALL_DATA} ${VBOX_BIN}/VBoxOGLpackspu.so ${STAGEDIR}${PREFIX}/lib/
+	${INSTALL_DATA} ${VBOX_BIN}/VBoxOGLpassthroughspu.so ${STAGEDIR}${PREFIX}/lib/
 
-	${MKDIR} ${PREFIX}/lib/dri
-	${LN} -sf ${PREFIX}/lib/VBoxOGL.so ${PREFIX}/lib/dri/vboxvideo_dri.so
+	${MKDIR} ${STAGEDIR}${PREFIX}/lib/dri
+	${LN} -sf ${PREFIX}/lib/VBoxOGL.so ${STAGEDIR}${PREFIX}/lib/dri/vboxvideo_dri.so
 .endif
-
-post-install:
-	@${CAT} ${PKGMESSAGE}
 
 .include <bsd.port.post.mk>

@@ -3,7 +3,7 @@
 
 PORTNAME=	tseries
 DISTVERSION=	0.10-32
-PORTREVISION=	2
+PORTREVISION=	3
 CATEGORIES=	finance
 DISTNAME=	${PORTNAME}_${DISTVERSION}
 
@@ -18,8 +18,6 @@ BUILD_DEPENDS=	R-cran-quadprog>0:${PORTSDIR}/math/R-cran-quadprog \
 RUN_DEPENDS=	R-cran-quadprog>0:${PORTSDIR}/math/R-cran-quadprog \
 		R-cran-zoo>0:${PORTSDIR}/math/R-cran-zoo
 
-USE_R_MOD=	yes
-R_MOD_AUTOPLIST=	yes
+USES=	cran:auto-plist
 
-NO_STAGE=	yes
 .include <bsd.port.mk>

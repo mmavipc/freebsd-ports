@@ -8,15 +8,12 @@ MASTER_SITES=	http://www.splint.org/downloads/
 EXTRACT_SUFX=	.src.tgz
 
 MAINTAINER=	lwhsu@FreeBSD.org
-COMMENT=	A tool for statically checking sourcecode for security vulnerabilities
+COMMENT=	Tool for statically checking sourcecode for security vulnerabilities
 
-USE_GMAKE=	yes
+USES=		gmake
 GNU_CONFIGURE=	yes
 MAKE_JOBS_UNSAFE=	yes
 
-MAN1=		splint.1
-
-NO_STAGE=	yes
 post-patch:
 	@${REINPLACE_CMD} -e \
 		's|%%PREFIX%%|${PREFIX}|g' ${WRKSRC}/src/Headers/constants.h

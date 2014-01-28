@@ -1,4 +1,3 @@
-@comment $FreeBSD$
 @stopdaemon mailman
 @unexec if cmp -s %D/%%MMDIR%%/Mailman/mm_cfg.py %D/%%MMDIR%%/Mailman/mm_cfg.py.dist; then rm -f %D/%%MMDIR%%/Mailman/mm_cfg.py; fi
 @unexec rm -f %D/%%MMDIR%%/Mailman/mm_cfg.pyc
@@ -385,6 +384,7 @@
 %%MMDIR%%/cron/mailpasswds
 %%MMDIR%%/cron/nightly_gzip
 %%SUB_HTDIG%%%%MMDIR%%/cron/nightly_htdig
+@unexec rm -f %%MMDIR%%/cron/paths.pyc
 %%MMDIR%%/cron/paths.py
 %%SUB_HTDIG%%%%MMDIR%%/cron/remote_nightly_htdig
 %%SUB_HTDIG%%%%MMDIR%%/cron/remote_nightly_htdig.pl

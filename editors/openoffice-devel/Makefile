@@ -15,7 +15,7 @@ EXTRACT_ONLY=	${OOOSRC} ${EXTSRC}
 MAINTAINER=	office@FreeBSD.org
 COMMENT=	Integrated wordprocessor/dbase/spreadsheet/drawing/chart/browser(developer version)
 
-LICENSE=	AL2
+LICENSE=	APACHE20
 
 PKGNAMESUFFIX=	-devel
 
@@ -69,9 +69,9 @@ FREEBSD_ENV_SET=	FreeBSDX86Env.Set.sh
 .endif
 
 OOOSRC=			ApacheOpenOffice.r${SVNREVISION}${EXTRACT_SUFX}
-EXTSRC=			ApacheOpenOffice.ext_sources.r${SVNREVISION}${EXTRACT_SUFX}
+EXTSRC=			ApacheOpenOffice.ext_sources.r${SVNREVISION}_2${EXTRACT_SUFX}
 OOODIR=			openoffice4
-SVNREVISION=		1517723
+SVNREVISION=		1543006
 INSTALLATION_BASEDIR?=	openoffice-r${SVNREVISION}
 EXECBASE?=		openoffice-r${SVNREVISION}
 DIST_SUBDIR=		openoffice
@@ -116,7 +116,7 @@ LIB_DEPENDS=	cairo:${PORTSDIR}/graphics/cairo \
 		jpeg:${PORTSDIR}/graphics/jpeg \
 		curl:${PORTSDIR}/ftp/curl \
 		hunspell-1.3:${PORTSDIR}/textproc/hunspell \
-		poppler-glib:${PORTSDIR}/graphics/poppler-glib \
+		libpoppler-glib.so:${PORTSDIR}/graphics/poppler-glib \
 		rdf:${PORTSDIR}/textproc/redland \
 		textcat:${PORTSDIR}/textproc/libtextcat \
 		freetype:${PORTSDIR}/print/freetype2 \
@@ -302,7 +302,7 @@ post-install:
 	@${ECHO_CMD} "" > ${TMPPLIST}
 	@${ECHO_CMD} "share/licenses/${PKGNAME}/catalog.mk" >> ${TMPPLIST}
 	@${ECHO_CMD} "share/licenses/${PKGNAME}/LICENSE"    >> ${TMPPLIST}
-	@${ECHO_CMD} "share/licenses/${PKGNAME}/AL2"        >> ${TMPPLIST}
+	@${ECHO_CMD} "share/licenses/${PKGNAME}/APACHE20"   >> ${TMPPLIST}
 	@${ECHO_CMD} "@dirrm share/licenses/${PKGNAME}"     >> ${TMPPLIST}
 	@${ECHO_CMD} "@dirrm share/licenses"                >> ${TMPPLIST}
 	@cd ${PREFIX} ; ${FIND} -s bin \( -type f -or -type l \) -name "${EXECBASE}*" >> ${TMPPLIST}

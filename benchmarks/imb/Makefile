@@ -15,8 +15,7 @@ MAINTAINER=	ports@FreeBSD.org
 COMMENT=	Intel MPI Benchmark
 
 WRKSRC=		${WRKDIR}/IMB_3.0/src/
-USES=		gmake
-USE_DOS2UNIX=	yes
+USES=		dos2unix gmake
 MAKEFILE=	make_mpich
 ALL_TARGET=	all
 # Intel hardcodes -O3 in make_mpich.  Replacing it with system defaults
@@ -49,7 +48,7 @@ MAKE_ENV+=	MPI_HOME=${LOCALBASE}
 .endif
 
 do-install:
-.if !defined(NOPORTDOCS)
+.if ${PORT_OPTIONS:MDOCS}
 	${MKDIR} ${DOCSDIR}
 	${INSTALL_MAN} ${WRKDIR}/IMB_3.0/doc/IMB_ug-3.0.pdf ${DOCSDIR}
 	${INSTALL_MAN} ${WRKDIR}/IMB_3.0/license/license.txt ${DOCSDIR}

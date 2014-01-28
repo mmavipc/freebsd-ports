@@ -8,7 +8,7 @@ MASTER_SITES=	CPAN
 MASTER_SITE_SUBDIR=	CPAN:AVAR
 PKGNAMEPREFIX=	p5-
 
-MAINTAINER=	milki@rescomp.berkeley.edu
+MAINTAINER=	milki@FreeBSD.org
 COMMENT=	Provide starcraft.trn via Bot::Training
 
 LICENSE=	ART10 GPLv1
@@ -21,7 +21,4 @@ RUN_DEPENDS=	p5-Any-Moose>=0:${PORTSDIR}/devel/p5-Any-Moose \
 USES=		perl5
 USE_PERL5=	configure
 
-MAN3=	Bot::Training::StarCraft.3
-
-NO_STAGE=	yes
 .include <bsd.port.mk>

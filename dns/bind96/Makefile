@@ -1,19 +1,19 @@
 # $FreeBSD$
 
 PORTNAME=	bind96
-PORTVERSION=	9.6.3.2.ESV.R10
+PORTVERSION=	9.6.3.2.ESV.R10.2
 CATEGORIES=	dns net ipv6
 MASTER_SITES=	${MASTER_SITE_ISC}
 MASTER_SITE_SUBDIR=	bind9/${ISCVERSION}
 DISTNAME=	bind-${ISCVERSION}
 
-MAINTAINER=	erwin@FreeBSD.org
+MAINTAINER=	mat@FreeBSD.org
 COMMENT=	BIND DNS suite with updated DNSSEC and threads
 
 LICENSE=	ISCL
 
 # ISC releases things like 9.4.0b3, which our versioning doesn't like
-ISCVERSION=	9.6-ESV-R10
+ISCVERSION=	9.6-ESV-R10-P2
 
 MAKE_JOBS_UNSAFE=	yes
 
@@ -25,9 +25,9 @@ CONFLICTS=	bind9*-9.[45789].* bind9*-sdb-9.[45789].* bind-tools-9.*
 DEPRECATED=	EOL in January 2014, consider moving to Bind 9.8 or 9.9
 EXPIRATION_DATE=	2014-01-31
 
-OPTIONS_DEFAULT=	IPV6 SSL LINKS XML THREADS
+OPTIONS_DEFAULT=	IPV6 SSL XML THREADS
 OPTIONS_DEFINE=		SSL LINKS XML IDN REPLACE_BASE LARGE_FILE \
-			SIGCHASE IPV6 THREADS FIXED_RRSET
+			SIGCHASE IPV6 THREADS FIXED_RRSET DOCS
 OPTIONS_GROUP=		DLZ
 OPTIONS_GROUP_DLZ=	DLZ_POSTGRESQL DLZ_MYSQL DLZ_BDB \
 			DLZ_LDAP DLZ_FILESYSTEM DLZ_STUB
@@ -134,19 +134,29 @@ CONFIGURE_ARGS+=	--disable-threads
 .endif
 
 .if ${PORT_OPTIONS:MREPLACE_BASE}
-.if ${OSVERSION} >= 1000500
+.if ${OPSYS} == FreeBSD && ${OSVERSION} >= 1000100
 IGNORE=		REPLACE_BASE option not supported on this release
 .endif
 PKGNAMESUFFIX=	-base
 PREFIX=		/usr
 BIND_DESTETC=	/etc/namedb
-CONFIGURE_ARGS+=	--prefix=${PREFIX} \
-			--sysconfdir=${BIND_DESTETC}
+.else
+.if ${OPSYS} == FreeBSD && ${OSVERSION} >= 1000100
+BIND_DESTETC=	${PREFIX}/etc/namedb
 .else
 BIND_DESTETC=	${PREFIX}/etc
 .endif
+.endif
 
+CONFIGURE_ARGS+=	--prefix=${PREFIX} \
+			--sysconfdir=${BIND_DESTETC}
 PLIST_SUB+=	BIND_DESTETC="${BIND_DESTETC}"
+
+.if ${OPSYS} == FreeBSD && ${OSVERSION} >= 1000100
+PLIST_SUB+=	NOBASE=""
+.else
+PLIST_SUB+=	NOBASE="@comment "
+.endif
 
 MAN1=	dig.1 host.1 isc-config.sh.1 nslookup.1 nsupdate.1
 MAN3=	lwres.3 lwres_addr_parse.3 lwres_buffer.3 lwres_buffer_add.3 \
@@ -202,8 +212,6 @@ post-patch:
 PORTDOCS=	*
 .endif
 post-install:
-	${INSTALL_DATA} ${WRKSRC}/bin/rndc/rndc.conf \
-		${BIND_DESTETC}/rndc.conf.sample
 .if ${PORT_OPTIONS:MDOCS}
 	${MKDIR} ${DOCSDIR}/arm ${DOCSDIR}/misc
 	${INSTALL_DATA} ${WRKSRC}/doc/arm/*.html ${DOCSDIR}/arm
@@ -212,10 +220,34 @@ post-install:
 	${CP} ${WRKSRC}/CHANGES ${WRKSRC}/COPYRIGHT ${WRKSRC}/FAQ \
 	    ${WRKSRC}/NSEC3-NOTES ${WRKSRC}/README* ${DOCSDIR}/
 .endif
-.if ${PORT_OPTIONS:MLINKS} && empty(PORT_OPTIONS:MREPLACE_BASE)
+.if ${OPSYS} == FreeBSD && ${OSVERSION} >= 1000100
+.for FILE in named named.conf
+	${SED} -e 's#%%PREFIX%%#${PREFIX}#g' \
+		-e 's#%%BIND_DESTETC%%#${BIND_DESTETC}#g' \
+		${FILESDIR}/${FILE} > ${WRKDIR}/${FILE}
+.endfor
+	${INSTALL_SCRIPT} ${WRKDIR}/named ${PREFIX}/etc/rc.d
+	${MKDIR} ${BIND_DESTETC}
+.for DIR in dynamic master slave working
+	${MKDIR} ${BIND_DESTETC}/${DIR}
+.endfor
+.for DIR in dynamic slave working
+	${CHOWN} bind:bind ${BIND_DESTETC}/${DIR}
+.endfor
+	${INSTALL_DATA} ${WRKDIR}/named.conf ${BIND_DESTETC}/named.conf.sample
+.if !exists(${BIND_DESTETC}/named.conf)
+	${INSTALL_DATA} ${WRKDIR}/named.conf ${BIND_DESTETC}/named.conf
+.endif
+	${INSTALL_DATA} ${FILESDIR}/named.root ${BIND_DESTETC}
+	${INSTALL_DATA} ${FILESDIR}/empty.db ${BIND_DESTETC}/master
+	${INSTALL_DATA} ${FILESDIR}/localhost-forward.db ${BIND_DESTETC}/master
+	${INSTALL_DATA} ${FILESDIR}/localhost-reverse.db ${BIND_DESTETC}/master
+.elif ${PORT_OPTIONS:MLINKS} && empty(PORT_OPTIONS:MREPLACE_BASE)
 	PKG_PREFIX=${PREFIX} ${SH} ${PKGINSTALL} ${PKGNAME} POST-INSTALL
 .endif
 
+	${INSTALL_DATA} ${WRKSRC}/bin/rndc/rndc.conf \
+		${BIND_DESTETC}/rndc.conf.sample
 	@${CAT} ${PKGMESSAGE}
 
 .include <bsd.port.mk>

@@ -2,7 +2,7 @@
 # $FreeBSD$
 
 PORTNAME=	libolecf
-DISTVERSION=	alpha-20131012
+DISTVERSION=	alpha-20131108
 CATEGORIES=	devel
 MASTER_SITES=	https://googledrive.com/host/0B3fBvzttpiiSS0hEb0pjU2h6a2c/ \
 		LOCAL/antoine
@@ -15,7 +15,7 @@ LICENSE=	LGPL3
 GNU_CONFIGURE=	yes
 CONFIGURE_ARGS=	--enable-python --with-libintl-prefix=${LOCALBASE} ${ICONV_CONFIGURE_ARG}
 USES=		fuse gettext iconv pathfix pkgconfig
-USE_PYTHON=	-2.7
+USE_PYTHON=	2
 USE_LDCONFIG=	yes
 WRKSRC=		${WRKDIR}/${PORTNAME}-${PORTVERSION:E}
 

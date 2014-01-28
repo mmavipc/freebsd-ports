@@ -1,0 +1,4 @@
+SHA256 (clang-3.4.src.tar.gz) = 22a9780db3b85a7f2eb9ea1f7f6e00da0249e3d12851e8dea0f62f1783242b1b
+SIZE (clang-3.4.src.tar.gz) = 10619607
+SHA256 (llvm-3.4.src.tar.gz) = 25a5612d692c48481b9b397e2b55f4870e447966d66c96d655241702d44a2628
+SIZE (llvm-3.4.src.tar.gz) = 15920544

@@ -47,7 +47,6 @@ CONFIGURE_ARGS+=	--with-desktop=agnostic
 CONFLICTS=	${PORTNAME}-gnome-[0-9]* ${PORTNAME}-xfce4-[0-9]*
 .endif
 
-NO_STAGE=	yes
 .include <bsd.port.options.mk>
 
 .if ${PORT_OPTIONS:MGCONF}
@@ -57,8 +56,6 @@ CONFIGURE_ARGS+=	--with-gconf
 .else
 CONFIGURE_ARGS+=	--without-gconf
 .endif
-
-.include <bsd.port.pre.mk>
 
 post-patch:
 	@${REINPLACE_CMD} -e 's|#!/usr/bin/python|#!/usr/bin/env python|' \
@@ -73,4 +70,4 @@ post-patch:
 	@${REINPLACE_CMD} -e 's|glib/gutils.h>|glib.h>|g' \
 		${WRKSRC}/libawn/awn-config-client-gkeyfile.c
 
-.include <bsd.port.post.mk>
+.include <bsd.port.mk>

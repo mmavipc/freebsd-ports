@@ -10,12 +10,11 @@ MASTER_SITES=	SF/${PORTNAME}/${PORTNAME}/${PORTVERSION}%20(Stable)/
 MAINTAINER=	acm@FreeBSD.org
 COMMENT=	Cross-platform C++ library for network and low-level I/O programming
 
-LIB_DEPENDS=	boost_thread:${PORTSDIR}/devel/boost-libs
+LIB_DEPENDS=	libboost_thread.so:${PORTSDIR}/devel/boost-libs
 
 GNU_CONFIGURE=	yes
 USE_GMAKE=	yes
 
 CONFIGURE_ARGS=	--with-boost=${LOCALBASE}/include
 
-NO_STAGE=	yes
 .include <bsd.port.mk>

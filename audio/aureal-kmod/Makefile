@@ -4,46 +4,38 @@
 PORTNAME=	aureal
 PORTVERSION=	1.5
 PORTREVISION=	6
-CATEGORIES=	audio kld
-MASTER_SITES=	http://www.matey.org/au88x0/ \
-		http://www.b1t.name/distfiles/ \
-		http://aureal-snd.googlecode.com/files/
+CATEGORIES=	audio
+MASTER_SITES=	GOOGLE_CODE
+PROJECTHOST=	${PORTNAME}-snd
 PKGNAMESUFFIX=	-kmod
-DISTNAME=	au88x0-${PORTVERSION}_${DISTREVISION}
+DISTNAME=	au88x0-${PORTVERSION}_4
 
 MAINTAINER=	c.kworr@gmail.com
-COMMENT=	A FreeBSD Driver for Aureal Vortex based soundcards
-
-NO_PACKAGE=	Should be in sync with the kernel to work correctly
+COMMENT=	Driver for Aureal Vortex based soundcards
 
 ONLY_FOR_ARCHS=	i386
 STRAYFILES=	au88x0.h au88x0.c asp10.o asp20.o asp30.o
-DISTREVISION=	4
 
 KMODDIR=	${PREFIX}/modules/au88x0
 KMODDIR_REL=	${KMODDIR:S%${PREFIX}/%%}
 
-NO_STAGE=	yes
-USE_RC_SUBR=	aureal
+USE_RC_SUBR=	${PORTNAME}
 SUB_FILES=	pkg-message
 SUB_LIST=	KMODDIR=${KMODDIR}
-
-PLIST_SUB=	KMODDIR=${KMODDIR_REL}
 
 WRKSRC=		${WRKDIR}
 
 MAKE_ENV=	WRKSRC="${WRKSRC}"
 MAKE_ARGS=	KMODDIR="${KMODDIR}"
 
+USES=		kmod
+
 .include <bsd.port.pre.mk>
 
-.if ${OSVERSION} >= 800000
 EXTRA_PATCHES+=	${PATCHDIR}/extra_800000_patch-au88x0.c
-.endif
 
-# Make sure kernel sources are present before going any further
-.if ! exists(${SRC_BASE}/sys/dev/sound/pcm/sound.c)
-IGNORE=	you need to extract kernel source tree before building this package
+.if ${OSVERSION} >= 1000000
+BROKEN=	does not build
 .endif
 
 pre-everything::
@@ -62,11 +54,5 @@ pre-everything::
 	@${FALSE}
 .endif
 .endfor
-
-pre-install:
-	${MKDIR} ${KMODDIR}
-
-post-install:
-	@${CAT} ${PKGMESSAGE}
 
 .include <bsd.port.post.mk>

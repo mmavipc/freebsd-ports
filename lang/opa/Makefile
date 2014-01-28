@@ -10,6 +10,10 @@ DISTNAME=	${PORTNAME}_v${GITVER}
 MAINTAINER=	ports@FreeBSD.org
 COMMENT=	Open source, simple, and unified platform for writing web apps
 
+BROKEN=		Failes to find newer nodejs
+DEPRECATED=	Broken for more than 6 month
+EXPIRATION_DATE=	2014-02-27
+
 BUILD_DEPENDS=	${OCAMLFIND_DEPEND} \
 		${LOCALBASE}/${OCAML_SITELIBDIR}/ssl/ssl.a:${PORTSDIR}/security/ocaml-ssl \
 		${LOCALBASE}/${OCAML_SITELIBDIR}/cryptokit/cryptokit.a:${PORTSDIR}/security/ocaml-cryptokit \

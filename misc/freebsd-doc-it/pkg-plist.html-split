@@ -1,4 +1,3 @@
-@comment $FreeBSD$
 %%DOCSDIR%%/%%DOCLANG%%/articles/committers-guide/archs.html
 %%DOCSDIR%%/%%DOCLANG%%/articles/committers-guide/committer.types.html
 %%DOCSDIR%%/%%DOCLANG%%/articles/committers-guide/conventions.html
@@ -165,6 +164,7 @@
 %%DOCSDIR%%/%%DOCLANG%%/books/handbook/install.html
 %%DOCSDIR%%/%%DOCLANG%%/books/handbook/introduction.html
 %%DOCSDIR%%/%%DOCLANG%%/books/handbook/ipsec.html
+%%DOCSDIR%%/%%DOCLANG%%/books/handbook/ix01.html
 %%DOCSDIR%%/%%DOCLANG%%/books/handbook/jails-application.html
 %%DOCSDIR%%/%%DOCLANG%%/books/handbook/jails-build.html
 %%DOCSDIR%%/%%DOCLANG%%/books/handbook/jails-intro.html

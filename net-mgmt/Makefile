@@ -129,7 +129,6 @@
     SUBDIR += nagios-check_puppet
     SUBDIR += nagios-check_smartmon
     SUBDIR += nagios-check_tftp
-    SUBDIR += nagios-devel
     SUBDIR += nagios-geom
     SUBDIR += nagios-openldap-plugins
     SUBDIR += nagios-pf-plugin
@@ -139,6 +138,7 @@
     SUBDIR += nagios-snmp-plugins
     SUBDIR += nagios-snmp-plugins-extras
     SUBDIR += nagios-spamd-plugin
+    SUBDIR += nagios4
     SUBDIR += nagiosagent
     SUBDIR += nagiosgraph
     SUBDIR += nagiosql
@@ -193,7 +193,6 @@
     SUBDIR += openlldp
     SUBDIR += openvmps
     SUBDIR += ourmon
-    SUBDIR += percona-monitoring-plugins
     SUBDIR += p0f
     SUBDIR += p0f2
     SUBDIR += p5-AnyEvent-SNMP
@@ -228,6 +227,7 @@
     SUBDIR += p5-Net-Netmask
     SUBDIR += p5-Net-SNMP
     SUBDIR += p5-Net-SNMP-Util
+    SUBDIR += p5-Net-SNMPTrapd
     SUBDIR += p5-Net-Telnet-Cisco-IOS
     SUBDIR += p5-NetAddr-IP
     SUBDIR += p5-NetAddr-IP-Lite
@@ -252,6 +252,7 @@
     SUBDIR += pandorafms_agent
     SUBDIR += pandorafms_console
     SUBDIR += pandorafms_server
+    SUBDIR += percona-monitoring-plugins
     SUBDIR += pftabled
     SUBDIR += php5-snmp
     SUBDIR += php52-snmp
@@ -307,11 +308,14 @@
     SUBDIR += softflowd
     SUBDIR += spectools
     SUBDIR += ssgless
+    SUBDIR += statsd
     SUBDIR += subcalc
     SUBDIR += sysmon
     SUBDIR += tcpreplay
     SUBDIR += tcptrack
     SUBDIR += torrus
+    SUBDIR += unifi2
+    SUBDIR += unifi3
     SUBDIR += vidalia
     SUBDIR += virt-viewer
     SUBDIR += virtinst
@@ -330,17 +334,18 @@
     SUBDIR += zabbix2-frontend
     SUBDIR += zabbix2-proxy
     SUBDIR += zabbix2-server
+    SUBDIR += zabbix22-agent
+    SUBDIR += zabbix22-frontend
+    SUBDIR += zabbix22-proxy
+    SUBDIR += zabbix22-server
     SUBDIR += zenoss
-    SUBDIR += zenpack-apachemonitor
     SUBDIR += zenpack-checkping
     SUBDIR += zenpack-dellmon
-    SUBDIR += zenpack-dellmonitor
     SUBDIR += zenpack-deviceadvdetail
     SUBDIR += zenpack-devicesearch
     SUBDIR += zenpack-graphportlet
     SUBDIR += zenpack-interfacegraphs
     SUBDIR += zenpack-libvirt
     SUBDIR += zenpack-macreport
-    SUBDIR += zenpack-ntpmonitor
 
 .include <bsd.port.subdir.mk>

@@ -2,7 +2,8 @@
 # $FreeBSD$
 
 PORTNAME=	freeradius
-DISTVERSION=	2.2.2
+DISTVERSION=	2.2.3
+PORTREVISION=	1
 CATEGORIES=	net
 MASTER_SITES=	ftp://ftp.freeradius.org/pub/freeradius/%SUBDIR%/ \
 		ftp://ftp.ntua.gr/pub/net/radius/freeradius/%SUBDIR%/ \
@@ -22,7 +23,7 @@ LOGDIR?=	/var/log
 KRB5_CONFIG?=	/usr/bin/krb5-config --libs
 
 CONFLICTS=	gnu-radius-[0-9].* openradius-[0-9].* radiusd-cistron-[0-9].* \
-		freeradius-mysql-[0-9].* freeradius-[013-9].*
+		freeradius-mysql-[0-9].* freeradius-[013-9].* freeradius3-3.*
 
 USE_RC_SUBR=	radiusd
 
@@ -178,6 +179,7 @@ USE_PYTHON=	yes
 CONFIGURE_ARGS+=--with-rlm_python \
 		--with-rlm-python-lib-dir=${PYTHON_LIBDIR} \
 		--with-rlm-python-include-dir=${PYTHON_INCLUDEDIR}
+CONFIGURE_ENV+=	PYTHONBIN=${PYTHON_CMD}
 PLIST_SUB+=	RLMPYTHON=""
 .else
 CONFIGURE_ARGS+=--without-rlm_python
@@ -229,7 +231,7 @@ EXPM=		yes
 # Oracle support is experimental under FreeBSD
 .if ${PORT_OPTIONS:MOCI8}
 EXTRA_PATCHES+=	${FILESDIR}/extra-patch-exec.c
-CONFIGURE_ENV=	ORACLE_HOME="${ORACLE_HOME}"
+CONFIGURE_ENV+=	ORACLE_HOME="${ORACLE_HOME}"
 ORACLE_HOME?=	${LOCALBASE}/oracle8-client
 BUILD_DEPENDS+=	${ORACLE_HOME}/lib/libclntst8.a:${PORTSDIR}/databases/oracle8-client
 CONFIGURE_ARGS+=--with-oracle-home-dir=${ORACLE_HOME}/rdbms/demo

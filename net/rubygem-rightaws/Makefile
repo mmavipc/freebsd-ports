@@ -7,7 +7,7 @@ CATEGORIES=	net rubygems
 MASTER_SITES=	RG
 DISTNAME=	right_aws-${PORTVERSION}
 
-MAINTAINER=	glarkin@FreeBSD.org
+MAINTAINER=	ruby@FreeBSD.org
 COMMENT=	Provides access to Amazon EC2, S3, SQS, and SDB web services
 
 LICENSE=	MIT
@@ -23,7 +23,6 @@ UNIQUENAME=	${PORTNAME}
 OPTIONS_DEFINE=	LIBXML
 LIBXML_DESC=	Use libxml instead of REXML
 
-NO_STAGE=	yes
 .include <bsd.port.options.mk>
 
 .if ${PORT_OPTIONS:MLIBXML}

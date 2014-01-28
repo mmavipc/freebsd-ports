@@ -1,7 +1,8 @@
-@comment $FreeBSD$
 bin/bash
 bin/rbash
 bin/bashbug
+man/man1/bash.1.gz
+man/man1/bashbug.1.gz
 %%HELP%%%%DATADIR%%/alias
 %%HELP%%%%DATADIR%%/arith
 %%HELP%%%%DATADIR%%/arith_for

@@ -12,7 +12,6 @@ MAINTAINER=	coder@tuxfamily.org
 COMMENT=	LINGOT is a musical instrument tuner
 
 LICENSE=	GPLv2
-LICENSE_FILE=	${WRKSRC}/COPYING
 
 USE_GNOME=	gtk20 libglade2
 NO_STAGE=	yes
@@ -27,25 +26,23 @@ OPTIONS_DEFAULT=	JACK
 .include <bsd.port.options.mk>
 
 .if ${PORT_OPTIONS:MJACK}
-LIB_DEPENDS+=	jack.0:${PORTSDIR}/audio/jack \
-		samplerate.1:${PORTSDIR}/audio/libsamplerate
+LIB_DEPENDS+=	libjack.so:${PORTSDIR}/audio/jack \
+		libsamplerate.so:${PORTSDIR}/audio/libsamplerate
 CONFIGURE_ARGS+=--enable-jack
 .else
 CONFIGURE_ARGS+=--disable-jack
 .endif
 
 .if ${PORT_OPTIONS:MALSA}
-LIB_DEPENDS+=	asound.2:${PORTSDIR}/audio/alsa-lib
+LIB_DEPENDS+=	libasound.so:${PORTSDIR}/audio/alsa-lib
 RUN_DEPENDS+=	${LOCALBASE}/lib/alsa-lib/libasound_module_pcm_oss.so:${PORTSDIR}/audio/alsa-plugins
 CONFIGURE_ARGS+=--enable-alsa
 .else
 CONFIGURE_ARGS+=--disable-alsa
 .endif
 
-.include <bsd.port.pre.mk>
-
 .if ${OSVERSION} < 802502 || (${OSVERSION} > 900000 && ${OSVERSION} < 900027)
 EXTRA_PATCHES+=	${FILESDIR}/extra-lingot-config-scale.h
 .endif
 
-.include <bsd.port.post.mk>
+.include <bsd.port.mk>

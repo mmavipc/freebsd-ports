@@ -3,6 +3,7 @@
 
 PORTNAME=	Google-Data-JSON
 PORTVERSION=	0.1.10
+PORTREVISION=	1
 CATEGORIES=	textproc perl5
 MASTER_SITES=	CPAN
 MASTER_SITE_SUBDIR=	CPAN:TAKERU
@@ -21,14 +22,10 @@ BUILD_DEPENDS=	p5-File-Slurp>=0:${PORTSDIR}/devel/p5-File-Slurp \
 		p5-XML-Simple>=0:${PORTSDIR}/textproc/p5-XML-Simple \
 		p5-YAML-Syck>=0:${PORTSDIR}/textproc/p5-YAML-Syck
 RUN_DEPENDS:=	${BUILD_DEPENDS}
-
 TEST_DEPENDS=	p5-Test-NoWarnings>=0:${PORTSDIR}/devel/p5-Test-NoWarnings \
 		p5-Test-Perl-Critic>=0:${PORTSDIR}/textproc/p5-Test-Perl-Critic
 
 USES=		perl5
 USE_PERL5=	configure
 
-MAN3=		Google::Data::JSON.3
-
-NO_STAGE=	yes
 .include <bsd.port.mk>

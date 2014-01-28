@@ -1,9 +1,8 @@
 # $FreeBSD$
 
 PORTNAME=	ranch
-PORTVERSION=	0.8.5
+PORTVERSION=	0.9.0
 CATEGORIES=	net
-MASTER_SITES=	GH
 
 MAINTAINER=	olgeni@FreeBSD.org
 COMMENT=	Erlang socket acceptor pool for TCP protocols
@@ -13,16 +12,14 @@ RUN_DEPENDS=	erl:${PORTSDIR}/lang/erlang
 
 PLIST_SUB=	VERSION="${PORTVERSION}"
 
-USE_GMAKE=	yes
+USES=		gmake
 USE_GITHUB=	yes
 GH_ACCOUNT=	extend
 GH_PROJECT=	ranch
-GH_COMMIT=	4170575
+GH_COMMIT=	5df1f22
 GH_TAGNAME=	${PORTVERSION}
 
 PORTDOCS=	*
-
-.include <bsd.port.options.mk>
 
 do-install:
 	@${MKDIR} ${STAGEDIR}${DOCSDIR}

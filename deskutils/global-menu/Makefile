@@ -10,7 +10,7 @@ MASTER_SITES=		http://gnome2-globalmenu.googlecode.com/files/
 MAINTAINER=		gustau.perez@gmail.com
 COMMENT=		Global menu for gnome
 
-LIB_DEPENDS=		notify.4:${PORTSDIR}/devel/libnotify
+LIB_DEPENDS=		libnotify.so:${PORTSDIR}/devel/libnotify
 
 USE_GNOME=		gnomepanel gnomedesktop
 
@@ -27,6 +27,9 @@ OPTIONS_DEFINE=		XFCE4_PANEL NLS
 XFCE4_PANEL_DESC=	Xfce panel applet
 
 NO_STAGE=	yes
+
+BROKEN_sparc64=	Leaves files behind on deinstall on sparc64
+
 .include <bsd.port.options.mk>
 
 .if ${PORT_OPTIONS:MXFCE4_PANEL}
@@ -55,10 +58,4 @@ post-install:
 			${LOCALBASE}/libdata/bonobo/servers
 		@${CAT} ${PKGMESSAGE}
 
-.include <bsd.port.pre.mk>
-
-.if ${ARCH} == "sparc64"
-BROKEN=		Leaves files behind on deinstall on sparc64
-.endif
-
-.include <bsd.port.post.mk>
+.include <bsd.port.mk>

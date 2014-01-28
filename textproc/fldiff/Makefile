@@ -5,8 +5,7 @@ PORTNAME=	fldiff
 PORTVERSION=	1.1
 PORTREVISION=	8
 CATEGORIES=	textproc
-MASTER_SITES=	http://www.easysw.com/~mike/fldiff/ \
-		CRITICAL
+MASTER_SITES=	CRITICAL
 DISTNAME=	${PORTNAME}-${PORTVERSION}-source
 
 MAINTAINER=	ehaupt@FreeBSD.org
@@ -14,7 +13,7 @@ COMMENT=	Graphical diff program using FLTK
 
 LICENSE=	GPLv2
 
-LIB_DEPENDS=	fltk:${PORTSDIR}/x11-toolkits/fltk
+LIB_DEPENDS=	libfltk.so:${PORTSDIR}/x11-toolkits/fltk
 
 GNU_CONFIGURE=	yes
 

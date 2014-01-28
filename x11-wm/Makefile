@@ -83,7 +83,6 @@
     SUBDIR += epplets
     SUBDIR += evilwm
     SUBDIR += fbcmd
-    SUBDIR += fbpager
     SUBDIR += fluxbox
     SUBDIR += fluxconf
     SUBDIR += fluxter
@@ -111,6 +110,7 @@
     SUBDIR += lwm
     SUBDIR += lxmed
     SUBDIR += lxsession
+    SUBDIR += mate-window-manager
     SUBDIR += matwm2
     SUBDIR += mcwm
     SUBDIR += metacity

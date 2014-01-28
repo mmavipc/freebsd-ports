@@ -2,33 +2,29 @@
 # $FreeBSD$
 
 PORTNAME=	ttyload
-PORTVERSION=	0.5.2
+PORTVERSION=	0.5.3
 PORTREVISION=	1
 CATEGORIES=	sysutils
-MASTER_SITES=	http://www.daveltd.com/src/util/ttyload/ \
-		http://mirror.mcx2.org/
+MASTER_SITES=	http://www.daveltd.com/src/util/ttyload/
 
 MAINTAINER=	dhn@FreeBSD.org
 COMMENT=	Give a color-coded graph of load averages over time
 
+LICENSE=	ISCL
+LICENSE_FILE=	${WRKSRC}/LICENSE
+
 ALL_TARGET=	default
 
 USE_BZIP2=	yes
-PLIST_FILES=	bin/ttyload
-PORTDOCS=	*
-SUB_FILES=	pkg-message
+PLIST_FILES=	bin/ttyload man/man1/ttyload.1.gz
+PORTDOCS=	README
 
-NO_STAGE=	yes
-post-install:
-.if !defined(NOPORTDOCS)
-	@${ECHO_MSG} "Installing additional documentation to ${DOCSDIR}"
-	@${MKDIR} ${DOCSDIR}
-	${INSTALL_DATA} ${WRKSRC}/README ${DOCSDIR}/README
-	${INSTALL_DATA} ${WRKSRC}/LICENSE ${DOCSDIR}/LICENSE
-.endif
+OPTIONS_DEFINE=	DOCS
 
-	@${ECHO_MSG} ""
-	@${CAT} ${PKGMESSAGE}
-	@${ECHO_MSG} ""
+do-install:
+	@${MKDIR} ${STAGEDIR}${DOCSDIR}
+	${INSTALL_DATA} ${WRKSRC}/README.md ${STAGEDIR}${DOCSDIR}/README
+	${INSTALL_MAN} ${WRKSRC}/ttyload.1 ${STAGEDIR}${MANPREFIX}/man/man1
+	${INSTALL_PROGRAM} ${WRKSRC}/${PORTNAME} ${STAGEDIR}${PREFIX}/bin
 
 .include <bsd.port.mk>

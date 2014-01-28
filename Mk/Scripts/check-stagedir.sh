@@ -1,5 +1,6 @@
 #!/bin/sh
 # ports/Mk/Scripts/check-stagedir.sh - called from ports/Mk/bsd.stage.mk
+# $FreeBSD$
 
 set -e
 export LC_ALL=C
@@ -21,16 +22,17 @@ case "$1" in
 esac
 
 # validate environment
-envfault=0
+envfault=
 for i in STAGEDIR PREFIX LOCALBASE WRKDIR WRKSRC MTREE_FILE \
-    TMPPLIST DATADIR DOCSDIR EXAMPLESDIR
+    TMPPLIST DOCSDIR EXAMPLESDIR PLIST_SUB
 do
-	if eval test -z "\$$i" ; then
-		echo >&2 "Environment variable $i undefined. Aborting."
-		envfault=1
+    if ! ( eval ": \${${i}?}" ) 2>/dev/null ; then
+		envfault="${envfault}${envfault:+" "}${i}"
     fi
 done
-if [ $envfault -ne 0 ] ; then
+if [ -n "$envfault" ] ; then
+	echo "Environment variables $envfault undefined. Aborting." \
+	| fmt >&2
 	exit 1
 fi
 
@@ -56,6 +58,11 @@ if [ $makeplist = 0 ] ; then
 			/*) echo >&3 "$line" ;;
 			*)  echo >&3 "$cwd/$line" ;;
 			esac
+		;;
+		@info*)
+			set -- $line
+			shift
+			echo "$cwd/$@"
 		;;
 		# order matters here - we must check @cwd first because
 		# otherwise the @cwd* would also match it first, shadowing the
@@ -85,11 +92,24 @@ fi
 
 	a=${PREFIX}
 	while :; do
+		echo ${a}
 		a=${a%/*}
 		[ -z "${a}" ] && break
-		echo ${a}
 	done
 } > ${WRKDIR}/.mtree
+
+for i in $PLIST_SUB
+do
+	echo $i
+done | awk -F= '{print length($2), $1, $2 | "sort -nr" }' | while read l k v
+do
+	if [ $l -ne 0 ]
+	then
+		echo "s,${v},%%${k}%%,g;"
+	fi
+done > ${WRKDIR}/.plist_sub
+
+sed_plist_sub=`cat ${WRKDIR}/.plist_sub`
 
 ### HANDLE FILES
 find ${STAGEDIR} -type f -o -type l | sort | sed -e "s,${STAGEDIR},," >${WRKDIR}/.staged-files
@@ -97,17 +117,17 @@ comm -13 ${WRKDIR}/.plist-files ${WRKDIR}/.staged-files \
 	| sed \
 	-e "s,${DOCSDIR},%%PORTDOCS%%%%DOCSDIR%%,g" \
 	-e "s,${EXAMPLESDIR},%%PORTEXAMPLES%%%%EXAMPLESDIR%%,g" \
-	-e "s,${DATADIR},%%DATADIR%%,g" \
-	-e "s,${PREFIX}/,,g" | grep -v "^share/licenses" || [ $? = 1 ]
+	-e "s,${PREFIX}/,,g" \
+	-e "${sed_plist_sub}" | grep -v "^share/licenses" || [ $? = 1 ]
 
 ### HANDLE DIRS
 cat ${WRKDIR}/.plist-dirs-unsorted ${WRKDIR}/.mtree | sort -u >${WRKDIR}/.traced-dirs
 find ${STAGEDIR} -type d | sed -e "s,^${STAGEDIR},,;/^$/d" | sort >${WRKDIR}/.staged-dirs
 comm -13 ${WRKDIR}/.traced-dirs ${WRKDIR}/.staged-dirs \
 	| sort -r | sed \
+	-e 's,^,@dirrmtry ,' \
 	-e "s,\(.*\)${DOCSDIR},%%PORTDOCS%%\1%%DOCSDIR%%,g" \
 	-e "s,\(.*\)${EXAMPLESDIR},%%PORTEXAMPLES%%\1%%EXAMPLESDIR%%,g" \
-	-e "s,${DATADIR},%%DATADIR%%,g" \
 	-e "s,${PREFIX}/,,g" \
-	-e 's,^,@dirrmtry ,' \
+	-e "${sed_plist_sub}" \
 	-e 's,@dirrmtry \(/.*\),@unexec rmdir >/dev/null 2>\&1 \1 || :,' | grep -v "^@dirrmtry share/licenses" || [ $? = 1 ]

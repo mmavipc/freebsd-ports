@@ -2,34 +2,21 @@
 # $FreeBSD$
 
 PORTNAME=	wapiti
-PORTVERSION=	1.1.6
+PORTVERSION=	2.3.0
 PORTREVISION=	1
 CATEGORIES=	security
 MASTER_SITES=	SF/${PORTNAME}/${PORTNAME}/${PORTNAME}-${PORTVERSION}
 
-MAINTAINER=	jadawin@FreeBSD.org
+MAINTAINER=	antoine@FreeBSD.org
 COMMENT=	Wapiti is a vulnerability scanner for web applications
 
-RUN_DEPENDS=	${PYTHON_SITELIBDIR}/tidy:${PORTSDIR}/www/py-utidy
+LICENSE=	GPLv2
 
-USE_PYTHON=	2.5+
-NO_BUILD=	yes
-PORTDOCS=	README
+RUN_DEPENDS=	${PYTHON_PKGNAMEPREFIX}beautifulsoup32>=0:${PORTSDIR}/www/py-beautifulsoup32 \
+		${PYTHON_PKGNAMEPREFIX}requests1>=1.2.3:${PORTSDIR}/www/py-requests1
 
-PLIST_FILES=	bin/wapiti.py \
-		bin/lswww.py \
-		bin/getcookie.py \
-		bin/cookie.py \
-		bin/BeautifulSoup.py
-
-NO_STAGE=	yes
-do-install:
-.for i in wapiti.py lswww.py getcookie.py cookie.py BeautifulSoup.py
-	${INSTALL_SCRIPT} ${WRKSRC}/${i} ${PREFIX}/bin/
-.endfor
-.if !defined(NOPORTDOCS)
-	${MKDIR} ${DOCSDIR}
-	${INSTALL_DATA} ${WRKSRC}/README ${DOCSDIR}
-.endif
+USE_PYTHON=	2
+USE_PYDISTUTILS=yes
+PYDISTUTILS_AUTOPLIST=yes
 
 .include <bsd.port.mk>

@@ -27,6 +27,7 @@ HTTPS_LOGIN_DESC=	Generate https:// URLs only for login
 MIMETYPES_DESC=	search for a mime.types file
 SENTRENAME_DESC=	Periodic rename the Sent folder
 CHARSET_DESC=	charsets
+FAM_USES=	fam
 
 NO_STAGE=	yes
 .include "${.CURDIR}/../../security/courier-authlib/Makefile.opt"
@@ -88,10 +89,6 @@ INSTALL_TARGET=	install-strip install-configure
 .include "${.CURDIR}/../../security/courier-authlib/Makefile.dep"
 .endif
 
-.if ${PORT_OPTIONS:MFAM}
-USE_FAM=	yes
-.endif
-
 .if ! ${PORT_OPTIONS:MCACHEDIR}
 PLIST_SUB+=		CACHE="@comment "
 CONFIGURE_ARGS+=	--without-cachedir
@@ -116,8 +113,8 @@ CONFIGURE_ARGS+=	--without-gzip
 .endif
 
 .if ${PORT_OPTIONS:MISPELL}
-BUILD_DEPENDS+=		${LOCALBASE}/bin/ispell:${PORTSDIR}/textproc/ispell
-RUN_DEPENDS+=		${LOCALBASE}/bin/ispell:${PORTSDIR}/textproc/ispell
+BUILD_DEPENDS+=		${LOCALBASE}/bin/ispell:${PORTSDIR}/textproc/aspell-ispell
+RUN_DEPENDS+=		${LOCALBASE}/bin/ispell:${PORTSDIR}/textproc/aspell-ispell
 CONFIGURE_ARGS+=	--with-ispell=${LOCALBASE}/bin/ispell
 .else
 CONFIGURE_ARGS+=	--without-ispell

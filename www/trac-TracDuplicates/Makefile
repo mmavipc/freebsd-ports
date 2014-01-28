@@ -11,6 +11,8 @@ PKGNAMEPREFIX=	trac-
 MAINTAINER=	gslin@gslin.org
 COMMENT=	Notice original ticket to dupe one
 
+BROKEN=		Fails to patch
+
 LICENSE=	BSD
 
 RUN_DEPENDS=	trac>=0:${PORTSDIR}/www/trac
@@ -23,5 +25,4 @@ PLIST_FILES=	%%PYTHON_SITELIBDIR%%/%%PYEASYINSTALL_EGG%%
 USE_PYTHON=	yes
 USE_PYDISTUTILS=	easy_install
 
-NO_STAGE=	yes
 .include <bsd.port.mk>

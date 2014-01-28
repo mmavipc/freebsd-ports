@@ -3,7 +3,7 @@
 
 PORTNAME=	dlmodeler
 DISTVERSION=	1.2-1
-PORTREVISION=	4
+PORTREVISION=	5
 CATEGORIES=	math
 DISTNAME=	${PORTNAME}_${DISTVERSION}
 
@@ -13,8 +13,6 @@ COMMENT=	Generalized Dynamic Linear Modeler
 LICENSE=	GPLv2 GPLv3 BSD
 LICENSE_COMB=	dual
 
-USE_R_MOD=	yes
-R_MOD_AUTOPLIST=	yes
+USES=	cran:auto-plist
 
-NO_STAGE=	yes
 .include <bsd.port.mk>

@@ -28,14 +28,12 @@ share/kde4/services/kdevphpunitprovider.desktop
 %%NLS%%share/locale/pl/LC_MESSAGES/kdevphp.mo
 %%NLS%%share/locale/pt/LC_MESSAGES/kdevphp.mo
 %%NLS%%share/locale/pt_BR/LC_MESSAGES/kdevphp.mo
+%%NLS%%share/locale/ru/LC_MESSAGES/kdevphp.mo
 %%NLS%%share/locale/sk/LC_MESSAGES/kdevphp.mo
 %%NLS%%share/locale/sl/LC_MESSAGES/kdevphp.mo
 %%NLS%%share/locale/sv/LC_MESSAGES/kdevphp.mo
-%%NLS%%share/locale/th/LC_MESSAGES/kdevphp.mo
 %%NLS%%share/locale/uk/LC_MESSAGES/kdevphp.mo
 %%NLS%%share/locale/zh_CN/LC_MESSAGES/kdevphp.mo
 %%NLS%%share/locale/zh_TW/LC_MESSAGES/kdevphp.mo
-@dirrmtry share/locale/kk/LC_MESSAGES
-@dirrmtry share/locale/kk
 @dirrm share/apps/kdevphpsupport
 @dirrmtry share/apps/kdevappwizard/templates

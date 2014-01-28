@@ -8,7 +8,7 @@ MASTER_SITES=	CPAN
 MASTER_SITE_SUBDIR=	CPAN:RJBS
 PKGNAMEPREFIX=	p5-
 
-MAINTAINER=	milki@rescomp.berkeley.edu
+MAINTAINER=	milki@FreeBSD.org
 COMMENT=	Declare trusted symbol names in POD
 
 LICENSE=	ART10 GPLv1
@@ -24,7 +24,4 @@ TEST_DEPENDS=	p5-Test-Pod>=1.41:${PORTSDIR}/devel/p5-Test-Pod
 USES=		perl5
 USE_PERL5=	configure
 
-MAN3=		Pod::Coverage::TrustPod.3
-
-NO_STAGE=	yes
 .include <bsd.port.mk>

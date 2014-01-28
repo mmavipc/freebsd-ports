@@ -2,8 +2,7 @@
 # $FreeBSD$
 
 PORTNAME=	MooseX-Object-Pluggable
-PORTVERSION=	0.0011
-PORTREVISION=	1
+PORTVERSION=	0.0012
 CATEGORIES=	devel perl5
 MASTER_SITES=	CPAN
 PKGNAMEPREFIX=	p5-
@@ -17,7 +16,4 @@ RUN_DEPENDS:=	${BUILD_DEPENDS}
 USES=		perl5
 USE_PERL5=	configure
 
-MAN3=	MooseX::Object::Pluggable.3
-
-NO_STAGE=	yes
 .include <bsd.port.mk>

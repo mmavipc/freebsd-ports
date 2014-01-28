@@ -8,15 +8,14 @@ CATEGORIES=	cad
 MASTER_SITES=	SF/netgen-mesher/netgen-mesher/${PORTVERSION:S|.0$||}/
 
 MAINTAINER=	stephen@FreeBSD.org
-COMMENT=	An automatic 3D tetrahedral mesh generator
+COMMENT=	Automatic 3D tetrahedral mesh generator
 
-LIB_DEPENDS=	Tix8.4.3:${PORTSDIR}/x11-toolkits/tix \
-		jpeg.11:${PORTSDIR}/graphics/jpeg \
-		togl.1:${PORTSDIR}/graphics/togl
+LIB_DEPENDS=	libTix8.4.3.so:${PORTSDIR}/x11-toolkits/tix \
+		libjpeg.so:${PORTSDIR}/graphics/jpeg \
+		libtogl.so:${PORTSDIR}/graphics/togl
 
 USE_LDCONFIG=	yes
-USES=		gmake
-USE_TK=		yes
+USES=		gmake tk
 USE_GL=		yes
 USE_XORG=	xmu xi
 GNU_CONFIGURE=	yes
@@ -32,17 +31,17 @@ OCC_DESC=		Compile with OpenCascade geometry kernel
 FFMPEG_DESC=		video recording with FFmpeg
 OPTIONS_DEFAULT=	OCC
 
-NO_STAGE=	yes
+BROKEN_sparc64=	internal gcc error (Bug 23159)
 .include <bsd.port.options.mk>
 
 .if ${PORT_OPTIONS:MOCC}
-LIB_DEPENDS+=	TKernel.0:${PORTSDIR}/cad/opencascade
+LIB_DEPENDS+=	libTKernel.so:${PORTSDIR}/cad/opencascade
 CXXFLAGS+=	-DOCCGEOMETRY -DHAVE_CONFIG_H -D${ARCH} -I${LOCALBASE}/include/OpenCASCADE
 CONFIGURE_ARGS+=	--enable-occ
 .endif
 
 .if ${PORT_OPTIONS:MFFMPEG}
-LIB_DEPENDS+=	avcodec.1:${PORTSDIR}/multimedia/ffmpeg
+LIB_DEPENDS+=	libavcodec.so:${PORTSDIR}/multimedia/ffmpeg
 CONFIGURE_ARGS+=	--enable-ffmpeg
 .endif
 
@@ -54,11 +53,6 @@ MAKE_ENV=	TK_VER=${TK_VER} TCL_VER=${TCL_VER}	\
 		TCL_INCLUDEDIR="${TCL_INCLUDEDIR}"	\
 		TK_INCLUDEDIR="${TK_INCLUDEDIR}"	\
 		MACHINE=${MACHINE} MAKE=${GMAKE}
-.include <bsd.port.pre.mk>
-
-.if ${ARCH} == "sparc64"
-BROKEN=		internal gcc error (Bug 23159)
-.endif
 
 pre-configure:
 	${REINPLACE_CMD} -e "s|%%DATADIR%%|${DATADIR}|"		\
@@ -66,9 +60,9 @@ pre-configure:
 
 post-install:
 #	copy some additional headers for build cad/salome-netgenplugin
-	${MKDIR} ${DATADIR}/include
-	${SH} ${FILESDIR}/netgen_copy_include_for_salome ${WRKSRC} ${PREFIX}
-	${LN} ${PREFIX}/lib/libnglib.so  ${PREFIX}/lib/libnglib.so.1
+	${MKDIR} ${STAGEDIR}${DATADIR}/include
+	${SH} ${FILESDIR}/netgen_copy_include_for_salome ${WRKSRC} ${STAGEDIR}${PREFIX}
+	${LN} ${STAGEDIR}${PREFIX}/lib/libnglib.so ${STAGEDIR}${PREFIX}/lib/libnglib.so.1
 	${CAT} ${PKGMESSAGE}
 
-.include <bsd.port.post.mk>
+.include <bsd.port.mk>

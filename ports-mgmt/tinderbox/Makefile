@@ -2,14 +2,13 @@
 # $FreeBSD$
 
 PORTNAME=	tinderbox
-PORTVERSION=	4.0.1
-PORTREVISION=	4
+PORTVERSION=	4.1.0
 CATEGORIES=	ports-mgmt
 MASTER_SITES=	http://tinderbox.marcuscom.com/ \
 		http://T32.TecNik93.com/FreeBSD/ports/${PORTNAME}/sources/
 DIST_SUBDIR=	${PORTNAME}
 
-MAINTAINER=	itetcu@FreeBSD.org
+MAINTAINER=	crees@FreeBSD.org
 COMMENT=	Port build tinderbox system
 
 RUN_DEPENDS=	dialog4ports-static:${PORTSDIR}/ports-mgmt/dialog4ports-static

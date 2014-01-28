@@ -14,10 +14,12 @@ LICENSE=	BSL GPLv3
 LICENSE_COMB=	multi
 
 BROKEN=		Does not build
+DEPRECATED=	Broken for more than 6 month
+EXPIRATION_DATE=	2014-02-27
 
-LIB_DEPENDS=	boost_regex:${PORTSDIR}/devel/boost-libs \
-		xerces-c.3:${PORTSDIR}/textproc/xerces-c3 \
-		gtkglextmm-x11-1.2:${PORTSDIR}/x11-toolkits/gtkglextmm
+LIB_DEPENDS=	libboost_regex.so:${PORTSDIR}/devel/boost-libs \
+		libxerces-c.so.3:${PORTSDIR}/textproc/xerces-c3 \
+		libgtkglextmm-x11-1.2.so:${PORTSDIR}/x11-toolkits/gtkglextmm
 
 USE_BZIP2=	yes
 USES=	pathfix gmake

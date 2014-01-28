@@ -10,11 +10,10 @@ MASTER_SITES=	ftp://ftp.SpringDaemons.com/soft/
 MAINTAINER=	ports@FreeBSD.org
 COMMENT=	XMMS input plugin to play midi files
 
-LIB_DEPENDS=	xmms.4:${PORTSDIR}/multimedia/xmms
+LIB_DEPENDS=	libxmms.so:${PORTSDIR}/multimedia/xmms
 RUN_DEPENDS=	timidity:${PORTSDIR}/audio/timidity
 
 USES=		gmake
-NO_STAGE=	yes
 USE_GNOME=	gtk12
 USE_AUTOTOOLS=	libtool
 

@@ -2,6 +2,7 @@
 
 PORTNAME=	activemq
 PORTVERSION=	5.9.0
+PORTREVISION=	2
 CATEGORIES=	net java
 MASTER_SITES=	http://www.sai.msu.su/apache/${MASTER_SITE_SUBDIR}/ \
 		${MASTER_SITE_APACHE}/${MASTER_SITE_SUBDIR}/
@@ -11,7 +12,7 @@ DISTNAME=	apache-${PORTNAME}-${PORTVERSION}-bin
 MAINTAINER=	tj@FreeBSD.org
 COMMENT=	Messaging and Integration Patterns provider
 
-LICENSE=	AL2
+LICENSE=	APACHE20
 
 NO_BUILD=	yes
 USE_JAVA=	yes

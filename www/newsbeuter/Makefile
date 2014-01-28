@@ -2,19 +2,24 @@
 # $FreeBSD$
 
 PORTNAME=	newsbeuter
-PORTVERSION=	2.7
+PORTVERSION=	2.8
 CATEGORIES=	www
 MASTER_SITES=	http://newsbeuter.org/downloads/
 
 MAINTAINER=	arved@FreeBSD.org
 COMMENT=	An RSS feed reader for the text console
 
-LIB_DEPENDS=	stfl.1:${PORTSDIR}/devel/stfl \
-		curl:${PORTSDIR}/ftp/curl \
-		json.0:${PORTSDIR}/devel/json-c
-
 LICENSE=	MIT
 LICENSE_FILE=	${WRKSRC}/LICENSE
+
+LIB_DEPENDS=	stfl:${PORTSDIR}/devel/stfl \
+		curl:${PORTSDIR}/ftp/curl \
+		libjson.so:${PORTSDIR}/devel/json-c
+
+OPTIONS_DEFINE= PODCAST
+PODCAST_DESC=	Podcast client (podbeuter)
+
+OPTIONS_DEFAULT= PODCAST
 
 USES=		gettext iconv ncurses gmake pkgconfig perl5
 USE_PERL5=	build
@@ -22,9 +27,13 @@ USE_SQLITE=	yes
 USE_GNOME=	libxml2
 USE_GCC=	any
 
-MAN1=	newsbeuter.1 podbeuter.1
+.include  <bsd.port.options.mk>
 
-NO_STAGE=	yes
+.if ${PORT_OPTIONS:MPODCAST}
+PLIST_SUB+=	PODCAST=""
+.else
+PLIST_SUB+=	PODCAST="@comment "
+.endif
 
 post-patch:
 	${REINPLACE_CMD} -e "s,share/man,man,; \
@@ -33,7 +42,7 @@ post-patch:
 				${WRKSRC}/Makefile
 	${REINPLACE_CMD} -e 's,<ncursesw/ncurses.h>,<ncurses.h>,' \
 		${WRKSRC}/src/controller.cpp ${WRKSRC}/src/view.cpp
-	${REINPLACE_CMD} -e 's,fail "ncursesw5",true,; s,fail "libcrypto",true,' \
+	${REINPLACE_CMD} -e 's,fail "ncursesw",true,; s,fail "libcrypto",true,' \
 		${WRKSRC}/config.sh
 	${REINPLACE_CMD} -e 's|-liconv|${ICONV_LIB} -lcrypto -lncursesw|' \
 		${WRKSRC}/Makefile

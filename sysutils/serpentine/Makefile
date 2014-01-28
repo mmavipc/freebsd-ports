@@ -12,7 +12,7 @@ MAINTAINER=	ports@FreeBSD.org
 COMMENT=	Gnome Audio Cd Burner
 
 BUILD_DEPENDS=	xmlproc_parse:${PORTSDIR}/textproc/py-xml
-RUN_DEPENDS=	xmlproc_parse:${PORTSDIR}/textproc/py-xml
+RUN_DEPENDS:=	${BUILD_DEPENDS}
 
 USES=		pkgconfig
 USE_BZIP2=	yes
@@ -20,7 +20,6 @@ GNU_CONFIGURE=	yes
 USE_GNOME=	pygnomedesktop intlhack
 USE_GMAKE=	yes
 USE_GSTREAMER=	core gnomevfs python
-USE_PYTHON=	2.4+
+USE_PYTHON=	yes
 
-NO_STAGE=	yes
 .include <bsd.port.mk>

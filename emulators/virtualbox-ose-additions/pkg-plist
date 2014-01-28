@@ -1,4 +1,3 @@
-@comment $FreeBSD$
 %%X11%%bin/VBoxClient-all
 %%X11%%bin/VBoxClient
 %%X11%%etc/xdg/autostart/vboxclient.desktop
@@ -20,12 +19,12 @@ sbin/VBoxService
 %%X11%%@dirrmtry lib/xorg/modules/input
 %%X11%%@dirrmtry lib/xorg/modules
 %%X11%%@dirrmtry lib/xorg
+%%X11%%@dirrmtry etc/xdg/autostart
+%%X11%%@dirrmtry etc/xdg
 %%OPENGL%%@dirrmtry lib/dri
 %%X11%%@dirrmtry lib
 @cwd /
 %%KMODDIR%%/vboxguest.ko
-%%WITH_DEBUG%%%%KMODDIR%%/vboxguest.ko.symbols
+%%DEBUG%%%%KMODDIR%%/vboxguest.ko.symbols
 %%X11%%%%KMODDIR%%/vboxvideo.ko
-%%WITH_DEBUG%%%%X11%%%%KMODDIR%%/vboxvideo.ko
-@exec /usr/sbin/kldxref /%%KMODDIR%%
-@unexec /usr/sbin/kldxref /%%KMODDIR%%
+%%DEBUG%%%%X11%%%%KMODDIR%%/vboxvideo.ko

@@ -31,6 +31,7 @@
     SUBDIR += asciidoc
     SUBDIR += asm-xml
     SUBDIR += aspell
+    SUBDIR += aspell-ispell
     SUBDIR += ast-aspell
     SUBDIR += atom
     SUBDIR += ats-contrib-parcomb
@@ -72,6 +73,7 @@
     SUBDIR += cl-ppcre-sbcl
     SUBDIR += clit
     SUBDIR += clucene
+    SUBDIR += clucene-qt4
     SUBDIR += coccigrep
     SUBDIR += coco
     SUBDIR += code2html
@@ -139,7 +141,6 @@
     SUBDIR += docdiff
     SUBDIR += doclifter
     SUBDIR += docproj
-    SUBDIR += docproj-nojadetex
     SUBDIR += dom4j
     SUBDIR += domc
     SUBDIR += dsssl-docbook-modular
@@ -212,6 +213,7 @@
     SUBDIR += gnome-translate
     SUBDIR += gnugrep
     SUBDIR += go-text
+    SUBDIR += go.text
     SUBDIR += goldendict
     SUBDIR += google-ctemplate
     SUBDIR += gpp
@@ -339,6 +341,7 @@
     SUBDIR += jrefentry
     SUBDIR += jshon
     SUBDIR += kdiff3
+    SUBDIR += kibana
     SUBDIR += kmfl-european-latin
     SUBDIR += kmfl-khmer
     SUBDIR += kmfl-sil-ezra
@@ -357,7 +360,6 @@
     SUBDIR += latex-service
     SUBDIR += latex2html
     SUBDIR += lemmatizer2
-    SUBDIR += lexxia
     SUBDIR += libcrm114
     SUBDIR += libcroco
     SUBDIR += libcsv
@@ -390,7 +392,6 @@
     SUBDIR += libwpd
     SUBDIR += libwps
     SUBDIR += libxdiff
-    SUBDIR += libxml
     SUBDIR += libxml++26
     SUBDIR += libxml++26-reference
     SUBDIR += libxml2
@@ -407,6 +408,7 @@
     SUBDIR += linux-f10-scim-libs
     SUBDIR += linuxdoc
     SUBDIR += localize
+    SUBDIR += loook
     SUBDIR += lt-aspell
     SUBDIR += lt-hyphen
     SUBDIR += lttoolbox
@@ -423,6 +425,7 @@
     SUBDIR += manued.el
     SUBDIR += markdown
     SUBDIR += markdown-mode.el
+    SUBDIR += mate-doc-utils
     SUBDIR += mathml-xsd
     SUBDIR += mdocml
     SUBDIR += meld
@@ -505,9 +508,9 @@
     SUBDIR += p5-Dev-Bollocks
     SUBDIR += p5-Devel-TraceSAX
     SUBDIR += p5-DocSet
+    SUBDIR += p5-EBook-Tools
     SUBDIR += p5-ElasticSearch
     SUBDIR += p5-ElasticSearch-SearchBuilder
-    SUBDIR += p5-EBook-Tools
     SUBDIR += p5-Excel-Template
     SUBDIR += p5-Excel-Writer-XLSX
     SUBDIR += p5-File-Inplace
@@ -595,7 +598,6 @@
     SUBDIR += p5-Lingua-Stem-Snowball-Se
     SUBDIR += p5-Lingua-StopWords
     SUBDIR += p5-Lingua-Treebank
-    SUBDIR += p5-Lucene
     SUBDIR += p5-MARC
     SUBDIR += p5-MARC-Charset
     SUBDIR += p5-MARC-Lint
@@ -671,6 +673,7 @@
     SUBDIR += p5-Pod-Stripper
     SUBDIR += p5-Pod-Tree
     SUBDIR += p5-Pod-WSDL
+    SUBDIR += p5-Pod-WikiDoc
     SUBDIR += p5-Pod-XML
     SUBDIR += p5-Pod-Xhtml
     SUBDIR += p5-RADIUS-UserFile
@@ -813,6 +816,7 @@
     SUBDIR += p5-Text-Highlight
     SUBDIR += p5-Text-HikiDoc
     SUBDIR += p5-Text-Hyphen
+    SUBDIR += p5-Text-LTSV
     SUBDIR += p5-Text-Language-Guess
     SUBDIR += p5-Text-Lorem
     SUBDIR += p5-Text-Markdown
@@ -868,6 +872,7 @@
     SUBDIR += p5-Text-WikiCreole
     SUBDIR += p5-Text-WikiFormat
     SUBDIR += p5-Text-WordDiff
+    SUBDIR += p5-Text-WrapI18N
     SUBDIR += p5-Text-Wrapper
     SUBDIR += p5-Text-Xslate
     SUBDIR += p5-Text-Xslate-Bridge-TT2Like
@@ -921,6 +926,7 @@
     SUBDIR += p5-XML-DOMHandler
     SUBDIR += p5-XML-DT
     SUBDIR += p5-XML-DTDParser
+    SUBDIR += p5-XML-Declare
     SUBDIR += p5-XML-Descent
     SUBDIR += p5-XML-DifferenceMarkup
     SUBDIR += p5-XML-Directory
@@ -949,9 +955,9 @@
     SUBDIR += p5-XML-Generator-DBI
     SUBDIR += p5-XML-Generator-PerlData
     SUBDIR += p5-XML-Grove
-    SUBDIR += p5-XML-Hadler-HTMLWriter
     SUBDIR += p5-XML-Handler-Dtd2DocBook
     SUBDIR += p5-XML-Handler-Dtd2Html
+    SUBDIR += p5-XML-Handler-HTMLWriter
     SUBDIR += p5-XML-Handler-Trees
     SUBDIR += p5-XML-Handler-YAWriter
     SUBDIR += p5-XML-Hash-LX
@@ -1001,9 +1007,7 @@
     SUBDIR += p5-XML-SAX-Writer
     SUBDIR += p5-XML-SAXDriver-CSV
     SUBDIR += p5-XML-SAXDriver-Excel
-    SUBDIR += p5-XML-SAXDriver-Sablotron
     SUBDIR += p5-XML-STX
-    SUBDIR += p5-XML-Sablotron
     SUBDIR += p5-XML-Schematron
     SUBDIR += p5-XML-SemanticDiff
     SUBDIR += p5-XML-Simple
@@ -1174,8 +1178,10 @@
     SUBDIR += py-markdown2
     SUBDIR += py-openpyxl
     SUBDIR += py-paragrep
+    SUBDIR += py-pdfminer
     SUBDIR += py-pss
     SUBDIR += py-pyctpp2
+    SUBDIR += py-pyelasticsearch
     SUBDIR += py-pygments
     SUBDIR += py-pysrt
     SUBDIR += py-pystache
@@ -1223,7 +1229,6 @@
     SUBDIR += pystemmer
     SUBDIR += qprint
     SUBDIR += qstardict
-    SUBDIR += qt4-clucene
     SUBDIR += qt4-xml
     SUBDIR += qt4-xmlpatterns
     SUBDIR += qt4-xmlpatterns-tool
@@ -1239,9 +1244,7 @@
     SUBDIR += redet
     SUBDIR += redland
     SUBDIR += redland-bindings
-    SUBDIR += redland-bindings-python
     SUBDIR += refdb
-    SUBDIR += referrercop
     SUBDIR += reflex
     SUBDIR += replaceit
     SUBDIR += resume
@@ -1258,7 +1261,6 @@
     SUBDIR += roap
     SUBDIR += rot
     SUBDIR += rss2html
-    SUBDIR += rst.el
     SUBDIR += rtf2html
     SUBDIR += rtfreader
     SUBDIR += rtfx
@@ -1351,6 +1353,7 @@
     SUBDIR += rubygem-xslt
     SUBDIR += rubygem-ya2yaml
     SUBDIR += rubygem-yard
+    SUBDIR += rubygem-yard-chef
     SUBDIR += rubygem-zmq
     SUBDIR += rw-aspell
     SUBDIR += rxp
@@ -1418,20 +1421,19 @@
     SUBDIR += stardict-MerrianWebster
     SUBDIR += stardict-OxfordCollocation
     SUBDIR += stardict-dict-fa_IR
+    SUBDIR += stardict-dictd_mova
     SUBDIR += stardict-longman
     SUBDIR += stardict-oald
+    SUBDIR += stardict-quick
     SUBDIR += stardict-rptts
-    SUBDIR += stardict2
-    SUBDIR += stardict2-dictd_mova
-    SUBDIR += stardict2-quick
     SUBDIR += stardict3
     SUBDIR += supercat
     SUBDIR += sv-aspell
+    SUBDIR += sv-hunspell
     SUBDIR += sv-hyphen
     SUBDIR += sv-mythes
     SUBDIR += svn2cl
     SUBDIR += sw-aspell
-    SUBDIR += sw-hunspell
     SUBDIR += sxml
     SUBDIR += syck
     SUBDIR += ta-aspell

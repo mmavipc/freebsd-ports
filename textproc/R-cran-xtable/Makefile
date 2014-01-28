@@ -3,7 +3,7 @@
 
 PORTNAME=	xtable
 DISTVERSION=	1.7-1
-PORTREVISION=	3
+PORTREVISION=	4
 CATEGORIES=	textproc
 DISTNAME=	${PORTNAME}_${DISTVERSION}
 
@@ -13,8 +13,6 @@ COMMENT=	Export tables to LaTeX or HTML
 LICENSE=	GPLv2 GPLv3
 LICENSE_COMB=	dual
 
-USE_R_MOD=	yes
-R_MOD_AUTOPLIST=	yes
+USES=	cran:auto-plist
 
-NO_STAGE=	yes
 .include <bsd.port.mk>

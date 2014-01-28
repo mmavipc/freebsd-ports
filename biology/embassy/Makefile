@@ -11,7 +11,7 @@ DIST_SUBDIR=	emboss
 MAINTAINER=	wen@FreeBSD.org
 COMMENT=	Collection of contributed EMBOSS applications
 
-LIB_DEPENDS=	nucleus.6:${PORTSDIR}/biology/emboss
+LIB_DEPENDS=	libnucleus.so:${PORTSDIR}/biology/emboss
 
 PREFIX?=	${LOCALBASE}/emboss
 NO_MTREE=	yes
@@ -75,7 +75,6 @@ EMBASSY_APPS=		DOMAINATRIX EMNU ESIM4 HMMER MEMENEW MSE PHYLIPNEW \
 			VIENNA MIRA IPRSCAN CBSTOOLS
 
 NO_STAGE=	yes
-.include <bsd.port.pre.mk>
 .include <bsd.port.options.mk>
 
 .for app in ${EMBASSY_APPS}
@@ -127,4 +126,4 @@ do-install:
 	  ${MAKE_ARGS} ${INSTALL_TARGET}
 .endfor
 
-.include <bsd.port.post.mk>
+.include <bsd.port.mk>

@@ -1,19 +1,23 @@
 # $FreeBSD$
 
 PORTNAME=	hunspell
-PORTVERSION=	20120607
+PORTVERSION=	20131206
 CATEGORIES=	german textproc
-MASTER_SITES=	http://www.j3e.de/ispell/igerman98/dict/
+MASTER_SITES=	http://www.j3e.de/ispell/igerman98/dict/ \
+		LOCAL/sunpoet/${PORTNAME}
 DISTNAME=	igerman98-${PORTVERSION}
 DIST_SUBDIR=	${PORTNAME}
 
 MAINTAINER=	office@FreeBSD.org
 COMMENT=	German hunspell dictionaries
 
-BUILD_DEPENDS=	buildhash:${PORTSDIR}/textproc/ispell \
+LICENSE=	GPLv2 GPLv3
+LICENSE_COMB=	dual
+
+BUILD_DEPENDS=	aspell:${PORTSDIR}/textproc/aspell \
 		hunspell:${PORTSDIR}/textproc/hunspell
 
-USES=		gmake shebangfix perl5
+USES=		gmake perl5 shebangfix
 USE_BZIP2=	yes
 ALL_TARGET=	hunspell-all
 USE_PERL5=	build
@@ -34,8 +38,12 @@ PLIST_FILES+=	%%DATADIR%%/${ALIAS}.aff \
 		%%DATADIR%%/${ALIAS}.dic
 .endfor
 
+post-patch:
+	@${REINPLACE_CMD} -e "s/AFFIX_EXPANDER = ispell/AFFIX_EXPANDER = aspell/g" \
+		${WRKSRC}/Makefile
+
 do-install:
-	${MKDIR} ${STAGEDIR}${DATADIR}/
+	@${MKDIR} ${STAGEDIR}${DATADIR}/
 	${INSTALL_DATA} ${WRKSRC}/hunspell/de_AT.aff ${WRKSRC}/hunspell/de_AT.dic \
 		${WRKSRC}/hunspell/de_CH.aff ${WRKSRC}/hunspell/de_CH.dic \
 		${WRKSRC}/hunspell/de_DE.aff ${WRKSRC}/hunspell/de_DE.dic ${STAGEDIR}${DATADIR}/

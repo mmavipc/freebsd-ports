@@ -2,7 +2,7 @@
 # $FreeBSD$
 
 PORTNAME?=	lighttpd
-PORTVERSION=	1.4.33
+PORTVERSION=	1.4.34
 CATEGORIES?=	www
 MASTER_SITES?=	http://download.lighttpd.net/lighttpd/releases-1.4.x/
 
@@ -10,17 +10,16 @@ MAINTAINER?=	mm@FreeBSD.org
 COMMENT?=	Secure, fast, compliant, and flexible Web Server
 
 .if !defined(_BUILDING_LIGHTTPD_MODULE)
-LICENSE=	BSD
+LICENSE=	BSD3CLAUSE
 LICENSE_FILE=	${WRKSRC}/COPYING
 .endif
 
-LIB_DEPENDS+=	pcre.3:${PORTSDIR}/devel/pcre
+LIB_DEPENDS+=	libpcre.so:${PORTSDIR}/devel/pcre
 
 USE_BZIP2=	yes
 GNU_CONFIGURE=	yes
 USE_GNOME=	lthack
-USE_GMAKE=	yes
-USES=		pkgconfig
+USES=		gmake pkgconfig
 
 #.if !defined(_BUILDING_LIGHTTPD_MODULE)
 #USE_AUTOTOOLS=	libtool
@@ -37,12 +36,10 @@ LDFLAGS+=	-L${LOCALBASE}/lib
 .if !defined(_BUILDING_LIGHTTPD_MODULE)
 USE_RC_SUBR=	lighttpd
 
-MAN8=		lighttpd.8
-
 OPTIONS_DEFINE=	BZIP2 FAM GDBM IPV6 LIBEV LUA MEMCACHE MYSQL MYSQLAUTH \
 		NODELAY LDAP OPENSSL SPAWNFCGI VALGRIND WEBDAV
 
-OPTIONS_DEFAULT=	IPV6 OPENSSL 
+OPTIONS_DEFAULT=	IPV6 OPENSSL
 
 BZIP2_DESC=	bzip2 support (mod_compress)
 GDBM_DESC=	gdbm storage (mod_trigger_b4_dl)
@@ -55,6 +52,10 @@ NODELAY_DESC=	Set TCP_NODELAY on listening sockets
 SPAWNFCGI_DESC=	Depend on spawn-fcgi utility
 VALGRIND_DESC=	valgrind support
 WEBDAV_DESC=	WebDAV support
+
+FAM_USES=	fam
+FAM_CONFIGURE_ON=	--with-fam
+FAM_CONFIGURE_ENV=	FAM_CFLAGS="-I${LOCALBASE}/include" FAM_LIBS="-L${LOCALBASE}/lib"
 
 LIGHTTPD_CONF_FILES=	lighttpd.conf modules.conf
 
@@ -80,7 +81,6 @@ PLIST_SUB+=		LOGROOT="${LIGHTTPD_LOGROOT}" \
 
 .endif # !defined(_BUILDING_LIGHTTPD_MODULE)
 
-NO_STAGE=	yes
 .include <bsd.port.pre.mk>
 
 .if !defined(_BUILDING_LIGHTTPD_MODULE)
@@ -103,14 +103,8 @@ CONFIGURE_ARGS+=	--with-openssl \
 CONFIGURE_ARGS+=	--with-bzip2
 .endif
 
-.if ${PORT_OPTIONS:MFAM}
-USE_FAM=		yes
-CONFIGURE_ARGS+=	--with-fam
-CONFIGURE_ENV+=		FAM_CFLAGS="-I${LOCALBASE}/include" FAM_LIBS="-L${LOCALBASE}/lib"
-.endif
-
 .if ${PORT_OPTIONS:MGDBM}
-LIB_DEPENDS+=		gdbm:${PORTSDIR}/databases/gdbm
+LIB_DEPENDS+=		libgdbm.so:${PORTSDIR}/databases/gdbm
 CONFIGURE_ARGS+=	--with-gdbm
 .endif
 
@@ -120,7 +114,7 @@ CONFIGURE_ARGS+=	--disable-ipv6
 
 .if ${PORT_OPTIONS:MLIBEV}
 CONFIGURE_ARGS+=	--with-libev=${LOCALBASE}
-LIB_DEPENDS+=		ev.4:${PORTSDIR}/devel/libev
+LIB_DEPENDS+=		libev.so:${PORTSDIR}/devel/libev
 .endif
 
 .if ${PORT_OPTIONS:MLUA}
@@ -130,7 +124,7 @@ CONFIGURE_ENV+=		LUA_CFLAGS="-I${LUA_INCDIR}" LUA_LIBS="-L${LUA_LIBDIR} -llua"
 .endif
 
 .if ${PORT_OPTIONS:MMEMCACHE}
-LIB_DEPENDS+=		memcache.4:${PORTSDIR}/databases/libmemcache
+LIB_DEPENDS+=		libmemcache.so:${PORTSDIR}/databases/libmemcache
 CONFIGURE_ARGS+=	--with-memcache
 .endif
 
@@ -171,8 +165,8 @@ CONFIGURE_ARGS+=	--with-valgrind
 
 .if ${PORT_OPTIONS:MWEBDAV}
 USE_GNOME+=		libxml2
-LIB_DEPENDS+=		uuid.1:${PORTSDIR}/misc/e2fsprogs-libuuid \
-			sqlite3.8:${PORTSDIR}/databases/sqlite3
+LIB_DEPENDS+=		libuuid.so:${PORTSDIR}/misc/e2fsprogs-libuuid \
+			libsqlite3.so:${PORTSDIR}/databases/sqlite3
 CONFIGURE_ARGS+=	--with-webdav-props --with-webdav-locks
 .endif
 
@@ -204,39 +198,38 @@ post-patch:
 		${WRKSRC}/doc/config/lighttpd.conf
 
 post-install:
-	@${MKDIR} ${PREFIX}/etc/lighttpd/conf.d ${PREFIX}/etc/lighttpd/vhosts.d
+	@${MKDIR} ${STAGEDIR}${PREFIX}/etc/lighttpd/conf.d ${STAGEDIR}${PREFIX}/etc/lighttpd/vhosts.d
 .for FILE in ${LIGHTTPD_CONF_FILES}
 	@${INSTALL_DATA} ${WRKSRC}/doc/config/${FILE} \
-		${PREFIX}/etc/lighttpd/${FILE}.sample
-.if !exists(${PREFIX}/etc/lighttpd/${FILE})
+		${STAGEDIR}${PREFIX}/etc/lighttpd/${FILE}.sample
+.if !exists(${STAGEDIR}${PREFIX}/etc/lighttpd/${FILE})
 	@${INSTALL_DATA} ${WRKSRC}/doc/config/${FILE} \
-		${PREFIX}/etc/lighttpd/${FILE}
+		${STAGEDIR}${PREFIX}/etc/lighttpd/${FILE}
 .endif
 .endfor
 .for FILE in ${LIGHTTPD_CONF_D_FILES}
 	@${INSTALL_DATA} ${WRKSRC}/doc/config/conf.d/${FILE} \
-		${PREFIX}/etc/lighttpd/conf.d/${FILE}.sample
-.if !exists(${PREFIX}/etc/lighttpd/conf.d/${FILE})
+		${STAGEDIR}${PREFIX}/etc/lighttpd/conf.d/${FILE}.sample
+.if !exists(${STAGEDIR}${PREFIX}/etc/lighttpd/conf.d/${FILE})
 	@${INSTALL_DATA} ${WRKSRC}/doc/config/conf.d/${FILE} \
-		${PREFIX}/etc/lighttpd/conf.d/${FILE}
+		${STAGEDIR}${PREFIX}/etc/lighttpd/conf.d/${FILE}
 .endif
 .endfor
 	@${INSTALL_DATA} ${WRKSRC}/doc/config/vhosts.d/vhosts.template \
-		${PREFIX}/etc/lighttpd/vhosts.d/vhosts.template
-	@${MKDIR} -m 0700 ${LIGHTTPD_LOGROOT}
-	@${CHOWN} ${LIGHTTPD_USER}:${LIGHTTPD_GROUP} ${LIGHTTPD_LOGROOT}
+		${STAGEDIR}${PREFIX}/etc/lighttpd/vhosts.d/vhosts.template
 
 .if ${PORT_OPTIONS:MDOCS}
-	@${MKDIR} ${DOCSDIR}
+	@${MKDIR} ${STAGEDIR}${DOCSDIR}
 . for FILE in ${DOCS}
-	@${INSTALL_DATA} ${WRKSRC}/${FILE} ${DOCSDIR}/${FILE}
+	@${INSTALL_DATA} ${WRKSRC}/${FILE} ${STAGEDIR}${DOCSDIR}/${FILE}
 . endfor
 .endif
 .if ${PORT_OPTIONS:MMYSQLAUTH}
 . for FILE in README.mysqlauth mysql_auth.sql
-	@${INSTALL_DATA} ${FILESDIR}/${FILE} ${DOCSDIR}/${FILE}
+	@${INSTALL_DATA} ${FILESDIR}/${FILE} ${STAGEDIR}${DOCSDIR}/${FILE}
 . endfor
 .endif
+	@${MKDIR} -m 0700 ${STAGEDIR}${LIGHTTPD_LOGROOT}
 
 test: build
 	@cd ${WRKSRC}/tests && ${SETENV} ${MAKE_ENV} ${MAKE} \

@@ -1,9 +1,6 @@
 # Created by: David Naylor <naylor.b.david@gmail.com>
 # $FreeBSD$
 
-# Note:	1)	If port is interupted while compiling, "make clean" must be run before
-#		attempting to recompile.
-
 PORTNAME=	cursor-crystal-theme
 DISTVERSION=	1.1.1
 PORTREVISION=	5
@@ -15,10 +12,11 @@ DISTNAME=	Crystalcursors
 MAINTAINER=	dbn@FreeBSD.org
 COMMENT=	KDE Crystal style X cursor theme
 
+LICENSE=	LGPL21
+
 BUILD_DEPENDS=	convert:${PORTSDIR}/graphics/ImageMagick \
 		xcursorgen:${PORTSDIR}/x11/xcursorgen
 
-MAKE_ENV+=	DESTDIR=${STAGEDIR}
 USES=		gmake
 USE_BZIP2=	yes
 
@@ -33,6 +31,9 @@ post-patch:
 		${WRKSRC}/green_src/Makefile \
 		${WRKSRC}/left-handed_templates/Makefile \
 		${WRKSRC}/white_src/Makefile
+
+pre-build:
+	@(cd ${WRKSRC}; ${ENV} ${MAKE_ENV} ${MAKE_CMD} clean ${MAKE_ARGS})
 
 pre-install:
 	@${REINPLACE_CMD} \

@@ -3,8 +3,10 @@
 PORTNAME=	mythes
 PORTVERSION=	2.3
 CATEGORIES=	french textproc
-MASTER_SITES=	http://www.dicollecte.org/download/fr/
+MASTER_SITES=	http://www.dicollecte.org/download/fr/ \
+		LOCAL/sunpoet/${PORTNAME}
 DISTNAME=	thesaurus-v${PORTVERSION}
+EXTRACT_SUFX=	.zip
 DIST_SUBDIR=	${PORTNAME}
 
 MAINTAINER=	office@FreeBSD.org
@@ -12,7 +14,6 @@ COMMENT=	French thesaurus
 
 LICENSE=	LGPL21
 
-EXTRACT_SUFX=	.zip
 NO_BUILD=	yes
 NO_WRKSUBDIR=	yes
 
@@ -27,7 +28,7 @@ PLIST_FILES+=	%%DATADIR%%/th_${ALIAS}_v2.dat \
 .endfor
 
 do-install:
-	${MKDIR} ${DATADIR}/
+	${MKDIR} ${STAGEDIR}${DATADIR}/
 	${INSTALL_DATA} ${WRKSRC}/thes_fr.dat ${STAGEDIR}${DATADIR}/th_fr_FR_v2.dat
 	${INSTALL_DATA} ${WRKSRC}/thes_fr.idx ${STAGEDIR}${DATADIR}/th_fr_FR_v2.idx
 .for ALIAS in ${FRALIASES}

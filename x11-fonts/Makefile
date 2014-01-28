@@ -3,6 +3,8 @@
 
     COMMENT = X11 fonts and font utilities
 
+    SUBDIR += alegreya-sans
+    SUBDIR += alfont
     SUBDIR += andika
     SUBDIR += anonymous-pro
     SUBDIR += artwiz-aleczapka
@@ -12,14 +14,17 @@
     SUBDIR += bdfresize
     SUBDIR += bdftopcf
     SUBDIR += bitstream-vera
+    SUBDIR += bitter
     SUBDIR += c64bdf
     SUBDIR += cantarell-fonts
     SUBDIR += charis
     SUBDIR += charis-compact
+    SUBDIR += clearsans
     SUBDIR += code2000
     SUBDIR += code2001
     SUBDIR += comfortaa-ttf
     SUBDIR += consolamono-ttf
+    SUBDIR += cosmic-sans-neue-mono
     SUBDIR += croscorefonts-fonts-ttf
     SUBDIR += cyberbit-ttfonts
     SUBDIR += cyr-rfx
@@ -30,8 +35,8 @@
     SUBDIR += droid-fonts-ttf
     SUBDIR += ecofont
     SUBDIR += encodings
-    SUBDIR += etlfonts
     SUBDIR += farsifonts
+    SUBDIR += fira
     SUBDIR += fntsample
     SUBDIR += font-adobe-100dpi
     SUBDIR += font-adobe-75dpi
@@ -133,10 +138,10 @@
     SUBDIR += paratype
     SUBDIR += pcf2bdf
     SUBDIR += pingwi
-    SUBDIR += ppantsfonts
     SUBDIR += profont
     SUBDIR += proggy_fonts
     SUBDIR += proggy_fonts-ttf
+    SUBDIR += py-bdflib
     SUBDIR += roboto-fonts-ttf
     SUBDIR += sgifonts
     SUBDIR += sharefonts
@@ -154,6 +159,7 @@
     SUBDIR += ubuntu-font
     SUBDIR += urwfonts
     SUBDIR += urwfonts-ttf
+    SUBDIR += vollkorn-ttf
     SUBDIR += webfonts
     SUBDIR += wqy
     SUBDIR += xf86bigfontproto

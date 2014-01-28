@@ -24,6 +24,10 @@ ALL_TARGET=	${PORTNAME}
 MAN1=		hanzim.1
 
 NO_STAGE=	yes
+BROKEN_powepc=	Does not install on powerpc: signal 11
+
+.include <bsd.port.options.mk>
+
 post-patch:
 	@${REINPLACE_CMD} -e 's,%%PREFIX%%,${PREFIX},g' ${WRKSRC}/hanzim.c
 
@@ -32,16 +36,10 @@ do-install:
 	${INSTALL_MAN} ${WRKSRC}/hanzim.man ${PREFIX}/man/man1/hanzim.1
 	@${MKDIR} ${PREFIX}/lib/hanzim
 	${INSTALL_DATA} ${WRKSRC}/Data/* ${PREFIX}/lib/hanzim
-.if !defined(NOPORTDOCS)
+.if ${PORT_OPTIONS:MDOCS}
 	@${MKDIR} ${DOCSDIR}
 	${INSTALL_DATA} ${WRKSRC}/hanzim.doc ${DOCSDIR}
 .endif
 	${PREFIX}/bin/hanzim -port-install
 
-.include <bsd.port.pre.mk>
-
-.if ${ARCH} == "powerpc"
-BROKEN=		Does not install on powerpc: signal 11
-.endif
-
-.include <bsd.port.post.mk>
+.include <bsd.port.mk>

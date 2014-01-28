@@ -6,13 +6,13 @@ PORTVERSION=	3.6.2
 CATEGORIES=	textproc java
 MASTER_SITES=	APACHE
 MASTER_SITE_SUBDIR=	lucene/solr/${PORTVERSION}/
-EXTRACT_SUFX=	.tgz
 PKGNAMESUFFIX=	3
+EXTRACT_SUFX=	.tgz
 
 MAINTAINER=	gaod@hychen.org
 COMMENT=	High performance search server built using Lucene Java
 
-LICENSE=	AL2
+LICENSE=	APACHE20
 
 CONFLICT=	apache-solr-4.1.*
 
@@ -22,12 +22,9 @@ PLIST_SUB+=	PORTVERSION="${PORTVERSION}"
 USE_JAVA=	yes
 PORTEXAMPLES=	*
 
-NO_STAGE=	yes
 do-install:
-	cd ${WRKSRC}/dist && ${COPYTREE_SHARE} \* ${JAVAJARDIR}
-.if !defined(NOPORTEXAMPLES)
-	${MKDIR} ${EXAMPLESDIR}
-	cd ${WRKSRC}/example && ${COPYTREE_SHARE} \* ${EXAMPLESDIR}
-.endif
+	cd ${WRKSRC}/dist && ${COPYTREE_SHARE} . ${STAGEDIR}${JAVAJARDIR}
+	@${MKDIR} ${STAGEDIR}${EXAMPLESDIR}
+	cd ${WRKSRC}/example && ${COPYTREE_SHARE} . ${STAGEDIR}${EXAMPLESDIR}
 
 .include <bsd.port.mk>

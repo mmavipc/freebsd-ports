@@ -13,18 +13,17 @@ LICENSE=	GPLv2 LGPL21
 LICENSE_COMB=	multi
 
 BUILD_DEPENDS=	fftw3>0:${PORTSDIR}/math/fftw3
-LIB_DEPENDS=	fluidsynth:${PORTSDIR}/audio/fluidsynth \
-		jack:${PORTSDIR}/audio/jack \
-		fftw3f:${PORTSDIR}/math/fftw3-float \
-		expat:${PORTSDIR}/textproc/expat2
+LIB_DEPENDS=	libfluidsynth.so:${PORTSDIR}/audio/fluidsynth \
+		libjack.so:${PORTSDIR}/audio/jack \
+		libfftw3f.so:${PORTSDIR}/math/fftw3-float \
+		libexpat.so:${PORTSDIR}/textproc/expat2
 
 OPTIONS_DEFINE=	LASH LV2
 OPTIONS_DEFAULT=LASH LV2
+OPTIONS_SUB=	yes
 LV2_DESC=	LV2 audio plugin
 
-NO_STAGE=	yes
 USES=		gmake pkgconfig
-USE_GCC=	any
 USE_GNOME=	gtk20
 GNU_CONFIGURE=	yes
 INSTALLS_ICONS=	yes
@@ -32,37 +31,40 @@ INSTALLS_ICONS=	yes
 CPPFLAGS+=	-I${LOCALBASE}/include
 LDFLAGS+=	-L${LOCALBASE}/lib
 
-MAN1=		calfjackhost.1
-MAN7=		calf.7
+LASH_LIB_DEPENDS=	liblash.so:${PORTSDIR}/audio/lash
+LASH_CONFIGURE_WITH=	lash
+LV2_BUILD_DEPENDS=	lv2core>0:${PORTSDIR}/audio/lv2core
+LV2_RUN_DEPENDS=	lv2core>0:${PORTSDIR}/audio/lv2core
+LV2_CONFIGURE_WITH=	lv2
 
 .include <bsd.port.options.mk>
-
-.if ${PORT_OPTIONS:MLASH}
-LIB_DEPENDS+=	lash:${PORTSDIR}/audio/lash
-.else
-CONFIGURE_ARGS+=--without-lash
-.endif
-
-.if ${PORT_OPTIONS:MLV2}
-BUILD_DEPENDS+=	lv2core>0:${PORTSDIR}/audio/lv2core
-RUN_DEPENDS+=	lv2core>0:${PORTSDIR}/audio/lv2core
-PLIST_SUB+=	LV2=""
-.else
-CONFIGURE_ARGS+=--without-lv2
-PLIST_SUB+=	LV2="@comment "
-.endif
 
 post-patch:
 	@${FIND} ${BUILD_WRKSRC} -name '*.cpp' | ${XARGS} ${REINPLACE_CMD} -e \
 		's|<malloc.h>|<stdlib.h>|'
 	@${REINPLACE_CMD} -e '/CXXFLAGS/s|-O3||' ${WRKSRC}/configure
-	@${REINPLACE_CMD} -e '/^install-data-am:/s|install-data-local||' \
-		${WRKSRC}/Makefile.in
+	@${REINPLACE_CMD} -e '/calf.so/s|$$(pkglibdir)|../../calf|' \
+		${WRKSRC}/src/Makefile.in
+	@${REINPLACE_CMD} -e 's|src\.size();|src->size();|' \
+		${WRKSRC}/src/calf/buffer.h
+	@${REINPLACE_CMD} -e 's|data\[(1<<IntBits)+1\]|data[]|' \
+		${WRKSRC}/src/calf/fixed_point.h
+
+pre-build:
+.if ${PORT_OPTIONS:MLV2}
+	@${MKDIR} ${WRKDIR}/calfmakerdf
+	@(cd ${WRKSRC} && ${PAX} -rw . ${WRKDIR}/calfmakerdf)
+	@${REINPLACE_CMD} -e 's|\(PKGLIBDIR\).*|\1 "${STAGEDIR}${DATADIR}"|' \
+		${WRKDIR}/calfmakerdf/config.h
+	@(cd ${WRKDIR}/calfmakerdf/src && ${SETENV} ${MAKE_ENV} ${MAKE_CMD} \
+		${MAKE_FLAGS} ${MAKEFILE} -j${MAKE_JOBS_NUMBER} ${MAKE_ARGS} \
+		calfmakerdf)
+.endif
 
 post-install:
-.if ${PORT_OPTIONS:MDOCS}
-	@(cd ${INSTALL_WRKSRC} && ${SETENV} ${MAKE_ENV} ${GMAKE} \
-		${MAKE_FLAGS} ${MAKEFILE} ${MAKE_ARGS} install-data-local)
+.if ${PORT_OPTIONS:MLV2}
+	@(cd ${WRKDIR}/calfmakerdf/src && ./calfmakerdf -m ttl \
+		-p ${STAGEDIR}${PREFIX}/lib/lv2/calf.lv2)
 .endif
 
 .include <bsd.port.mk>
